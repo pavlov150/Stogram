@@ -26,7 +26,9 @@
     <spring-data-jpa.version>2.6.1</spring-data-jpa.version>
     <hibernate-core.version>5.6.5.Final</hibernate-core.version>
     <thymeleaf-extras-java8time.version>3.0.4.RELEASE</thymeleaf-extras-java8time.version>
-
+    <spring-security-core.version>5.6.2</spring-security-core.version>
+    <spring-security-web.version>5.6.2</spring-security-web.version>
+    <spring-security-config.version>5.6.2</spring-security-config.version>
   </properties>
 
   <dependencies>
@@ -36,44 +38,37 @@
       <version>${junit.version}</version>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-webmvc</artifactId>
       <version>${spring-webmvc.version}</version>
     </dependency>
-
     <dependency>
       <groupId>org.postgresql</groupId>
       <artifactId>postgresql</artifactId>
       <version>${postgresql.version}</version>
     </dependency>
-
     <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>javax.servlet-api</artifactId>
       <version>${javax.servlet-api.version}</version>
       <scope>provided</scope>
     </dependency>
-
     <dependency>
       <groupId>org.thymeleaf</groupId>
       <artifactId>thymeleaf-spring5</artifactId>
       <version>${thymeleaf-spring5.version}</version>
     </dependency>
-
     <dependency>
       <groupId>org.webjars</groupId>
       <artifactId>bootstrap</artifactId>
       <version>${bootstrap.version}</version>
     </dependency>
-
     <dependency>
       <groupId>org.springframework.data</groupId>
       <artifactId>spring-data-jpa</artifactId>
       <version>${spring-data-jpa.version}</version>
     </dependency>
-
     <dependency>
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-core</artifactId>
@@ -84,7 +79,21 @@
       <artifactId>thymeleaf-extras-java8time</artifactId>
       <version>${thymeleaf-extras-java8time.version}</version>
     </dependency>
-
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-core</artifactId>
+      <version>${spring-security-core.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-web</artifactId>
+      <version>${spring-security-web.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-config</artifactId>
+      <version>${spring-security-config.version}</version>
+    </dependency>
   </dependencies>
 
   <build>

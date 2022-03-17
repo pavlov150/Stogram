@@ -8,8 +8,8 @@ drop table if exists users;
 
 CREATE TABLE users (
   user_id bigserial PRIMARY KEY,
-  username varchar(50) not null,
-  password varchar(50) not null,
+  username varchar(150) not null,
+  password varchar(150) not null,
   created_at timestamp not null,
   is_active boolean
 );
@@ -59,10 +59,13 @@ insert into role values (1, 'ADMIN');
 insert into role values (2, 'USER');
 
 insert into users (username, password, created_at, is_active)
-    values ('admin', 'admin', now()::timestamp, true);
+    values ('admin', '$2a$10$gnOFf8E/d3kN.4LRtbkaOu/bUgigm5jFrPdOr.Y66i7Cxe.wEDArq', now()::timestamp, true);
+--пароль NtCn0db4
+insert into users (username, password, created_at, is_active)
+    values ('pavlov89312', '$2a$10$gnOFf8E/d3kN.4LRtbkaOu/bUgigm5jFrPdOr.Y66i7Cxe.wEDArq', now()::timestamp, true);
 
 insert into users (username, password, created_at, is_active)
-    values ('user1', 'user1', now()::timestamp, true);
+values ('user', '$2a$10$gnOFf8E/d3kN.4LRtbkaOu/bUgigm5jFrPdOr.Y66i7Cxe.wEDArq', now()::timestamp, true);
 
 insert into user_role values (1, 1);
 insert into user_role values (2, 2);

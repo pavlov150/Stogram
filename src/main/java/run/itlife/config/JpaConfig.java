@@ -24,7 +24,7 @@ public class JpaConfig {
 
     private static final String URL = "jdbc:postgresql://127.0.0.1:5432/Stogram";
     private static final String LOGIN = "postgres";
-    private static final String PASSWORD = "";
+    private static final String PASSWORD = "111";
 
     @Bean
     public DataSource dataSource() {

@@ -7,11 +7,9 @@
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Jekyll v4.1.1">
     <title>Вход - Stogram</title>
-
     <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/sign-in/">
-
-    <!-- Bootstrap core CSS -->
-<link href="../resources/css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{/webjars/bootstrap/5.1.3/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/resources/css/signin.css}" rel="stylesheet">
 
     <style>
       .bd-placeholder-img {
@@ -29,15 +27,14 @@
         }
       }
     </style>
-    <!-- Custom styles for this template -->
-    <link href="../resources/css/signin.css" rel="stylesheet">
+
   </head>
   <body class="text-center">
-    <form class="form-signin">
+    <form class="form-signin" action="login" method="POST">
   <h1 class="h3 mb-3 font-weight-normal">Вход</h1>
   <label for="inputEmail" class="sr-only">Email</label>
-  <input type="email" id="inputEmail" class="form-control" placeholder="Email или логин" required autofocus>
-  <label for="inputPassword" class="sr-only">Пароль</label>
+  <input type="email" id="inputEmail" name="username" class="form-control" placeholder="Email или логин" required autofocus>
+  <label for="inputPassword" class="sr-only" name="password">Пароль</label>
   <input type="password" id="inputPassword" class="form-control" placeholder="Пароль" required>
   <div class="checkbox mb-3">
     <label>

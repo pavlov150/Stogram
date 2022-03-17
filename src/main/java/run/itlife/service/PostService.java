@@ -7,4 +7,6 @@ public interface PostService {
 
     List<Post> listAllPosts();
 
+    List<Post> findByUser(String username);
+
 }
