@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Jekyll v4.1.1">
-    <title>Вход - Stogram</title>
+    <title>Sign In - Stogram</title>
     <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/sign-in/">
     <link th:href="@{/webjars/bootstrap/5.1.3/css/bootstrap.min.css}" rel="stylesheet">
     <link th:href="@{/resources/css/signin.css}" rel="stylesheet">
@@ -31,17 +31,17 @@
   </head>
   <body class="text-center">
     <form class="form-signin" action="login" method="POST">
-  <h1 class="h3 mb-3 font-weight-normal">Вход</h1>
-  <label for="inputEmail" class="sr-only">Email</label>
-  <input type="email" id="inputEmail" name="username" class="form-control" placeholder="Email или логин" required autofocus>
-  <label for="inputPassword" class="sr-only" name="password">Пароль</label>
-  <input type="password" id="inputPassword" class="form-control" placeholder="Пароль" required>
+  <h1 class="h3 mb-3 font-weight-normal">Login</h1>
+  <label class="sr-only">Username</label>
+  <input type="text" name="username" class="form-control" placeholder="Username" required="" autofocus="">
+  <label class="sr-only">Password</label>
+  <input type="password" name="password" class="form-control" placeholder="Password" required="">
   <div class="checkbox mb-3">
     <label>
-      <input type="checkbox" value="remember-me"> Запомнить меня
+      <input type="checkbox" value="remember-me"> Remember me
     </label>
   </div>
-  <button class="btn btn-lg btn-primary btn-block" type="submit">Вход</button>
+  <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
   <p class="mt-5 mb-3 text-muted">© 2022 Stogram</p>
 </form>
 </body>

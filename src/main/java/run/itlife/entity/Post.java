@@ -11,7 +11,7 @@ public class Post {
     @Column(name="post_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long postId;
-    @Column
+    //@Column
     private String title;
     private String content;
     @Column(name = "created_at")

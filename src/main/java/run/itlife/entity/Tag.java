@@ -30,14 +30,6 @@ public class Tag {
         this.tagId = tagId;
     }
 
-    public List<Post> getPosts() {
-        return posts;
-    }
-
-    public void setPosts(List<Post> posts) {
-        this.posts = posts;
-    }
-
     public String getName() {
         return name;
     }

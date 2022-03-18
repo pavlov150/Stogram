@@ -11,6 +11,8 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.support.TransactionOperations;
+import org.springframework.transaction.support.TransactionTemplate;
 import org.springframework.web.client.RestOperations;
 import org.springframework.web.client.RestTemplate;
 import javax.sql.DataSource;
@@ -24,7 +26,7 @@ public class JpaConfig {
 
     private static final String URL = "jdbc:postgresql://127.0.0.1:5432/Stogram";
     private static final String LOGIN = "postgres";
-    private static final String PASSWORD = "111";
+    private static final String PASSWORD = "";
 
     @Bean
     public DataSource dataSource() {
@@ -65,6 +67,11 @@ public class JpaConfig {
                 "hibernate.dialect", "org.hibernate.dialect.PostgreSQL10Dialect");
 
         return hibernateProperties;
+    }
+
+    @Bean
+    public TransactionOperations transactionOperations(){
+        return new TransactionTemplate(transactionManager());
     }
 
     @Bean

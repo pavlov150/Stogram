@@ -14,7 +14,8 @@ public class MyWebAppInitializer implements WebApplicationInitializer {
         AnnotationConfigWebApplicationContext context
                 = new AnnotationConfigWebApplicationContext();
         context.register(WebConfig.class);
-        container.addListener(new ContextLoaderListener(context));
+        //container.addListener(new ContextLoaderListener(context));
+        context.setServletContext(container);
         ServletRegistration.Dynamic dispatcher = container
                 .addServlet("StogramDispatcher", new DispatcherServlet(context));
         dispatcher.setLoadOnStartup(1);

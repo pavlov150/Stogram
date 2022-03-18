@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @Table(name="users")
 public class User implements UserDetails {
 
-    private final String ROLE = "ROLE_";
+    //private final String ROLE = "ROLE_";
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -62,6 +62,7 @@ public class User implements UserDetails {
         this.roles = roles;
     }
 
+    @Override
     public String getUsername() {
         return username;
     }

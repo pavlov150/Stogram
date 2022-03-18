@@ -17,9 +17,6 @@ import run.itlife.service.UserService;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private MyBasicAuthenticationEntryPoint authEndpoint;
-
-    @Autowired
     private UserService userService;
 
     @Override
@@ -35,18 +32,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout()
                 .permitAll()
-                .logoutSuccessUrl("/")
-                .and()
-                .httpBasic().authenticationEntryPoint(authEndpoint);
-    }
-
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userService).passwordEncoder(bCryptPasswordEncoder());
+                .logoutSuccessUrl("/");
     }
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder(){
         return new BCryptPasswordEncoder();
+    }
+
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userService).passwordEncoder(bCryptPasswordEncoder());
     }
 }
