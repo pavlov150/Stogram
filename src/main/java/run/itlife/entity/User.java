@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @Table(name="users")
 public class User implements UserDetails {
 
-    //private final String ROLE = "ROLE_";
+    private final String ROLE = "ROLE_";
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -62,9 +62,37 @@ public class User implements UserDetails {
         this.roles = roles;
     }
 
-    @Override
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     public String getUsername() {
         return username;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return false;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return false;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
     }
 
     public String getPassword() {
@@ -91,39 +119,11 @@ public class User implements UserDetails {
         this.posts = posts;
     }
 
-    public boolean getIsActive() {
+    public boolean isActive() {
         return isActive;
     }
 
-    public void setIsActive(boolean active) {
+    public void setActive(boolean active) {
         isActive = active;
     }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return getIsActive();
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return getIsActive();
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return getIsActive();
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return getIsActive();
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return getRoles().stream()
-                .map(r -> new SimpleGrantedAuthority("ROLE_" + r.getName()))
-                .collect(Collectors.toList());
-    }
 }
-
