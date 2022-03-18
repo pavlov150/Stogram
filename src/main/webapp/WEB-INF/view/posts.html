@@ -45,13 +45,13 @@
             <span class="sr-only">(current)</span>
           </a>
         </li>
-        <li sec:authorize="hasRole('USER')" class="nav-item">
+        <li  class="nav-item">
           <a class="nav-link" th:href="@{/post/new}">New Post</a>
         </li>
-        <li sec:authorize="!isAuthenticated()" class="nav-item">
+        <li  class="nav-item">
           <a class="nav-link" th:href="@{/login}">Login</a>
         </li>
-        <li sec:authorize="isAuthenticated()" class="nav-item">
+        <li  class="nav-item">
           <a class="nav-link" th:href="@{/logout}">Logout</a>
         </li>
       </ul>
@@ -65,8 +65,9 @@
 <main role="main">
 
   <section class="jumbotron text-center">
-  <img th:src="@{/img/stogram.png}">
+    <img th:src="@{/img/stogram.png}">
     <div class="container">
+      <h1>Login of current user</h1>
       <h1>Login of current user</h1>
 	  <p class="lead text-muted">67 publications  234 followers  12 subscribes</p>
 	  <p>

@@ -10,7 +10,9 @@ import run.itlife.entity.User;
 import run.itlife.repository.RoleRepository;
 import run.itlife.repository.UserRepository;
 
+import javax.persistence.EntityExistsException;
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -44,5 +46,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> findAll() {
         return userRepository.findAll(Sort.by("username"));
+    }
+
+    public void create(User user) {
+        if (userRepository.findByUsername(user.getUsername()).isPresent())
+            throw new EntityExistsException();
+        user.setPassword(cryptPasswordEncoder.encode(user.getPassword()));
+        user.setRoles(List.of(roleRepository.findByName("USER")));
+        user.setCreatedAt(LocalDateTime.now());
+        user.setActive(true);
+        userRepository.save(user);
     }
 }
