@@ -45,7 +45,7 @@
             <span class="sr-only">(current)</span>
           </a>
         </li>
-        <li sec:authorize="hasAnyAuthority('ROLE_USER')" class="nav-item">
+        <li sec:authorize="hasRole('USER')" class="nav-item">
           <a class="nav-link" th:href="@{/post/new}">New Post</a>
         </li>
         <li sec:authorize="!isAuthenticated()" class="nav-item">

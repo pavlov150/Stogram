@@ -14,8 +14,6 @@ import java.util.stream.Collectors;
 @Table(name="users")
 public class User implements UserDetails {
 
-    private final String ROLE = "ROLE_";
-
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "user_id")
@@ -62,37 +60,43 @@ public class User implements UserDetails {
         this.roles = roles;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     public String getUsername() {
         return username;
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return getIsActive();
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return getIsActive();
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return getIsActive();
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return getIsActive();
+    }
+
+    public boolean getIsActive() {
+        return isActive;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return getRoles().stream()
+                .map(r -> new SimpleGrantedAuthority("ROLE_" + r.getName()))
+                .collect(Collectors.toList());
     }
 
     public String getPassword() {
@@ -101,14 +105,6 @@ public class User implements UserDetails {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
     }
 
     public List<Post> getPosts() {
@@ -126,4 +122,14 @@ public class User implements UserDetails {
     public void setActive(boolean active) {
         isActive = active;
     }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+
 }
