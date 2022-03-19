@@ -36,5 +36,7 @@ public class SecurityUtils {
     public static void checkAuthority(String username) {
         if (!hasAuthority(username))
             throw new AccessDeniedException(ACCESS_DENIED);
+     //   if(!Objects.equals(username, getCurrentUserDetails().getUsername()))
+     //       throw new AccessDeniedException(ACCESS_DENIED);
     }
 }

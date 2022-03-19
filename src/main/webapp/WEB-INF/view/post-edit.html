@@ -4,19 +4,14 @@
 
 <head>
 
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="description" content="">
-        <meta name="author" content="">
-
-    <title>New Post - Stogram</title>
+    <title>Edit Post - Stogram</title>
     <link th:href="@{/webjars/bootstrap/5.1.3/css/bootstrap.min.css}" rel="stylesheet">
     <link th:href="@{/resources/css/posts.css}" rel="stylesheet">
-
-
-
 
 
 </head>
@@ -27,8 +22,6 @@
 
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-
-
     <div class="container">
         <a class="navbar-brand" th:href="@{/}">Spring Blog</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
@@ -54,8 +47,6 @@
             </ul>
         </div>
     </div>
-
-
 </nav>
 
 <!-- Page Content -->
@@ -67,34 +58,35 @@
         <div class="col-lg-8">
 
 
-            <form method="POST" th:action="@{/post/new}">
+            <form method="POST" th:action="@{/post/edit}" th:object="${post}">
                 <div class="form-group">
+                    <input type="hidden" th:field="*{postId}"/>
+
                     <h1 class="mt-4">
-                        <input name="title"
+                        <input th:field="*{title}"
                                class="form-control form-control-lg mt-4"
                                type="text" placeholder="Title"/>
                     </h1>
 
                     <hr>
 
-                    <textarea name="content"
+                    <textarea th:field="*{content}"
                               class="form-control" rows="9"></textarea>
 
                     <hr>
 
-                    <input name="tags"
-                           class="form-control"
-                           type="text" placeholder="Tags"/>
+                    <input th:field="*{tags}"
+                           class="form-control" type="text" placeholder="Tags"/>
                 </div>
 
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
 
+
         </div>
 
         <!-- Sidebar Widgets Column -->
         <div class="col-md-4">
-
 
             <div>
 
@@ -151,9 +143,6 @@
                     </div>
                 </div>
             </div>
-
-
-
         </div>
 
     </div>

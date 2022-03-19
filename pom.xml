@@ -15,8 +15,8 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>1.7</maven.compiler.source>
-    <maven.compiler.target>1.7</maven.compiler.target>
+    <maven.compiler.source>15</maven.compiler.source>
+    <maven.compiler.target>15</maven.compiler.target>
     <junit.version>4.11</junit.version>
     <spring-webmvc.version>5.3.16</spring-webmvc.version>
     <postgresql.version>42.3.1</postgresql.version>
@@ -142,8 +142,8 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
         <configuration>
-          <source>9</source>
-          <target>9</target>
+          <source>10</source>
+          <target>10</target>
         </configuration>
       </plugin>
     </plugins>

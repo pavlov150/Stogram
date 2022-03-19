@@ -9,5 +9,10 @@ public interface PostService {
     List<Post> listAllPosts();
     long createPost(PostDto postDto);
     List<Post> findByUser(String username);
+    void checkAuthority(long postId);
+    PostDto getAsDto(long postId);
+    void update(PostDto postDto);
+    Post findById(long id);
+    void delete(long id);
 
 }

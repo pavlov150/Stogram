@@ -1,11 +1,14 @@
 package run.itlife.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import run.itlife.dto.PostDto;
 import run.itlife.service.PostService;
 import run.itlife.service.TagService;
@@ -48,6 +51,41 @@ public class PostController {
         postService.createPost(postDto);
         return "redirect:/";
     }
+
+    @GetMapping("/post/{postId}/edit")
+    @PreAuthorize("hasRole('USER')")
+    public String postEdit(ModelMap modelMap,
+                           @PathVariable long postId) {
+        postService.checkAuthority(postId);
+
+        modelMap.put("post", postService.getAsDto(postId));
+        setCommonParams(modelMap);
+        return "post-edit";
+    }
+
+    @PostMapping("/post/edit")
+    @PreAuthorize("hasRole('USER')")
+    public String postEdit(PostDto postDto) {
+        postService.checkAuthority(postDto.getPostId());
+        postService.update(postDto);
+        return "redirect:/";
+    }
+
+    @GetMapping("/post/{id}")
+    public String post(@PathVariable long id,
+                       ModelMap modelMap){
+        modelMap.put("post", postService.findById(id));
+        setCommonParams(modelMap);
+        return "post-view";
+    }
+
+    @PostMapping("/post/{id}/delete")
+    @ResponseStatus(HttpStatus.OK)
+    public void delete(@PathVariable long id){
+
+        postService.delete(id);
+    }
+
 
     private void setCommonParams(ModelMap modelMap) {
         modelMap.put("tags", tagService.findAll());

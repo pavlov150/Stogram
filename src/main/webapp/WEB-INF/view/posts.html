@@ -28,30 +28,37 @@
         }
       }
     </style>
+    <script th:inline="javascript">
+      var contextPath = [[${contextPath}]];
+    </script>
+    <script type="text/javascript"
+            th:src="@{/resources/js/delete-post.js}"></script>
 
   </head>
+
+
   <body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
   <div class="container">
-    <a class="navbar-brand" th:href="@{/}">Spring Blog</a>
+    <img th:src="@{/resources/img/stogram.png}">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
             aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarResponsive">
+    <div class="collapse navbar-collapse text-dark" id="navbarResponsive">
       <ul class="navbar-nav ml-auto">
         <li class="nav-item active">
           <a class="nav-link" th:href="@{/}">Home
             <span class="sr-only">(current)</span>
           </a>
         </li>
-        <li class="nav-item">
+        <li  class="nav-item">
           <a class="nav-link" th:href="@{/post/new}">New Post</a>
         </li>
-        <li class="nav-item">
+        <li  class="nav-item">
           <a class="nav-link" th:href="@{/login}">Login</a>
         </li>
-        <li class="nav-item">
+        <li  class="nav-item">
           <a class="nav-link" th:href="@{/logout}">Logout</a>
         </li>
       </ul>
@@ -65,9 +72,8 @@
 <main role="main">
 
   <section class="jumbotron text-center">
-    <img th:src="@{/img/stogram.png}">
+
     <div class="container">
-      <h1>Login of current user</h1>
       <h1>Login of current user</h1>
 	  <p class="lead text-muted">67 publications  234 followers  12 subscribes</p>
 	  <p>
@@ -89,8 +95,17 @@
               <p class="card-text" th:text="${post.content}"></p>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                  <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+
+
+                  <a th:href="@{/post/{postId}(postId = ${post.postId})}" class="btn btn-primary">View</a>
+                  <a
+                      th:href="@{/post/{postId}/edit(postId = ${post.postId})}"
+                      class="btn btn-warning">Edit</a>
+                  <a
+                     th:onclick="'deletePost(\'' + ${post.postId} + '\');'"
+                     class="btn btn-danger">Delete</a>
+
+
                 </div>
                 <small class="text-muted" th:text="${#temporals.format(post.createdAt, 'dd.MM.yyyy')}"></small>
               </div>
