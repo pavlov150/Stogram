@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:include="fragments.html :: header">
+
+    <title id="pageTitle"></title>
+
+</head>
+
+
+
+<body>
+
+<!-- Navigation -->
+<nav    th:insert="fragments.html :: navigation"
+        class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+
+</nav>
+
+<!-- Page Content -->
+<div class="container">
+
+    <div class="row">
+
+        <!-- Post Content Column -->
+        <div class="col-lg-8">
+
+
+
+                <div class="form-group" th:object="${post}">
+                    <input type="hidden" th:field="*{postId}"/>
+
+                    <h1 class="mt-4" th:text="${post.title}"></h1>
+
+                    <hr>
+
+
+                    <p class="lead" th:text="*{content}"></p>
+                    <hr>
+
+                    <p>
+                    <span th:each="tag: *{tags}">
+                        <a th:text="'#' + ${tag.name}"
+                           th:href="@{/tag/{tagName}(tagName=${tag.name})}"></a>
+                    </span>
+                    </p>
+                </div>
+
+
+            <!-- Comments Form -->
+            <div sec:authorize="hasAnyRole('USER')"  class="card my-4">
+                <h5 class="card-header">Leave a Comment:</h5>
+                <div class="card-body">
+                    <form method="POST" th:action="@{/comment/create}">
+                        <div class="form-group">
+
+                            <input type="hidden" name="postId" th:value="${post.postId}" />
+
+                            <textarea class="form-control"  name="content" rows="3"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Single Comment -->
+            <div th:each="comment: ${post.comments}" class="media mb-4">
+                <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+                <div class="media-body">
+                    <h5 class="mt-0" th:text="${comment.user.username}"></h5>
+                    <span th:text="${comment.content}"></span>
+                </div>
+            </div>
+
+
+        </div>
+
+        <!-- Sidebar Widgets Column -->
+        <div th:insert="fragments.html :: widget" class="col-md-4">
+        </div>
+
+    </div>
+    <!-- /.row -->
+
+</div>
+<!-- /.container -->
+
+<!-- Footer -->
+<footer class="py-5 bg-dark">
+    <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; Your Website 2020</p>
+    </div>
+    <!-- /.container -->
+</footer>
+
+<!-- Bootstrap core JavaScript -->
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>
