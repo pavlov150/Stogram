@@ -7,21 +7,15 @@ import java.util.List;
 @Table
 @Entity
 public class Post {
+
     @Id
     @Column(name="post_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long postId;
-    //@Column
-    private String title;
-    private String content;
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    private String title;
+
+    private String content;
 
     @ManyToMany
     @JoinTable(
@@ -34,21 +28,15 @@ public class Post {
     @OneToMany(mappedBy = "post")
     private List<Comment> comments;
 
-    public List<Comment> getComments() {
-        return comments;
-    }
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 
-    public void setComments(List<Comment> comments) {
-        this.comments = comments;
-    }
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     public Long getPostId() {
         return postId;
@@ -97,5 +85,31 @@ public class Post {
     public void setTags(List<Tag> tags) {
         this.tags = tags;
     }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
+
+
+
+
+
+
+
+
+
 }
 

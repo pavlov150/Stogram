@@ -15,7 +15,7 @@ import run.itlife.repository.UserRepository;
 import run.itlife.utils.SecurityUtils;
 
 import javax.persistence.EntityNotFoundException;
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collections;
@@ -41,7 +41,12 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<Post> listAllPosts() {
-        return postRepository.findAll(Sort.by("createdAt").descending());
+        List<Post> posts =  postRepository.findAll(Sort.by("createdAt").descending());
+        for (Post p : posts){
+            p.getTags().size();
+            p.getComments().size();
+        }
+        return posts;
     }
 
     @Override
@@ -54,6 +59,20 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    public long createPost(PostDto postDto) {
+        Post post = new Post();
+        post.setTitle(postDto.getTitle());
+        post.setContent(postDto.getContent());
+        post.setTags(parseTags(postDto.getTags()));
+        post.setCreatedAt(LocalDateTime.now());
+
+        String username = SecurityUtils.getCurrentUserDetails().getUsername();
+        post.setUser(userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException(username)));
+        postRepository.save(post);
+        return post.getPostId();
+    }						   
+@Override
     public void checkAuthority(long postId) {
         SecurityUtils.checkAuthority(postRepository.findById(postId)
                 .orElseThrow()
@@ -88,8 +107,20 @@ public class PostServiceImpl implements PostService {
         post.getTags().size();
         post.getComments().size();
         return post;
-
     }
+
+    @Override
+    public void delete(long id) {
+        String username = postRepository.findById(id)
+                .orElseThrow()
+                .getUser().getUsername();
+
+        if (!hasAuthority(username) && !hasRole("ADMIN")){
+            throw new AccessDeniedException(ACCESS_DENIED);
+        }
+        postRepository.deleteById(id);
+    }
+
 
     private PostDto toDto(Post post) {
         PostDto dto = new PostDto();
@@ -111,32 +142,8 @@ public class PostServiceImpl implements PostService {
         return dto;
     }
 
-    @Override
-    public long createPost(PostDto postDto) {
-        Post post = new Post();
-        post.setTitle(postDto.getTitle());
-        post.setContent(postDto.getContent());
-        post.setTags(parseTags(postDto.getTags()));
-        post.setCreatedAt(LocalDateTime.now());
 
-        String username = SecurityUtils.getCurrentUserDetails().getUsername();
-        post.setUser(userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException(username)));
-        postRepository.save(post);
-        return post.getPostId();
-    }
 
-    @Override
-    public void delete(long id) {
-        String username = postRepository.findById(id)
-                .orElseThrow()
-                .getUser().getUsername();
-
-        if (!hasAuthority(username) && !hasRole("ADMIN")){
-            throw new AccessDeniedException(ACCESS_DENIED);
-        }
-        postRepository.deleteById(id);
-    }
 
     private List<Tag> parseTags(String tags) {
         if (tags == null)

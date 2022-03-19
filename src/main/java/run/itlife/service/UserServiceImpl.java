@@ -11,7 +11,7 @@ import run.itlife.repository.RoleRepository;
 import run.itlife.repository.UserRepository;
 
 import javax.persistence.EntityExistsException;
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -32,16 +32,6 @@ public class UserServiceImpl implements UserService {
         this.roleRepository = roleRepository;
     }
 
-    @Override
-    public User findByUsername(String username) {
-        return userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException(username));
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return findByUsername(username);
-    }
 
     @Override
     public List<User> findAll() {
@@ -54,7 +44,17 @@ public class UserServiceImpl implements UserService {
         user.setPassword(cryptPasswordEncoder.encode(user.getPassword()));
         user.setRoles(List.of(roleRepository.findByName("USER")));
         user.setCreatedAt(LocalDateTime.now());
-        user.setActive(true);
+        user.setIsActive(true);
         userRepository.save(user);
     }
+    @Override
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException(username));
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return findByUsername(username);
+    }	 
 }

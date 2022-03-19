@@ -49,16 +49,16 @@
       <ul class="navbar-nav ml-auto">
         <li class="nav-item active">
           <a class="nav-link" th:href="@{/}">Home
-            <span class="sr-only">(current)</span>
+
           </a>
         </li>
-        <li  class="nav-item">
+        <li sec:authorize="hasRole('USER')" class="nav-item">
           <a class="nav-link" th:href="@{/post/new}">New Post</a>
         </li>
-        <li  class="nav-item">
+        <li sec:authorize="!isAuthenticated()" class="nav-item">
           <a class="nav-link" th:href="@{/login}">Login</a>
         </li>
-        <li  class="nav-item">
+        <li sec:authorize="isAuthenticated()" class="nav-item">
           <a class="nav-link" th:href="@{/logout}">Logout</a>
         </li>
       </ul>
@@ -98,10 +98,10 @@
 
 
                   <a th:href="@{/post/{postId}(postId = ${post.postId})}" class="btn btn-primary">View</a>
-                  <a
+                  <a  th:if="${#authentication.name == post.user.username}"
                       th:href="@{/post/{postId}/edit(postId = ${post.postId})}"
                       class="btn btn-warning">Edit</a>
-                  <a
+                  <a th:if="${#authentication.name == post.user.username or #authorization.expression('hasRole(''ADMIN'')')}"
                      th:onclick="'deletePost(\'' + ${post.postId} + '\');'"
                      class="btn btn-danger">Delete</a>
 

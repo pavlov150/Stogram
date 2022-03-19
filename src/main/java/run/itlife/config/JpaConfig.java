@@ -1,5 +1,6 @@
 package run.itlife.config;
 
+import org.postgresql.Driver;							 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -21,17 +22,17 @@ import java.util.Properties;
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories("run.itlife.repository")
-@ComponentScan("run.itlife")
+//@ComponentScan("run.itlife")
 public class JpaConfig {
 
     private static final String URL = "jdbc:postgresql://127.0.0.1:5432/Stogram";
     private static final String LOGIN = "postgres";
-    private static final String PASSWORD = "";
+    private static final String PASSWORD = "NtCn0db4";
 
     @Bean
     public DataSource dataSource() {
         SimpleDriverDataSource dataSource = new SimpleDriverDataSource();
-        dataSource.setDriverClass(org.postgresql.Driver.class);
+        dataSource.setDriverClass(Driver.class);
         dataSource.setUrl(URL);
         dataSource.setUsername(LOGIN);
         dataSource.setPassword(PASSWORD);
@@ -59,6 +60,17 @@ public class JpaConfig {
         return transactionManager;
     }
 
+
+    @Bean
+    public TransactionOperations transactionOperations() {
+        return new TransactionTemplate(transactionManager());
+    }
+
+    @Bean
+    public RestOperations restOperations() {
+        return new RestTemplate();
+    }
+
     private final Properties hibernateProperties() {
         Properties hibernateProperties = new Properties();
         hibernateProperties.setProperty(
@@ -67,16 +79,6 @@ public class JpaConfig {
                 "hibernate.dialect", "org.hibernate.dialect.PostgreSQL10Dialect");
 
         return hibernateProperties;
-    }
-
-    @Bean
-    public TransactionOperations transactionOperations(){
-        return new TransactionTemplate(transactionManager());
-    }
-
-    @Bean
-    public RestOperations restOperations(){
-        return new RestTemplate();
     }
 
 }

@@ -5,16 +5,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
+import javax.servlet.ServletContext;
 import run.itlife.dto.PostDto;
 import run.itlife.service.PostService;
 import run.itlife.service.TagService;
 import run.itlife.service.UserService;
 
-import javax.servlet.ServletContext;
 
 @Controller
 public class PostController {
@@ -32,9 +29,10 @@ public class PostController {
         this.context = context;
     }
 
-    @GetMapping
+    @GetMapping("/")
     public String index(ModelMap modelMap) {
         modelMap.put("posts", postService.listAllPosts());
+        modelMap.put("title", "All posts");
         return "posts";
     }
 

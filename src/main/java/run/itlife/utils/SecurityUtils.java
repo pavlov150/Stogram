@@ -5,7 +5,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.security.Security;
 import java.util.Objects;
+import java.util.stream.Collector;		  
 import java.util.stream.Collectors;
 
 public class SecurityUtils {
