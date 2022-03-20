@@ -4,10 +4,7 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-
-import java.security.Security;
 import java.util.Objects;
-import java.util.stream.Collector;		  
 import java.util.stream.Collectors;
 
 //Настройка безопасности
@@ -23,7 +20,6 @@ public class SecurityUtils {
                 .getAuthentication().getPrincipal();
         if (!(principal instanceof  UserDetails))
             throw new AccessDeniedException(ACCESS_DENIED);
-
         return (UserDetails)principal;
     }
 
@@ -36,14 +32,13 @@ public class SecurityUtils {
                 .contains("ROLE_" + role);
     }
 
-    public static boolean hasAuthority(String username){
+    public static boolean hasAuthority(String username) {
         return Objects.equals(username, getCurrentUserDetails().getUsername());
     }
 
     public static void checkAuthority(String username) {
         if (!hasAuthority(username))
             throw new AccessDeniedException(ACCESS_DENIED);
-     //   if(!Objects.equals(username, getCurrentUserDetails().getUsername()))
-     //       throw new AccessDeniedException(ACCESS_DENIED);
     }
+
 }

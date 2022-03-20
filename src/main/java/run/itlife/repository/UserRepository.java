@@ -2,7 +2,6 @@ package run.itlife.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import run.itlife.entity.User;
-
 import java.util.Optional;
 
 //JpaRepository - специфически переносит методы для работы с реляционными БД.

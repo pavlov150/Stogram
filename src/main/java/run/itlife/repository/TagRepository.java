@@ -7,5 +7,4 @@ import run.itlife.entity.Tag;
 //В JpaRepository есть все методы CRUD и много других.
 //В репозиториях мы объявляем метод, не реализуя его и он по неймингу (если его правильно называем)
 //автоматически понимает какой запрос нужно сделать.
-public interface TagRepository extends JpaRepository<Tag, Long> {
-}
+public interface TagRepository extends JpaRepository<Tag, Long> {}

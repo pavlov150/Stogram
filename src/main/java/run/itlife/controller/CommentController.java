@@ -26,4 +26,5 @@ public class CommentController {
         commentService.create(comment);
         return "redirect:/post/" + comment.getPostId();
     }
+
 }

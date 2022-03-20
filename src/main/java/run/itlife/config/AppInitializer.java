@@ -9,8 +9,7 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
 //который ссылается на объект Config и SecurityWebAppInitializer для инициализации WebConfig
 //AppInitializer, MyWebAppInitializer и SecurityWebAppInitializer нужны просто для того,
 //чтобы произошла инициализация. Просто, чтобы наши конфигурации (WebConfig и WebSecurityConfig) подхватились.
-public class AppInitializer extends
-        AbstractAnnotationConfigDispatcherServletInitializer {
+public class AppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
     @Override
     protected Class<?>[] getRootConfigClasses () {

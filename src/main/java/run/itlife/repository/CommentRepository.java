@@ -7,5 +7,4 @@ import run.itlife.entity.Comment;
 //В JpaRepository есть все методы CRUD и много других.
 //В репозиториях мы объявляем метод, не реализуя его и он по неймингу (если его правильно называем)
 //автоматически понимает какой запрос нужно сделать.
-public interface CommentRepository extends JpaRepository<Comment, Long> {
-}
+public interface CommentRepository extends JpaRepository<Comment, Long> {}

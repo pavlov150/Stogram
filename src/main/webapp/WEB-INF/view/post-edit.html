@@ -1,68 +1,47 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<head th:include="fragments.html :: header">
-    <title id="pageTitle">Stogram Edit Post</title>
-</head>
+    <head th:include="fragments.html :: header">
+        <title id="pageTitle">Stogram Edit Post</title>
+    </head>
 
-<!-- Navigation -->
-<body class="text-center">
-<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" th:insert="fragments.html :: navigation">
-</nav>
+    <!-- Navigation -->
+    <body class="text-center">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" th:insert="fragments.html :: navigation"></nav>
 
-<!-- Page Content -->
-<div class="container">
-
-    <div class="row">
-
-        <!-- Post Content Column -->
-        <div class="col-lg-8">
-
-
-            <form method="POST" th:action="@{/post/edit}" th:object="${post}">
-                <div class="form-group">
-                    <input type="hidden" th:field="*{postId}"/>
-
-                    <h1 class="mt-4">
-                        <input th:field="*{title}"
-                               class="form-control form-control-lg mt-4"
-                               type="text" placeholder="Title"/>
-                    </h1>
-
-                    <hr>
-
-                    <textarea th:field="*{content}"
-                              class="form-control" rows="9"></textarea>
-
-                    <hr>
-
-                    <input th:field="*{tags}"
-                           class="form-control" type="text" placeholder="Tags"/>
+        <!-- Page Content -->
+        <br>
+        <br>
+        <div class="container">
+            <div class="row">
+                <!-- Post Content Column -->
+                <div class="col-lg-8">
+                    <form method="POST" th:action="@{/post/edit}" th:object="${post}">
+                        <div class="form-group">
+                            <input type="hidden" th:field="*{postId}"/>
+                            <h1 class="mt-4">
+                                <input th:field="*{title}" class="form-control form-control-lg mt-4" type="text" placeholder="Enter Title"/>
+                            </h1>
+                            <br>
+                            <textarea th:field="*{content}" class="form-control" rows="9" placeholder="Enter Text"></textarea>
+                            <br>
+                            <input th:field="*{tags}" class="form-control" type="text" placeholder="Enter Tags"/>
+                        </div>
+                        <br>
+                        <button type="submit" class="btn btn-primary">Edit Post</button>
+                    </form>
                 </div>
-
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
-
-
+            </div>
+            <!-- /.row -->
         </div>
+        <!-- /.container -->
 
+        <!-- Footer -->
+        <footer th:insert="fragments.html :: footer"></footer>
 
-    </div>
-    <!-- /.row -->
+        <!-- Bootstrap core JavaScript -->
+        <script src="vendor/jquery/jquery.min.js"></script>
+        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-</div>
-<!-- /.container -->
-
-<!-- Footer -->
-<footer th:insert="fragments.html :: footer">
-
-</footer>
-
-<!-- Bootstrap core JavaScript -->
-<script src="vendor/jquery/jquery.min.js"></script>
-<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-</body>
-
+    </body>
 </html>

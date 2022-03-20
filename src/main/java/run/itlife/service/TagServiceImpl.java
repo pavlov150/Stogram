@@ -7,8 +7,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import run.itlife.entity.Tag;
 import run.itlife.repository.TagRepository;
-
-import java.util.Arrays;
 import java.util.List;
 
 //Класс, реализующий интерфейс, который отвечает за логику создания тегов
@@ -31,13 +29,9 @@ public class TagServiceImpl implements TagService {
         tagRepository.save(tag);
     }
 
-  //  @Override
-  //  public void createTags(String... names) {
-   //     Arrays.asList(names).forEach(this::createTag);
-  //  }
-
     @Override
     public List<Tag> findAll() {
         return tagRepository.findAll(Sort.by(Sort.Order.asc("name")));
     }
+
 }

@@ -85,8 +85,6 @@ public class User implements UserDetails {
         return getIsActive();
     }
 
-
-
     public void setUsername(String username) {
         this.username = username;
     }
@@ -111,7 +109,6 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
@@ -119,6 +116,7 @@ public class User implements UserDetails {
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
+
     public List<Post> getPosts() {
         return posts;
     }
@@ -127,7 +125,6 @@ public class User implements UserDetails {
         this.posts = posts;
     }
 
-
     public boolean getIsActive() {
         return isActive;
     }
@@ -135,6 +132,5 @@ public class User implements UserDetails {
     public void setIsActive(boolean active) {
         isActive = active;
     }
-
 
 }

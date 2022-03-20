@@ -46,7 +46,6 @@ public class WebConfig implements ApplicationContextAware, WebMvcConfigurer {
         templateResolver.setSuffix(".html");
         templateResolver.setTemplateMode(TemplateMode.HTML);
         templateResolver.setCacheable(false);
-
         return templateResolver;
     }
 
@@ -57,7 +56,6 @@ public class WebConfig implements ApplicationContextAware, WebMvcConfigurer {
         templateEngine.setEnableSpringELCompiler(true);
         templateEngine.addDialect(new Java8TimeDialect());
         templateEngine.addDialect(new SpringSecurityDialect());
-
         return templateEngine;
     }
 
@@ -74,4 +72,5 @@ public class WebConfig implements ApplicationContextAware, WebMvcConfigurer {
         registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
         registry.addResourceHandler("/webjars/**").addResourceLocations("/webjars/");
     }
+
 }

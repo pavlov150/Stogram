@@ -13,7 +13,6 @@ import run.itlife.repository.PostRepository;
 import run.itlife.repository.TagRepository;
 import run.itlife.repository.UserRepository;
 import run.itlife.utils.SecurityUtils;
-
 import javax.persistence.EntityNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
@@ -21,7 +20,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import static run.itlife.utils.SecurityUtils.*;
 
 //Класс, реализующий интерфейс, который отвечает за логику создания постов, валидацию, изменение и т.д.
@@ -44,7 +42,7 @@ public class PostServiceImpl implements PostService {
     @Override
     public List<Post> listAllPosts() {
         List<Post> posts =  postRepository.findAll(Sort.by("createdAt").descending());
-        for (Post p : posts){
+        for (Post p : posts) {
             p.getTags().size();
             p.getComments().size();
         }
@@ -67,14 +65,14 @@ public class PostServiceImpl implements PostService {
         post.setContent(postDto.getContent());
         post.setTags(parseTags(postDto.getTags()));
         post.setCreatedAt(LocalDateTime.now());
-
         String username = SecurityUtils.getCurrentUserDetails().getUsername();
         post.setUser(userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException(username)));
         postRepository.save(post);
         return post.getPostId();
-    }						   
-@Override
+    }
+
+    @Override
     public void checkAuthority(long postId) {
         SecurityUtils.checkAuthority(postRepository.findById(postId)
                 .orElseThrow()
@@ -90,15 +88,12 @@ public class PostServiceImpl implements PostService {
     public void update(PostDto postDto) {
         checkAuthority(postDto.getPostId());
         Post post = postRepository.findById(postDto.getPostId()).orElseThrow();
-        //TODO апдейт постов не работал из-за отсутствия отрицания ниже
-
         if (!StringUtils.isEmpty(postDto.getTitle()))
             post.setTitle(postDto.getTitle());
         if (!StringUtils.isEmpty(postDto.getContent()))
             post.setContent(postDto.getContent());
         if (!StringUtils.isEmpty(postDto.getTags()))
             post.setTags(parseTags(postDto.getTags()));
-
         postRepository.save(post);
     }
 
@@ -116,13 +111,11 @@ public class PostServiceImpl implements PostService {
         String username = postRepository.findById(id)
                 .orElseThrow()
                 .getUser().getUsername();
-
-        if (!hasAuthority(username) && !hasRole("ADMIN")){
+        if (!hasAuthority(username) && !hasRole("ADMIN")) {
             throw new AccessDeniedException(ACCESS_DENIED);
         }
         postRepository.deleteById(id);
     }
-
 
     private PostDto toDto(Post post) {
         PostDto dto = new PostDto();
@@ -133,25 +126,15 @@ public class PostServiceImpl implements PostService {
                 .stream()
                 .map(Tag::getName)
                 .collect(Collectors.joining(" ")));
-
-      //  dto.setComments(post.getComments().stream()
-      //          .map(this::commentToDto)
-      //          .collect(Collectors.toList()));
-      //  dto.setUsername(post.getUser().getUsername());
-      //  dto.setCreatedAt(post.getCreatedAt());
-       // dto.setUpdatedAt(post.getUpdatedAt());
-
         return dto;
     }
 
-
-
-
     private List<Tag> parseTags(String tags) {
-        if (tags == null)
-            return Collections.emptyList();
-        return Arrays.stream(tags.split(" "))
+        if (tags == null) return Collections.emptyList();
+        return Arrays
+                .stream(tags.split(" "))
                 .map(tagName -> tagRepository.save(new Tag(tagName)))
                 .collect(Collectors.toList());
     }
+
 }

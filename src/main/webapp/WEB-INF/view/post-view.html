@@ -1,93 +1,69 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<head th:include="fragments.html :: header">
-    <title id="pageTitle">Stogram View Post</title>
-</head>
+    <head th:include="fragments.html :: header">
+        <title id="pageTitle">Stogram View Post</title>
+    </head>
 
+    <!-- Navigation -->
+    <body class="text-center">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" th:insert="fragments.html :: navigation"></nav>
 
+        <!-- Page Content -->
+        <br>
+        <br>
+        <div class="container">
+            <div class="row">
+                <!-- Post Content Column -->
+                <div class="col-lg-8">
+                    <div class="form-group" th:object="${post}">
+                        <input type="hidden" th:field="*{postId}"/>
+                        <h1 class="mt-4" th:text="${post.title}"></h1>
+                        <br>
+                        <p class="lead" th:text="*{content}"></p>
+                        <br>
+                        <p>
+                            <span th:each="tag: *{tags}">
+                                <a th:text="'#' + ${tag.name}" th:href="@{/tag/{tagName}(tagName=${tag.name})}"></a>
+                            </span>
+                        </p>
+                    </div>
 
-<!-- Navigation -->
-<body class="text-center">
-<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" th:insert="fragments.html :: navigation">
-</nav>
-
-<!-- Page Content -->
-<div class="container">
-
-    <div class="row">
-
-        <!-- Post Content Column -->
-        <div class="col-lg-8">
-
-
-
-                <div class="form-group" th:object="${post}">
-                    <input type="hidden" th:field="*{postId}"/>
-
-                    <h1 class="mt-4" th:text="${post.title}"></h1>
-
-                    <hr>
-
-
-                    <p class="lead" th:text="*{content}"></p>
-                    <hr>
-
-                    <p>
-                    <span th:each="tag: *{tags}">
-                        <a th:text="'#' + ${tag.name}"
-                           th:href="@{/tag/{tagName}(tagName=${tag.name})}"></a>
-                    </span>
-                    </p>
-                </div>
-
-
-            <!-- Comments Form -->
-            <div sec:authorize="hasAnyRole('USER')"  class="card my-4">
-                <h5 class="card-header">Leave a Comment:</h5>
-                <div class="card-body">
-                    <form method="POST" th:action="@{/comment/create}">
-                        <div class="form-group">
-
-                            <input type="hidden" name="postId" th:value="${post.postId}" />
-
-                            <textarea class="form-control"  name="content" rows="3"></textarea>
+                    <!-- Comments Form -->
+                    <div sec:authorize="hasAnyRole('USER')"  class="card my-4">
+                        <h5 class="card-header">Leave a Comment:</h5>
+                        <div class="card-body">
+                            <form method="POST" th:action="@{/comment/create}">
+                                <div class="form-group">
+                                    <input type="hidden" name="postId" th:value="${post.postId}" />
+                                    <textarea class="form-control"  name="content" rows="3" placeholder="Enter Comment"></textarea>
+                                </div>
+                                <br>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </form>
                         </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </form>
+                    </div>
+
+                    <!-- Single Comment -->
+                    <div th:each="comment: ${post.comments}" class="media mb-4">
+                        <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+                        <div class="media-body">
+                            <h5 class="mt-0" th:text="${comment.user.username}"></h5>
+                            <span th:text="${comment.content}"></span>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-            <!-- Single Comment -->
-            <div th:each="comment: ${post.comments}" class="media mb-4">
-                <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
-                <div class="media-body">
-                    <h5 class="mt-0" th:text="${comment.user.username}"></h5>
-                    <span th:text="${comment.content}"></span>
-                </div>
-            </div>
-
-
+            <!-- /.row -->
         </div>
+        <!-- /.container -->
 
+        <!-- Footer -->
+        <footer th:insert="fragments.html :: footer"></footer>
 
+        <!-- Bootstrap core JavaScript -->
+        <script src="vendor/jquery/jquery.min.js"></script>
+        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    </div>
-    <!-- /.row -->
-
-</div>
-<!-- /.container -->
-
-<!-- Footer -->
-<footer th:insert="fragments.html :: footer">
-
-</footer>
-
-<!-- Bootstrap core JavaScript -->
-<script src="vendor/jquery/jquery.min.js"></script>
-<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-</body>
-
+    </body>
 </html>

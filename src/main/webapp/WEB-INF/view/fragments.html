@@ -1,103 +1,95 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head th:fragment="header">
-    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
-    <meta name="port" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-    <meta name="generator" content="Jekyll v4.1.1">
-       <link th:href="@{/webjars/bootstrap/5.1.3/css/bootstrap.min.css}" rel="stylesheet">
-    <link th:href="@{/resources/css/posts.css}" rel="stylesheet">
-    <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/album/">
-    <title th:include=":: #pageTitle"></title>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-    <style>
-        .bd-placeholder-img {
-            font-size: 1.125rem;
-            text-anchor: middle;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
-
-        @media (min-width: 768px) {
-            .bd-placeholder-img-lg {
-                font-size: 3.5rem;
+    <head th:fragment="header">
+        <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+        <meta name="port" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+        <meta name="generator" content="Jekyll v4.1.1">
+        <link th:href="@{/webjars/bootstrap/5.1.3/css/bootstrap.min.css}" rel="stylesheet">
+        <link th:href="@{/resources/css/posts.css}" rel="stylesheet">
+        <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/album/">
+        <title th:include=":: #pageTitle"></title>
+        <style>
+            .bd-placeholder-img {
+                font-size: 1.125rem;
+                text-anchor: middle;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
             }
-        }
-    </style>
-</head>
-
-<head th:fragment="header-login">
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-    <meta name="generator" content="Jekyll v4.1.1">
-    <title th:include=":: #pageTitle"></title>
-    <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/sign-in/">
-    <link th:href="@{/webjars/bootstrap/5.1.3/css/bootstrap.min.css}" rel="stylesheet">
-    <link th:href="@{/resources/css/signin.css}" rel="stylesheet">
-
-    <style>
-        .bd-placeholder-img {
-            font-size: 1.125rem;
-            text-anchor: middle;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
-
-        @media (min-width: 768px) {
-            .bd-placeholder-img-lg {
-                font-size: 3.5rem;
+            @media (min-width: 768px) {
+                .bd-placeholder-img-lg {
+                    font-size: 3.5rem;
+                }
             }
-        }
-    </style>
+        </style>
+    </head>
 
-</head>
+    <head th:fragment="header-login">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+        <meta name="generator" content="Jekyll v4.1.1">
+        <title th:include=":: #pageTitle"></title>
+        <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/sign-in/">
+        <link th:href="@{/webjars/bootstrap/5.1.3/css/bootstrap.min.css}" rel="stylesheet">
+        <link th:href="@{/resources/css/signin.css}" rel="stylesheet">
+        <style>
+            .bd-placeholder-img {
+                font-size: 1.125rem;
+                text-anchor: middle;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+            }
+            @media (min-width: 768px) {
+                .bd-placeholder-img-lg {
+                    font-size: 3.5rem;
+                }
+            }
+        </style>
+    </head>
 
-<body>
-<!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" th:fragment="navigation">
-<div class="container">
-    <img th:src="@{/resources/img/stogram.png}">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
-            aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse text-dark" id="navbarResponsive">
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
-                <a class="nav-link" th:href="@{/}">Home
+    <body>
+        <!-- Navigation -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" th:fragment="navigation">
+            <div class="container">
+                <img th:src="@{/resources/img/stogram.png}">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                        aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse text-dark" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" th:href="@{/}">Home</a>
+                        </li>
+                        <li sec:authorize="hasRole('USER')" class="nav-item">
+                            <a class="nav-link" th:href="@{/post/new}">New Post</a>
+                        </li>
+                        <li sec:authorize="!isAuthenticated()" class="nav-item">
+                            <a class="nav-link" th:href="@{/login}">Login</a>
+                        </li>
+                        <li sec:authorize="isAuthenticated()" class="nav-item">
+                            <a class="nav-link" th:href="@{/logout}">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
 
-                </a>
-            </li>
-            <li sec:authorize="hasRole('USER')" class="nav-item">
-                <a class="nav-link" th:href="@{/post/new}">New Post</a>
-            </li>
-            <li sec:authorize="!isAuthenticated()" class="nav-item">
-                <a class="nav-link" th:href="@{/login}">Login</a>
-            </li>
-            <li sec:authorize="isAuthenticated()" class="nav-item">
-                <a class="nav-link" th:href="@{/logout}">Logout</a>
-            </li>
-        </ul>
-    </div>
-</div>
-</nav>
-<!-- Footer -->
-<p class="mt-5 mb-3 text-muted" th:fragment="footer-login">© 2022 Stogram</p>
+        <!-- Footer -->
+        <p class="mt-5 mb-3 text-muted" th:fragment="footer-login">©2022 Stogram</p>
+        <footer class="text-muted" th:fragment="footer">
+            <div class="container">
+                <p>© 2022 Stogram</p>
+            </div>
+        </footer>
 
-<footer class="text-muted" th:fragment="footer">
-    <div class="container">
-        <p>© 2022 Stogram</p>
-        <p>Text <a href="#">Text</a> text <a href="#">text</a>.</p>
-    </div>
-</footer>
-
-</body>
+    </body>
 </html>

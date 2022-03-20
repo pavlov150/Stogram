@@ -1,31 +1,26 @@
-<!doctype html>
-<html lang="en">
-  <head th:include="fragments.html :: header-login">
-    <title id="pageTitle">Stogram Login</title>
-  </head>
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
+    <head th:include="fragments.html :: header-login">
+        <title id="pageTitle">Stogram Login</title>
+    </head>
 
-  <!-- Page Content -->
-  <body class="text-center">
-     <form class="form-signin" action="login" method="POST">
-  <h1 class="h3 mb-3 font-weight-normal">Login</h1>
-  <label class="sr-only">Username</label>
-  <input type="text" name="username" class="form-control" placeholder="Username" required="" autofocus="">
-  <label class="sr-only">Password</label>
-  <input type="password" name="password" class="form-control" placeholder="Password" required="">
-  <div class="checkbox mb-3">
-    <label>
-      <input type="checkbox" value="remember-me"> Remember me
-    </label>
-  </div>
-  <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-      <button class="btn btn-lg btn-primary btn-block"
-              onclick="window.location='register'"
-              type="button">Register</button>
-       <p th:insert="fragments.html :: footer-login"></p>
+    <!-- Page Content -->
+    <body class="text-center">
+        <form class="form-signin" action="login" method="POST">
+            <h1 class="h3 mb-3 font-weight-normal">Please Sign-In</h1>
+            <label class="sr-only">Username</label>
+            <input type="text" name="username" class="form-control" placeholder="Username" required="" autofocus="">
+            <br>
+            <label class="sr-only">Password</label>
+            <input type="password" name="password" class="form-control" placeholder="Password" required="">
+            <div class="checkbox mb-4">
+                <label><input type="checkbox" value="remember-me">Remember me</label>
+            </div>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+            <button class="btn btn-lg btn-primary btn-block" onclick="window.location='register'" type="button">Register</button>
+            <p th:insert="fragments.html :: footer-login"></p>
+        </form>
 
-</form>
-
-
-</body>
+    </body>
 </html>

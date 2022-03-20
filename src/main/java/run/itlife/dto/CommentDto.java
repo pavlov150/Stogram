@@ -3,7 +3,6 @@ package run.itlife.dto;
 // Используется в CommentController
 public class CommentDto {
 
-    //REST
     private Long commentId;
 
     private Long postId;
@@ -50,4 +49,5 @@ public class CommentDto {
     public void setUsername(String username) {
         this.username = username;
     }
+
 }

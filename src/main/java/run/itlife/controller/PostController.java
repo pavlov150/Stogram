@@ -52,10 +52,8 @@ public class PostController {
 
     @GetMapping("/post/{postId}/edit")
     @PreAuthorize("hasRole('USER')")
-    public String postEdit(ModelMap modelMap,
-                           @PathVariable long postId) {
+    public String postEdit(ModelMap modelMap, @PathVariable long postId) {
         postService.checkAuthority(postId);
-
         modelMap.put("post", postService.getAsDto(postId));
         setCommonParams(modelMap);
         return "post-edit";
@@ -70,8 +68,7 @@ public class PostController {
     }
 
     @GetMapping("/post/{id}")
-    public String post(@PathVariable long id,
-                       ModelMap modelMap){
+    public String post(@PathVariable long id, ModelMap modelMap){
         modelMap.put("post", postService.findById(id));
         setCommonParams(modelMap);
         return "post-view";
@@ -80,14 +77,13 @@ public class PostController {
     @PostMapping("/post/{id}/delete")
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable long id){
-
         postService.delete(id);
     }
-
 
     private void setCommonParams(ModelMap modelMap) {
         modelMap.put("tags", tagService.findAll());
         modelMap.put("users", userService.findAll());
         modelMap.put("contextPath", context.getContextPath());
     }
+
 }

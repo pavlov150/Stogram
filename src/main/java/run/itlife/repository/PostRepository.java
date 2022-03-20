@@ -7,7 +7,4 @@ import run.itlife.entity.Post;
 //В JpaRepository есть все методы CRUD и много других.
 //В репозиториях мы объявляем метод, не реализуя его и он по неймингу (если его правильно называем)
 //автоматически понимает какой запрос нужно сделать.
-public interface PostRepository extends JpaRepository<Post, Long> {
-
-}
-
+public interface PostRepository extends JpaRepository<Post, Long> {}

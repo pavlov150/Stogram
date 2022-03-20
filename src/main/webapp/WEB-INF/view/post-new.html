@@ -1,68 +1,46 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:include="fragments.html :: header">
-    <title id="pageTitle">Stogram New Post</title>
-</head>
+    <head th:include="fragments.html :: header">
+        <title id="pageTitle">Stogram New Post</title>
+    </head>
 
+    <!-- Navigation -->
+    <body class="text-center">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" th:insert="fragments.html :: navigation"></nav>
 
-
-<!-- Navigation -->
-<body class="text-center">
-<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" th:insert="fragments.html :: navigation">
-</nav>
-
-<!-- Page Content -->
-<div class="container">
-
-    <div class="row">
-
-        <!-- Post Content Column -->
-        <div class="col-lg-8">
-
-
-            <form method="POST" th:action="@{/post/new}">
-                <div class="form-group">
-                    <h1 class="mt-4">
-                        <input name="title"
-                               class="form-control form-control-lg mt-4"
-                               type="text" placeholder="Title"/>
-                    </h1>
-
-                    <hr>
-
-                    <textarea name="content"
-                              class="form-control" rows="9"></textarea>
-
-                    <hr>
-
-                    <input name="tags"
-                           class="form-control"
-                           type="text" placeholder="Tags"/>
+        <!-- Page Content -->
+        <br>
+        <br>
+        <div class="container">
+            <div class="row">
+                <!-- Post Content Column -->
+                <div class="col-lg-8">
+                    <form method="POST" th:action="@{/post/new}">
+                        <div class="form-group">
+                            <h1 class="mt-4">
+                                <input name="title" class="form-control form-control-lg mt-4" type="text" placeholder="Enter Title"/>
+                            </h1>
+                            <br>
+                            <textarea name="content" class="form-control" rows="9" placeholder="Enter Text"></textarea>
+                            <br>
+                            <input name="tags" class="form-control" type="text" placeholder="Enter Tags"/>
+                        </div>
+                        <br>
+                        <button type="submit" class="btn btn-primary">Publish Post</button>
+                    </form>
                 </div>
-
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
-
+            </div>
+            <!-- /.row -->
         </div>
+        <!-- /.container -->
 
-    </div>
-    <!-- /.row -->
+        <!-- Footer -->
+        <footer th:insert="fragments.html :: footer"></footer>
 
-</div>
-<!-- /.container -->
+        <!-- Bootstrap core JavaScript -->
+        <script src="vendor/jquery/jquery.min.js"></script>
+        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-<!-- Footer -->
-<footer th:insert="fragments.html :: footer">
-
-</footer>
-
-<!-- Bootstrap core JavaScript -->
-<script src="vendor/jquery/jquery.min.js"></script>
-<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-</body>
-
+    </body>
 </html>

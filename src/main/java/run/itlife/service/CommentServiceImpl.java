@@ -5,9 +5,7 @@ import org.springframework.stereotype.Service;
 import run.itlife.dto.CommentDto;
 import run.itlife.entity.Comment;
 import run.itlife.repository.CommentRepository;
-
 import java.time.LocalDateTime;
-
 import static run.itlife.utils.SecurityUtils.getCurrentUserDetails;
 
 //Класс, реализующий интерфейс, который отвечает за логику создания комментариев
@@ -38,4 +36,5 @@ public class CommentServiceImpl implements CommentService {
         comment.setCreatedAt(LocalDateTime.now());
         commentRepository.save(comment);
     }
+
 }

@@ -14,8 +14,7 @@ public class PostDto {
     private String tags;
     private String username;
 
-    public PostDto() {
-    }
+    public PostDto() {}
 
     public PostDto(String title) {
         this.title = title;
@@ -95,5 +94,5 @@ public class PostDto {
     public void setComments(List<CommentDto> comments) {
         this.commets = comments;
     }
-}
 
+}

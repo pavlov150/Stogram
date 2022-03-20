@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import run.itlife.entity.User;
 import run.itlife.repository.RoleRepository;
 import run.itlife.repository.UserRepository;
-
 import javax.persistence.EntityExistsException;
 import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
@@ -26,14 +25,11 @@ public class UserServiceImpl implements UserService {
     private final RoleRepository roleRepository;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository,
-                           BCryptPasswordEncoder cryptPasswordEncoder,
-                           RoleRepository roleRepository) {
+    public UserServiceImpl(UserRepository userRepository, BCryptPasswordEncoder cryptPasswordEncoder, RoleRepository roleRepository) {
         this.userRepository = userRepository;
         this.cryptPasswordEncoder = cryptPasswordEncoder;
         this.roleRepository = roleRepository;
     }
-
 
     @Override
     public List<User> findAll() {
@@ -49,6 +45,7 @@ public class UserServiceImpl implements UserService {
         user.setIsActive(true);
         userRepository.save(user);
     }
+
     @Override
     public User findByUsername(String username) {
         return userRepository.findByUsername(username)
@@ -58,5 +55,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return findByUsername(username);
-    }	 
+    }
+
 }
