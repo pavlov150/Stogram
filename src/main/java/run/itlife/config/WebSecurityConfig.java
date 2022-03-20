@@ -13,6 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import run.itlife.service.UserService;
 
+//Чтобы поднять обычный WebConfig, мы используем класс WebSecurityConfig
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -23,10 +24,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private UserService userService;
 
     @Override
+    //Делаем цепочку вызовов. Вызываем методы друг за другом и туда кидаем какую-то конфигурацию
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf()
+        http.csrf()// отключаем проверку на безопасность по csrf-токену
                 .disable()
-                .authorizeRequests()
+                .authorizeRequests() // включаем авторизацию и затем через and отдельно настраиваем форму логина и логаута
                 .and()
                 .formLogin()
                 .loginPage("/login")
@@ -39,8 +41,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
+    //Когда придёт запрос нужно использовать UserService для того, чтобы проверять права пользователя, логин и пароль,
+    //проводить аутентификацию и выдавать им права
     public BCryptPasswordEncoder bCryptPasswordEncoder(){
-        return new BCryptPasswordEncoder();
+        return new BCryptPasswordEncoder(); // хеширует в md5
     }
 
     @Autowired

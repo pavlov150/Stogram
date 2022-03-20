@@ -10,6 +10,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import run.itlife.entity.User;
 import run.itlife.service.UserService;
 
+//UserController, отвечающий за логин юзеров и т.д.
+//Создаем в папке view страницу register.html. Далее необходимо сделать, чтобы мы пересылали данные в контроллер.
+//У UserController будет страница по которой будет идти регистрация. Для этого нужно сделать форму и она уже будет
+//идти на контроллер для регистрации
 @Controller
 public class UserController {
 

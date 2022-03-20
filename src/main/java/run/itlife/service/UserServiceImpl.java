@@ -15,10 +15,12 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 
+//Класс, реализующий интерфейс, который отвечает за логику создания пользователей, поиск пользователей
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
 
+    // сервисы в свою очередь включают репозиторий
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder cryptPasswordEncoder;
     private final RoleRepository roleRepository;

@@ -4,6 +4,7 @@ import run.itlife.dto.PostDto;
 import run.itlife.entity.Post;
 import java.util.List;
 
+//Интерфейс, отвечающий за логику создания постов, валидацию, изменение и т.д.
 public interface PostService {
 
     List<Post> listAllPosts();

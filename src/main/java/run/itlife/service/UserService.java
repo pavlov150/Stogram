@@ -5,6 +5,7 @@ import run.itlife.entity.User;
 
 import java.util.List;
 
+//Интерфейс, отвечающий за логику создания пользователей, поиск пользователей
 public interface UserService extends UserDetailsService {
 
     User findByUsername(String username);

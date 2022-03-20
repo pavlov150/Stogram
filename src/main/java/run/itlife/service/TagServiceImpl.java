@@ -11,11 +11,12 @@ import run.itlife.repository.TagRepository;
 import java.util.Arrays;
 import java.util.List;
 
+//Класс, реализующий интерфейс, который отвечает за логику создания тегов
 @Service
 @Transactional(propagation = Propagation.REQUIRES_NEW)
 public class TagServiceImpl implements TagService {
 
-
+    // сервисы в свою очередь включают репозиторий
     private final TagRepository tagRepository;
 
     @Autowired

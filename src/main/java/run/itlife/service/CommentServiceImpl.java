@@ -10,9 +10,11 @@ import java.time.LocalDateTime;
 
 import static run.itlife.utils.SecurityUtils.getCurrentUserDetails;
 
+//Класс, реализующий интерфейс, который отвечает за логику создания комментариев
 @Service
 public class CommentServiceImpl implements CommentService {
 
+    // сервисы в свою очередь включают репозиторий
     private final CommentRepository commentRepository;
     private final PostService postService;
     private final UserService userService;
@@ -27,6 +29,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
+    //Имя пользователя достаётся во время создания комментария. Реализация в CommentServiceImpl в методе create.
     public void create(CommentDto commentDto) {
         Comment comment = new Comment();
         comment.setPost(postService.findById(commentDto.getPostId()));

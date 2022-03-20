@@ -7,11 +7,12 @@ import org.springframework.transaction.support.TransactionOperations;
 
 import java.util.Arrays;
 
+//Создали без использования интерфейса
 @Service
 @Transactional
 public class TagBatchService {
 
-    private TransactionOperations transactionOperations;
+/*    private TransactionOperations transactionOperations;
     private final TagService tagService;
     @Autowired
     public TagBatchService(TransactionOperations transactionOperations,
@@ -21,12 +22,12 @@ public class TagBatchService {
     }
 
     public void createTags(String... names) {
-        Arrays.asList(names).forEach(tagService::createTag);
+        Arrays.asList(names).forEach(tagService::createTag);*/
 
 /*        transactionOperations.executeWithoutResult(status -> {
             Arrays.asList(names).forEach(tagService::createTag);
         });*/
-    }
+    //}
 
 
 }

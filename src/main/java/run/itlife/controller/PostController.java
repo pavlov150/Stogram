@@ -12,7 +12,7 @@ import run.itlife.service.PostService;
 import run.itlife.service.TagService;
 import run.itlife.service.UserService;
 
-
+//Контроллер для постов (создание, редактирование, удаление)
 @Controller
 public class PostController {
 

@@ -19,6 +19,7 @@ import org.springframework.web.client.RestTemplate;
 import javax.sql.DataSource;
 import java.util.Properties;
 
+//Работаем с Hibernate, используя спецификацию JPA
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories("run.itlife.repository")
@@ -40,7 +41,7 @@ public class JpaConfig {
     }
 
     @Bean
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory() { //он заменяет Hibernate’овский sessionFactory
         LocalContainerEntityManagerFactoryBean em
                 = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource());
@@ -53,7 +54,7 @@ public class JpaConfig {
     }
 
     @Bean
-    public PlatformTransactionManager transactionManager() {
+    public PlatformTransactionManager transactionManager() { // это JPA Transaction Manager - для управления транзакциями
         JpaTransactionManager transactionManager = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());
 
@@ -66,15 +67,15 @@ public class JpaConfig {
         return new TransactionTemplate(transactionManager());
     }
 
-    @Bean
+/*    @Bean
     public RestOperations restOperations() {
         return new RestTemplate();
-    }
+    }*/
 
-    private final Properties hibernateProperties() {
+    private final Properties hibernateProperties() { // необходим для того, чтобы передать ему базовые свойства
         Properties hibernateProperties = new Properties();
         hibernateProperties.setProperty(
-                "hibernate.hbm2ddl.auto", "none");
+                "hibernate.hbm2ddl.auto", "none"); // свойство, которое определяет стратегию, будем ли создавать автоматически таблицы
         hibernateProperties.setProperty(
                 "hibernate.dialect", "org.hibernate.dialect.PostgreSQL10Dialect");
 

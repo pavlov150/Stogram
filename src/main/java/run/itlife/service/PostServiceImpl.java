@@ -24,10 +24,12 @@ import java.util.stream.Collectors;
 
 import static run.itlife.utils.SecurityUtils.*;
 
+//Класс, реализующий интерфейс, который отвечает за логику создания постов, валидацию, изменение и т.д.
 @Service
 @Transactional
 public class PostServiceImpl implements PostService {
 
+    // сервисы в свою очередь включают репозиторий
     private final PostRepository postRepository;
     private final UserRepository userRepository;
     private final TagRepository tagRepository;

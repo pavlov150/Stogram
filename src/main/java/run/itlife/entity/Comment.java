@@ -3,6 +3,7 @@ package run.itlife.entity;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+//Маппинг сущностей с БД
 @Entity
 @Table
 public class Comment {

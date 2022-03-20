@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
+//Маппинг сущностей с БД
 @Table
 @Entity
 public class Post {

@@ -17,6 +17,8 @@ import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
 
+//Собственная конфигурация, которая будет служить конфигурационным классом для нашего приложения (конфигурация через Java-конфиг)
+//Это класс для доступа к контейнеру
 @Configuration
 @EnableWebMvc
 @ComponentScan("run.itlife")
@@ -25,11 +27,17 @@ public class WebConfig implements ApplicationContextAware, WebMvcConfigurer {
     private ApplicationContext applicationContext;
 
     @Override
+    //Контекст приложений (application contexts) основан на понятии фабрик компонентов и реализует прикладные
+    //службы фреймворка. Обычно именно контекст приложений используется в программе
+    //Определяется интерфейсом org.springframework.context.ApplicationContext
+    //Application Context содержит, помимо того, что есть в BeanFactory, дополнительную функциональность в которой
+    //используется для настройки бинов при создании
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         this.applicationContext = applicationContext;
     }
 
     @Bean
+    //Бин, с помощью которого мы говорим, что у нас фактически используется HTML-страница и полное имя передавать не нужно
     public SpringResourceTemplateResolver templateResolver(){
         SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
         templateResolver.setApplicationContext(this.applicationContext);
@@ -61,6 +69,7 @@ public class WebConfig implements ApplicationContextAware, WebMvcConfigurer {
     }
 
     @Override
+    //Маппинг для записей типа "@{/resources" в HTML-странице
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
         registry.addResourceHandler("/webjars/**").addResourceLocations("/webjars/");

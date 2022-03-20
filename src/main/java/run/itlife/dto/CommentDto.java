@@ -1,5 +1,6 @@
 package run.itlife.dto;
 
+// Используется в CommentController
 public class CommentDto {
 
     //REST

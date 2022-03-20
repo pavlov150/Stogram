@@ -3,6 +3,7 @@ package run.itlife.entity;
 import javax.persistence.*;
 import java.util.List;
 
+//Маппинг сущностей с БД
 @Entity
 public class Tag {
 

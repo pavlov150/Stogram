@@ -3,6 +3,9 @@ package run.itlife.dto;
 import java.time.LocalDateTime;
 import java.util.List;
 
+//Класс, который представляет таблицу post в виде Java-класса (dto - dataobject)
+//задача объектов класса содержать некоторые данные по информации в таблице.
+//Каждый объект класса будет соответствовать некоторому посту
 public class PostDto {
 
     private Long postId;

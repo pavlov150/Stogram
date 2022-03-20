@@ -6,7 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import java.util.List;
 
-
+//Маппинг сущностей с БД
 @Entity
 public class Role {
 

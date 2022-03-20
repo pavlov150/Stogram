@@ -9,6 +9,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
+//Маппинг сущностей с БД
 @Entity
 @Table(name="users")
 public class User implements UserDetails {
@@ -91,13 +92,17 @@ public class User implements UserDetails {
     }
 
     @Override
+    //Есть система прав, которая основана на ролях, а есть - на правах. Но в последнее время их слили в одно и то же.
+    //И нам нужно возвращать Authority, но тем не менее мы будем их создавать на основе наших ролей.
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return getRoles().stream()
                 .map(r -> new SimpleGrantedAuthority("ROLE_" + r.getName()))
                 .collect(Collectors.toList());
     }
 
-	@Override		 
+	@Override
+    //Возвращаем объект класса, реализующий UserDetails. Он вернёт нам Entity (он у нас как раз реализует UserDetails),
+    //пароль мы у него посмотрим за счёт вызова метода getPassword() из User.java и getUsername.
     public String getPassword() {
         return password;
     }
