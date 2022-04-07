@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
     <head th:include="fragments.html :: header">
-        <title id="pageTitle">Stogram New Post</title>
+        <title id="pageTitle">Stogram - Новый пост</title>
     </head>
 
     <!-- Navigation -->
@@ -16,18 +16,22 @@
             <div class="row">
                 <!-- Post Content Column -->
                 <div class="col-lg-8">
-                    <form method="POST" th:action="@{/post/new}">
+                    <form method="POST" th:action="@{/post/new}" enctype="multipart/form-data">
                         <div class="form-group">
                             <h1 class="mt-4">
-                                <input name="title" class="form-control form-control-lg mt-4" type="text" placeholder="Enter Title"/>
+                                <input name="title" class="form-control form-control-lg mt-4" type="text" placeholder="Введите заголовок"/>
                             </h1>
                             <br>
-                            <textarea name="content" class="form-control" rows="9" placeholder="Enter Text"></textarea>
+                            <textarea name="content" class="form-control" rows="9" placeholder="Введите текст поста"></textarea>
                             <br>
-                            <input name="tags" class="form-control" type="text" placeholder="Enter Tags"/>
+                            <input name="tags" class="form-control" type="text" placeholder="Введите теги"/>
                         </div>
                         <br>
-                        <button type="submit" class="btn btn-primary">Publish Post</button>
+                            Выберите файл для загрузки: <input type="file" name="file">
+
+                        <br>
+                        <br>
+                        <button type="submit" class="btn btn-primary">Опубликовать пост</button>
                     </form>
                 </div>
             </div>

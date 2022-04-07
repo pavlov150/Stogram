@@ -9,7 +9,8 @@ import run.itlife.entity.Tag;
 import run.itlife.repository.TagRepository;
 import java.util.List;
 
-//Класс, реализующий интерфейс, который отвечает за логику создания тегов
+// Уровень обслуживания
+// Класс, реализующий интерфейс, который отвечает за логику создания тегов
 @Service
 @Transactional(propagation = Propagation.REQUIRES_NEW)
 public class TagServiceImpl implements TagService {

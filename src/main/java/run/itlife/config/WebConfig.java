@@ -6,6 +6,7 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
@@ -25,6 +26,7 @@ import org.thymeleaf.templatemode.TemplateMode;
 public class WebConfig implements ApplicationContextAware, WebMvcConfigurer {
 
     private ApplicationContext applicationContext;
+    private int maxUploadSizeInMb = 50 * 1024 * 1024; // 50 МБ
 
     @Override
     //Контекст приложений (application contexts) основан на понятии фабрик компонентов и реализует прикладные
@@ -63,6 +65,7 @@ public class WebConfig implements ApplicationContextAware, WebMvcConfigurer {
     public void configureViewResolvers(ViewResolverRegistry registry) {
         ThymeleafViewResolver resolver = new ThymeleafViewResolver();
         resolver.setTemplateEngine(templateEngine());
+        resolver.setCharacterEncoding("UTF-8");  // Encoding for Pages
         registry.viewResolver(resolver);
     }
 
@@ -72,5 +75,16 @@ public class WebConfig implements ApplicationContextAware, WebMvcConfigurer {
         registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
         registry.addResourceHandler("/webjars/**").addResourceLocations("/webjars/");
     }
+
+
+    // --- MultipartConfig ---
+    @Bean
+    public CommonsMultipartResolver multipartResolver() {
+        CommonsMultipartResolver cmr = new CommonsMultipartResolver();
+        cmr.setMaxUploadSize(maxUploadSizeInMb * 2);
+        cmr.setMaxUploadSizePerFile(maxUploadSizeInMb); // байты
+        return cmr;
+    }
+    // -----------------------
 
 }

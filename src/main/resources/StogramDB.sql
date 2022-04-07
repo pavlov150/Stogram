@@ -27,8 +27,10 @@ CREATE TABLE user_role (
 
 CREATE TABLE post (
     post_id bigserial PRIMARY KEY,
+    photo varchar(250),
     title varchar(100) NOT NULL,
     content text NOT NULL,
+    test text,
     user_id bigint REFERENCES users(user_id),
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone
@@ -65,9 +67,9 @@ insert into users (username, password, created_at, is_active) values ('user', '$
 insert into user_role values (1, 1);
 insert into user_role values (2, 2);
 
-insert into post (title, content, user_id, created_at, updated_at) values ('Day 1', 'It''s all good!', 2, '2020-12-12 16:10:23'::timestamp, null);
-insert into post (title, content, user_id, created_at, updated_at) values ('Day 2', 'It''s all ok!', 2, '2022-12-12 16:10:23'::timestamp, null);
-insert into post (title, content, user_id, created_at, updated_at) values ('Day 3', 'It''s all bad!', 2, '2020-12-12 16:10:23'::timestamp, null);
+insert into post (photo, title, content, user_id, created_at, updated_at) values ('test.jpg', 'Day 1', 'It''s all good!', 2, '2020-12-12 16:10:23'::timestamp, null);
+insert into post (photo, title, content, user_id, created_at, updated_at) values ('test.jpg', 'Day 2', 'It''s all ok!', 3, '2022-12-12 16:10:23'::timestamp, null);
+insert into post (photo, title, content, user_id, created_at, updated_at) values ('test2.jpg', 'Day 3', 'It''s all bad!', 2, '2020-12-12 16:10:23'::timestamp, null);
 
 insert into comment (post_id, content, created_at) values (2, 'Nice!', current_timestamp);
 insert into comment (post_id, content, created_at) values (1, 'Awesome!', current_timestamp);

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+    <head th:include="fragments.html :: header">
+        <title id="pageTitle">Stogram - Главная</title>
+    </head>
+
+    <script th:inline="javascript">var contextPath = [[${#httpServletRequest.getContextPath()}]];</script>
+    <script type="text/javascript" th:src="@{/resources/js/delete-post.js}"></script>
+
+    <!-- Navigation -->
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" th:insert="fragments.html :: navigation"></nav>
+
+        <!-- Page Content -->
+
+        <main role="main">
+            <div class="row">
+                <div class="row-cols-md-2" th:each="post: ${posts}" th:id="'post-' + ${post.postId}">
+                    <div class="card mb-4 shadow-sm">
+                        <h2 class="text-center" th:text="${post.user.username}"></h2>
+                        <a th:if="${#authentication.name == post.user.username}" th:href="@{/post/{postId}/edit(postId = ${post.postId})}" class="btn btn-warning">...</a>
+                        <a th:if="${#authentication.name == post.user.username or #authorization.expression('hasRole(''ADMIN'')')}" th:onclick="'deletePost(\'' + ${post.postId} + '\');'" class="btn btn-danger">Delete</a>
+                        <a th:href="@{/post/{postId}(postId = ${post.postId})}">
+                            <img th:src="@{'/resources/img/' + ${post.user.username} + '/' + ${post.photo}}" th:width="600px">
+                        </a>
+                        <div class="card-body">
+                            <p class="card-text" th:text="${post.content}"></p>
+                            <!-- Tags -->
+                            <span th:each="tag: *{tags}">
+                                <a th:text="${tag.name}" th:href="@{/tag/{tagName}(tagName=${tag.name})}"></a>
+                            </span>
+                            <!-- Single Comment -->
+                            <br>
+                            <br>
+                            <b>Комментарии:</b>
+                            <br>
+                            <br>
+                            <div th:each="comment: ${post.comments}" class="media mb-4">
+                                <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+                                <div class="media-body">
+                                    <b class="mt-0" th:text="${comment.user.username} + ' ' + ${#temporals.format(comment.createdAt, 'dd.MM.yyyy HH:mm')}"></b>
+                                    <p class="mt-0" th:text="${comment.content}"></p>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <p th:text="${#temporals.format(post.createdAt, 'dd.MM.yyyy')}"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+
+
+
+
+
+
+
+
+
+
+
+        <!-- Footer -->
+        <footer th:insert="fragments.html :: footer"></footer>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script>window.jQuery || document.write('<script src="../assets/js/vendor/jquery.slim.min.js"><\/script>')</script>
+        <script src="../resources/js/bootstrap.bundle.min.js"></script>
+
+    </body>
+</html>

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
     <head th:include="fragments.html :: header">
-        <title id="pageTitle">Stogram Home</title>
+        <title id="pageTitle">Stogram - Главная</title>
     </head>
 
     <script th:inline="javascript">var contextPath = [[${#httpServletRequest.getContextPath()}]];</script>
@@ -13,36 +13,24 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" th:insert="fragments.html :: navigation"></nav>
 
         <!-- Page Content -->
+
         <main role="main">
-            <section class="jumbotron text-center">
-                <div class="container">
-                    <h1>Login of current user</h1>
-                    <p class="lead text-muted">67 publications  234 followers  12 subscribes</p>
-                    <p><a href="#" class="btn btn-primary my-2">Edit profile</a></p>
+            <section class="text-center">
+                <div sec:authorize="isAuthenticated()" class="jumbotron">
+                    <h1 class="display-4" th:text="${user}"></h1>
+                    <p><a href="#" class="btn btn-primary my-2">Редактировать профиль</a></p>
+                    <hr class="my-4">
+                    <p class="lead">67 публикаций   234 подписчиков   12 подписок</p>
                 </div>
             </section>
 
             <div class="row">
                 <div class="col-md-4" th:each="post: ${posts}" th:id="'post-' + ${post.postId}">
-                    <div class="card mb-4 shadow-sm">
-                        <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Photo, video">
-                            <title>Placeholder</title>
-                            <rect width="100%" height="100%" fill="#55595c" />
-                            <text x="50%" y="50%" fill="#eceeef" dy=".3em">Photo, video</text>
-                        </svg>
-                        <div class="card-body">
-                            <p class="card-text" th:text="${post.title}"></p>
-                            <p class="card-text" th:text="${post.content}"></p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <a th:href="@{/post/{postId}(postId = ${post.postId})}" class="btn btn-primary">View</a>
-                                    <a th:if="${#authentication.name == post.user.username}" th:href="@{/post/{postId}/edit(postId = ${post.postId})}" class="btn btn-warning">Edit</a>
-                                    <a th:if="${#authentication.name == post.user.username or #authorization.expression('hasRole(''ADMIN'')')}" th:onclick="'deletePost(\'' + ${post.postId} + '\');'" class="btn btn-danger">Delete</a>
-                                </div>
-                                <small class="text-muted" th:text="${#temporals.format(post.createdAt, 'dd.MM.yyyy')}"></small>
-                            </div>
-                        </div>
+                    <a th:href="@{/posts_detail}">
+                    <div class="card mb-4">
+                        <img th:src="@{'/resources/img/' + ${post.user.username} + '/' + ${post.photo}}">
                     </div>
+                    </a>
                 </div>
             </div>
         </main>

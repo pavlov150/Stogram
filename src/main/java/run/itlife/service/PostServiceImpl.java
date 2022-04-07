@@ -6,6 +6,7 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+import org.thymeleaf.expression.Lists;
 import run.itlife.dto.PostDto;
 import run.itlife.entity.Post;
 import run.itlife.entity.Tag;
@@ -22,7 +23,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import static run.itlife.utils.SecurityUtils.*;
 
-//Класс, реализующий интерфейс, который отвечает за логику создания постов, валидацию, изменение и т.д.
+// Уровень обслуживания
+// Класс, реализующий интерфейс, который отвечает за логику создания постов, валидацию, изменение и т.д.
 @Service
 @Transactional
 public class PostServiceImpl implements PostService {
@@ -61,7 +63,10 @@ public class PostServiceImpl implements PostService {
     @Override
     public long createPost(PostDto postDto) {
         Post post = new Post();
+        post.setPhoto(postDto.getPhoto());
         post.setTitle(postDto.getTitle());
+        post.setTest(postDto.getTest());
+        post.setPhoto(postDto.getPhoto());
         post.setContent(postDto.getContent());
         post.setTags(parseTags(postDto.getTags()));
         post.setCreatedAt(LocalDateTime.now());
@@ -120,9 +125,10 @@ public class PostServiceImpl implements PostService {
     private PostDto toDto(Post post) {
         PostDto dto = new PostDto();
         dto.setPostId(post.getPostId());
+        dto.setPhoto(post.getPhoto());
         dto.setTitle(post.getTitle());
         dto.setContent(post.getContent());
-        dto.setTags(post.getTags()
+        dto.setTags(post.getTags()// TODO пример для получения тегов конкретного поста
                 .stream()
                 .map(Tag::getName)
                 .collect(Collectors.joining(" ")));

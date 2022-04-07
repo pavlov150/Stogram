@@ -1,5 +1,6 @@
 package run.itlife.dto;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -9,6 +10,8 @@ import java.util.List;
 public class PostDto {
 
     private Long postId;
+    private String photo;
+    private String test;
     private String title;
     private String content;
     private String tags;
@@ -21,6 +24,12 @@ public class PostDto {
     }
 
     public PostDto(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
+
+    public PostDto(String photo, String title, String content) {
+        this.photo = photo;
         this.title = title;
         this.content = content;
     }
@@ -95,4 +104,19 @@ public class PostDto {
         this.commets = comments;
     }
 
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
+    public String getTest() {
+        return test;
+    }
+
+    public void setTest(String test) {
+        this.test = test;
+    }
 }

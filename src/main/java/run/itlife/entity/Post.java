@@ -1,5 +1,7 @@
 package run.itlife.entity;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -13,6 +15,11 @@ public class Post {
     @Column(name="post_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long postId;
+
+    @Column(name="photo")
+    private String photo;
+
+    private String test;
 
     private String title;
 
@@ -103,4 +110,19 @@ public class Post {
         this.comments = comments;
     }
 
+    public String getTest() {
+        return test;
+    }
+
+    public void setTest(String test) {
+        this.test = test;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
 }

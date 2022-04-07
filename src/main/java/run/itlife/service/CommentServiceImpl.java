@@ -8,7 +8,8 @@ import run.itlife.repository.CommentRepository;
 import java.time.LocalDateTime;
 import static run.itlife.utils.SecurityUtils.getCurrentUserDetails;
 
-//Класс, реализующий интерфейс, который отвечает за логику создания комментариев
+// Уровень обслуживания
+// Класс, реализующий интерфейс, который отвечает за логику создания комментариев
 @Service
 public class CommentServiceImpl implements CommentService {
 
