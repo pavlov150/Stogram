@@ -5,6 +5,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import run.itlife.entity.Post;
 import run.itlife.entity.Tag;
 import run.itlife.repository.TagRepository;
 import java.util.List;
@@ -34,5 +35,14 @@ public class TagServiceImpl implements TagService {
     public List<Tag> findAll() {
         return tagRepository.findAll(Sort.by(Sort.Order.asc("name")));
     }
+
+   /* @Override
+    public List<Tag> findByTagName(String username, long postId) {
+        List<Tag> tags = tagRepository.findByTagName(username, postId);
+        for (Tag p : tags) {
+            p.getName().length();
+        }
+        return tags;
+    }*/
 
 }

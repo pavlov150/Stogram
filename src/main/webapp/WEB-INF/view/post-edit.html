@@ -19,10 +19,7 @@
                     <form method="POST" th:action="@{/post/edit}" th:object="${post}">
                         <div class="form-group">
                             <input type="hidden" th:field="*{postId}"/>
-                            <img th:src="@{'/resources/img/' + ${post.getUsername()} + '/' + ${post.photo}}" th:height="400px">
-                            <h1 class="mt-4">
-                                <input th:field="*{title}" class="form-control form-control-lg mt-4" type="text" placeholder="Введите заголовок"/>
-                            </h1>
+                            <img th:src="@{'/resources/img/' + ${user} + '/' + ${post.photo}}" th:height="600px">
                             <br>
                             <textarea th:field="*{content}" class="form-control" rows="9" placeholder="Введите текст поста"></textarea>
                             <br>

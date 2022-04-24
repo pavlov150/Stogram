@@ -18,21 +18,21 @@
             <div class="row">
                 <div class="row-cols-md-2" th:each="post: ${posts}" th:id="'post-' + ${post.postId}">
                     <div class="card mb-4 shadow-sm">
-                        <h2 class="text-center" th:text="${post.user.username}"></h2>
-                        <a th:if="${#authentication.name == post.user.username}" th:href="@{/post/{postId}/edit(postId = ${post.postId})}" class="btn btn-warning">...</a>
-                        <a th:if="${#authentication.name == post.user.username or #authorization.expression('hasRole(''ADMIN'')')}" th:onclick="'deletePost(\'' + ${post.postId} + '\');'" class="btn btn-danger">Delete</a>
+                        <h2 class="text-start" th:text="${post.user.username}"></h2>
+                        <a th:if="${#authentication.name == post.user.username}" th:href="@{/post/{postId}/edit(postId = ${post.postId})}" class="btn btn-warning">Изменить</a>
+                        <a th:if="${#authentication.name == post.user.username or #authorization.expression('hasRole(''ADMIN'')')}" th:onclick="'deletePost(\'' + ${post.postId} + '\');'" class="btn btn-danger">Удалить</a>
+
+
                         <a th:href="@{/post/{postId}(postId = ${post.postId})}">
                             <img th:src="@{'/resources/img/' + ${post.user.username} + '/' + ${post.photo}}" th:width="600px">
                         </a>
                         <div class="card-body">
                             <p class="card-text" th:text="${post.content}"></p>
                             <!-- Tags -->
-                            <span th:each="tag: *{tags}">
-                                <a th:text="${tag.name}" th:href="@{/tag/{tagName}(tagName=${tag.name})}"></a>
-                            </span>
+                            <p>
+                                <a th:text="${post.tags}" th:href="@{/tag/{tagName}(tagName=${post.tags})}"></a>
+                            </p>
                             <!-- Single Comment -->
-                            <br>
-                            <br>
                             <b>Комментарии:</b>
                             <br>
                             <br>
@@ -44,11 +44,12 @@
                                 </div>
                             </div>
                             <div class="d-flex justify-content-between align-items-center">
-                                <p th:text="${#temporals.format(post.createdAt, 'dd.MM.yyyy')}"></p>
+                                <p th:text="'Опубликовано ' + ${#temporals.format(post.createdAt, 'dd.MM.yyyy')} + ' г.'"></p>
                             </div>
                         </div>
                     </div>
                 </div>
+
             </div>
         </main>
 
@@ -68,7 +69,7 @@
 
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
         <script>window.jQuery || document.write('<script src="../assets/js/vendor/jquery.slim.min.js"><\/script>')</script>
-        <script src="../resources/js/bootstrap.bundle.min.js"></script>
+
 
     </body>
 </html>

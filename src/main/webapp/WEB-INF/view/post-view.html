@@ -5,8 +5,10 @@
         <title id="pageTitle">Stogram - Просмотр поста</title>
     </head>
 
+    <script th:inline="javascript">var contextPath = [[${#httpServletRequest.getContextPath()}]];</script>
+    <script type="text/javascript" th:src="@{/resources/js/delete-post.js}"></script>
     <!-- Navigation -->
-    <body class="text-center">
+    <body>
         <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" th:insert="fragments.html :: navigation"></nav>
 
         <!-- Page Content -->
@@ -18,19 +20,17 @@
                 <div class="col-lg-8">
                     <div class="form-group" th:object="${post}">
                         <input type="hidden" th:field="*{postId}"/>
+                        <a th:if="${#authentication.name == post.user.username}" th:href="@{/post/{postId}/edit(postId = ${post.postId})}" class="btn btn-warning">Изменить</a>
+                        <a th:if="${#authentication.name == post.user.username or #authorization.expression('hasRole(''ADMIN'')')}" th:href="@{/post/{postId}/delete(postId = ${post.postId})}" class="btn btn-danger">Удалить</a>
                         <img th:src="@{'/resources/img/' + ${post.user.username} + '/' + ${post.photo}}" th:height="600px">
-                        <h1 class="mt-4" th:text="${post.title}"></h1>
-                        <br>
-                        <p class="lead" th:text="*{content}"></p>
-                        <br>
-                        <p>
+                        <p th:text="*{content}"></p>
                             <span th:each="tag: *{tags}">
-                                <a th:text="'#' + ${tag.name}" th:href="@{/tag/{tagName}(tagName=${tag.name})}"></a>
+                                <a th:text="${tag.name}" th:href="@{/tag/{tagName}(tagName=${tag.name})}"></a>
                             </span>
-                        </p>
                     </div>
 
                     <!-- Comments Form -->
+
                     <div sec:authorize="hasAnyRole('USER')"  class="card my-4">
                         <h5 class="card-header">Написать комментарий:</h5>
                         <div class="card-body">
@@ -46,10 +46,14 @@
                     </div>
 
                     <!-- Single Comment -->
+                    <br>
+                    <b>Комментарии:</b>
+                    <br>
+                    <br>
                     <div th:each="comment: ${post.comments}" class="media mb-4">
                         <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
                         <div class="media-body">
-                            <h5 class="mt-0" th:text="${comment.user.username}"></h5>
+                            <b class="mt-0" th:text="${comment.user.username} + ' ' + ${#temporals.format(comment.createdAt, 'dd.MM.yyyy HH:mm')}"></b>
                             <span th:text="${comment.content}"></span>
                         </div>
                     </div>

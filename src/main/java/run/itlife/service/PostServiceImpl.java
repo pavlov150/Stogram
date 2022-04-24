@@ -51,6 +51,8 @@ public class PostServiceImpl implements PostService {
         return posts;
     }
 
+
+
     @Override
     public List<Post> findByUser(String username) {
         List<Post> posts = userRepository.findByUsername(username)
@@ -121,6 +123,18 @@ public class PostServiceImpl implements PostService {
         }
         postRepository.deleteById(id);
     }
+
+    @Override
+    public List<Post> findByUserName(String username) {
+        List<Post> posts = postRepository.findByUserName(username);
+        for (Post p : posts) {
+            p.getTags().size();
+            p.getComments().size();
+        }
+        return posts;
+    }
+
+
 
     private PostDto toDto(Post post) {
         PostDto dto = new PostDto();

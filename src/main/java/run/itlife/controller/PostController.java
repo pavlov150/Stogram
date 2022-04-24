@@ -12,6 +12,8 @@ import javax.servlet.ServletContext;
 
 import org.springframework.web.multipart.MultipartFile;
 import run.itlife.dto.PostDto;
+import run.itlife.entity.Post;
+import run.itlife.repository.PostRepository;
 import run.itlife.service.PostService;
 import run.itlife.service.TagService;
 import run.itlife.service.UserService;
@@ -28,34 +30,34 @@ public class PostController {
     private final UserService userService;
     private final TagService tagService;
     private final ServletContext context;
+    private final PostRepository postRepository;
 
     @Autowired
     ServletContext servletContext;
 
     @Autowired
-    public PostController(PostService postsService, UserService userService, TagService tagService, ServletContext context) {
+    public PostController(PostService postsService, UserService userService, TagService tagService, ServletContext context, PostRepository postRepository) {
         this.postService = postsService;
         this.userService = userService;
         this.tagService = tagService;
         this.context = context;
+        this.postRepository = postRepository;
     }
 
     @GetMapping("/")
     public String index(ModelMap modelMap) {
-        // TODO сделать выборку тегов для каждого поста
-       // modelMap.put("tags", tagService.findAll());
-        modelMap.put("posts", postService.listAllPosts());
+        modelMap.put("posts", postService.findByUser(SecurityContextHolder.getContext().getAuthentication().getName()));
         modelMap.put("user", SecurityContextHolder.getContext().getAuthentication().getName());
-        modelMap.put("title", "All posts");
         return "posts";
     }
 
     @GetMapping("/posts_detail")
     public String posts_detail(ModelMap modelMap) {
-        modelMap.put("posts", postService.listAllPosts());
-        modelMap.put("tags", tagService.findAll()); // TODO доработать вывод тегов по конкретному посту
-        modelMap.put("user", SecurityContextHolder.getContext().getAuthentication().getName());
-        modelMap.put("title", "All posts");
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        modelMap.put("posts", postService.findByUserName(username));
+        //modelMap.put("tags", tagService.findByTagName(username, postId)); // сделать выборку в запросе из БД ИД поста вложенным запросом или из объекта Post?
+        //посмотреть какие запросы в книге
+        modelMap.put("user", username);
         return "posts-detail";
     }
 
@@ -84,7 +86,7 @@ public class PostController {
                 byte[] bytes = file.getBytes();
                 name = filename;
                 final String rootPath = context.getRealPath("/resources/img/" + username); // getRealPath попробовать getContextPath
-                File dir = new File(rootPath + File.separator);
+                File dir = new File(rootPath);
                 if (!dir.exists()) {
                     dir.mkdirs();
                 }
@@ -111,6 +113,7 @@ public class PostController {
     public String postEdit(ModelMap modelMap, @PathVariable long postId) {
         postService.checkAuthority(postId);
         modelMap.put("post", postService.getAsDto(postId));
+        modelMap.put("user", SecurityContextHolder.getContext().getAuthentication().getName());
         setCommonParams(modelMap);
         return "post-edit";
     }

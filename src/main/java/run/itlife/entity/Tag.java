@@ -1,7 +1,9 @@
 package run.itlife.entity;
 
 import javax.persistence.*;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 //Маппинг сущностей с БД
 @Entity
@@ -39,4 +41,8 @@ public class Tag {
         this.name = name;
     }
 
+    @Override
+    public String toString() {
+        return name;
+    }
 }

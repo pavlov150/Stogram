@@ -10,4 +10,6 @@ public interface TagService {
 
     List<Tag> findAll();
 
+    //List<Tag> findByTagName(String username, long postId);
+
 }

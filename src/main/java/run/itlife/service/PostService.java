@@ -2,6 +2,8 @@ package run.itlife.service;
 
 import run.itlife.dto.PostDto;
 import run.itlife.entity.Post;
+import run.itlife.entity.Tag;
+
 import java.util.List;
 
 //Интерфейс, отвечающий за логику создания постов, валидацию, изменение и т.д.
@@ -22,5 +24,9 @@ public interface PostService {
     Post findById(long id);
 
     void delete(long id);
+
+    List<Post> findByUserName(String username);
+
+
 
 }
