@@ -10,12 +10,15 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" th:insert="fragments.html :: navigation"></nav>
 
         <!-- Page Content -->
-
         <main role="main">
             <section class="text-center">
                 <div sec:authorize="isAuthenticated()" class="jumbotron">
+
+                    <img th:src="@{'/resources/img/' + ${user} + '/profile/' + ${userinfo.photo}}" th:height="100px" class="round">
+                    <br>
                     <h1 class="display-4" th:text="${user}"></h1>
-                    <p><a href="#" class="btn btn-primary my-2">Редактировать профиль</a></p>
+
+                    <p><a th:href="@{/profile_edit/{user}(user = ${user})}" class="btn btn-primary my-2">Редактировать профиль</a></p>
                     <hr class="my-4">
                     <p class="lead">67 публикаций   234 подписчиков   12 подписок</p>
                 </div>

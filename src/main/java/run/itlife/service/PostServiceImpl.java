@@ -66,9 +66,6 @@ public class PostServiceImpl implements PostService {
     public long createPost(PostDto postDto) {
         Post post = new Post();
         post.setPhoto(postDto.getPhoto());
-        post.setTitle(postDto.getTitle());
-        post.setTest(postDto.getTest());
-        post.setPhoto(postDto.getPhoto());
         post.setContent(postDto.getContent());
         post.setTags(parseTags(postDto.getTags()));
         post.setCreatedAt(LocalDateTime.now());
@@ -95,8 +92,8 @@ public class PostServiceImpl implements PostService {
     public void update(PostDto postDto) {
         checkAuthority(postDto.getPostId());
         Post post = postRepository.findById(postDto.getPostId()).orElseThrow();
-        if (!StringUtils.isEmpty(postDto.getTitle()))
-            post.setTitle(postDto.getTitle());
+        if (!StringUtils.isEmpty(postDto.getPhoto()))
+            post.setPhoto(postDto.getPhoto());
         if (!StringUtils.isEmpty(postDto.getContent()))
             post.setContent(postDto.getContent());
         if (!StringUtils.isEmpty(postDto.getTags()))
@@ -140,7 +137,6 @@ public class PostServiceImpl implements PostService {
         PostDto dto = new PostDto();
         dto.setPostId(post.getPostId());
         dto.setPhoto(post.getPhoto());
-        dto.setTitle(post.getTitle());
         dto.setContent(post.getContent());
         dto.setTags(post.getTags()// TODO пример для получения тегов конкретного поста
                 .stream()

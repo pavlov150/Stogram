@@ -19,6 +19,12 @@
                 <div class="row-cols-md-2" th:each="post: ${posts}" th:id="'post-' + ${post.postId}">
                     <div class="card mb-4 shadow-sm">
                         <h2 class="text-start" th:text="${post.user.username}"></h2>
+
+
+
+
+
+
                         <a th:if="${#authentication.name == post.user.username}" th:href="@{/post/{postId}/edit(postId = ${post.postId})}" class="btn btn-warning">Изменить</a>
                         <a th:if="${#authentication.name == post.user.username or #authorization.expression('hasRole(''ADMIN'')')}" th:onclick="'deletePost(\'' + ${post.postId} + '\');'" class="btn btn-danger">Удалить</a>
 

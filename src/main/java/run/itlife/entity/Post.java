@@ -19,10 +19,6 @@ public class Post {
     @Column(name="photo")
     private String photo;
 
-    private String test;
-
-    private String title;
-
     private String content;
 
     @ManyToMany
@@ -52,14 +48,6 @@ public class Post {
 
     public void setPostId(Long postId) {
         this.postId = postId;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public String getContent() {
@@ -108,14 +96,6 @@ public class Post {
 
     public void setComments(List<Comment> comments) {
         this.comments = comments;
-    }
-
-    public String getTest() {
-        return test;
-    }
-
-    public void setTest(String test) {
-        this.test = test;
     }
 
     public String getPhoto() {

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+    <head th:include="fragments.html :: header">
+        <title id="pageTitle">Stogram - Редактирование профиля</title>
+    </head>
+
+    <!-- Navigation -->
+    <body class="text-center">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" th:insert="fragments.html :: navigation"></nav>
+
+        <!-- Page Content -->
+        <br>
+        <br>
+        <div class="container">
+            <div class="row">
+                <!-- Post Content Column -->
+                <div class="col-lg-8">
+
+                    <form method="POST" th:action="@{/profile_edit}" th:object="${userinfo}" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <input type="hidden" th:field="*{userId}"/>
+                            <br><br><br>
+                            <img th:src="@{'/resources/img/' + ${user} + '/profile/' + ${userinfo.photo}}" th:height="300px">
+                            <br>
+                            Выберите фото для аватарки: <input type="file" name="file">
+                            <br><br><br>
+                            <input th:field="*{username}" class="form-control" rows="9" placeholder="Введите имя"></input>
+                            <br>
+
+                            <input th:field="*{password}" type="password" class="form-control" rows="9" placeholder="Введите пароль"></input>
+                            <br>
+                            <input th:field="*{surname}" class="form-control" rows="9" placeholder="Введите фамилию"></input>
+                            <br>
+                            <input th:field="*{firstname}" class="form-control" rows="9" placeholder="Введите имя"></input>
+                            <br>
+                            <textarea th:field="*{info}" class="form-control" rows="9" placeholder="Введите информацию о себе"></textarea>
+                            <br>
+                            <input th:field="*{www}" class="form-control" rows="9" placeholder="Введите сайт"></input>
+                            <br>
+                            <input th:field="*{email}" class="form-control" rows="9" placeholder="Введите e-mail"></input>
+                            <br>
+                            <input th:field="*{phone}" class="form-control" rows="9" placeholder="Введите телефон"></input>
+                            <br>
+                            <select class="form-control" rows="9" th:field="*{sex}">
+                                <option th:value="male" th:text="Мужской"></option>
+                                <option th:value="female" th:text="Женский"></option>
+                            </select>
+                            <br>
+
+                        </div>
+                        <br>
+                        <button type="submit" class="btn btn-primary">Изменить данные профиля</button>
+                    </form>
+                </div>
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container -->
+
+        <!-- Footer -->
+        <footer th:insert="fragments.html :: footer"></footer>
+
+        <!-- Bootstrap core JavaScript -->
+        <script src="vendor/jquery/jquery.min.js"></script>
+        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    </body>
+</html>

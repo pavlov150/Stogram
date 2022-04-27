@@ -27,6 +27,12 @@
                 }
             }
         </style>
+        <style>
+            .round {
+                border-radius: 50px; /* Радиус скругления */
+                border: 3px solid greenyellow; /* Параметры рамки */
+            }
+        </style>
     </head>
 
     <head th:fragment="header-login">
@@ -57,22 +63,15 @@
     </head>
 
     <body>
+
         <!-- Navigation -->
         <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" th:fragment="navigation">
             <div class="container">
                 <a th:href="@{/}"><img th:src="@{/resources/img/stogram.png}"></a>
-
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
-                        aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse text-dark" id="navbarResponsive">
+                <div id="navbarResponsive">
                     <ul class="navbar-nav ml-auto">
                         <li sec:authorize="hasRole('USER')" class="nav-item">
                             <a class="nav-link" th:href="@{/post/new}"><img th:src="@{/resources/img/add.jpg}" th:width="30px"></a>
-                        </li>
-                        <li sec:authorize="hasRole('USER')" class="nav-item">
-                            <a class="nav-link" th:href="@{/post/newS3}">Добавить пост (s3)</a>
                         </li>
                         <li sec:authorize="!isAuthenticated()" class="nav-item">
                             <a class="nav-link" th:href="@{/login}">Войти</a>

@@ -12,8 +12,8 @@ import javax.servlet.ServletContext;
 
 import org.springframework.web.multipart.MultipartFile;
 import run.itlife.dto.PostDto;
-import run.itlife.entity.Post;
 import run.itlife.repository.PostRepository;
+import run.itlife.repository.UserRepository;
 import run.itlife.service.PostService;
 import run.itlife.service.TagService;
 import run.itlife.service.UserService;
@@ -30,17 +30,19 @@ public class PostController {
     private final UserService userService;
     private final TagService tagService;
     private final ServletContext context;
+    private final UserRepository userRepository;
     private final PostRepository postRepository;
 
     @Autowired
     ServletContext servletContext;
 
     @Autowired
-    public PostController(PostService postsService, UserService userService, TagService tagService, ServletContext context, PostRepository postRepository) {
+    public PostController(PostService postsService, UserService userService, TagService tagService, ServletContext context, UserRepository userRepository, PostRepository postRepository) {
         this.postService = postsService;
         this.userService = userService;
         this.tagService = tagService;
         this.context = context;
+        this.userRepository = userRepository;
         this.postRepository = postRepository;
     }
 
@@ -48,15 +50,16 @@ public class PostController {
     public String index(ModelMap modelMap) {
         modelMap.put("posts", postService.findByUser(SecurityContextHolder.getContext().getAuthentication().getName()));
         modelMap.put("user", SecurityContextHolder.getContext().getAuthentication().getName());
+        modelMap.put("userinfo", userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
+        //modelMap.put("test", userRepository.findById(4L).orElseThrow().getUsername());
         return "posts";
     }
 
-    @GetMapping("/posts_detail")
+    //@RequestMapping(value = "/posts_detail", method = RequestMethod.GET)
+    @GetMapping("/posts_detail") // такая же запись как и выше, но в другом виде, более современная
     public String posts_detail(ModelMap modelMap) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         modelMap.put("posts", postService.findByUserName(username));
-        //modelMap.put("tags", tagService.findByTagName(username, postId)); // сделать выборку в запросе из БД ИД поста вложенным запросом или из объекта Post?
-        //посмотреть какие запросы в книге
         modelMap.put("user", username);
         return "posts-detail";
     }
@@ -72,37 +75,36 @@ public class PostController {
     @PreAuthorize("hasRole('USER')")
     public String postNew(PostDto postDto, @RequestParam("file") MultipartFile file) {
 
-        String name = null;
         if (!file.isEmpty()) {
             try {
+                // изменение и генерация ноового имени файла
                 BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
                 String filename = encoder.encode(file.getOriginalFilename()).substring(8, 15) + ".jpg";
-                postDto.setPhoto(filename);
-                postService.createPost(postDto);
+
+                // получаем имя юзера для формирования пути сохранения фото
                 final String username = SecurityContextHolder.getContext().getAuthentication().getName();
 
-                // TODO сохранение фото в посте (ссылки на фото) и вывод фото
-                // TODO проанализировать код ниже и улучшить
+                // получение имени фото и сохранение имени фото и данных поста в БД
+                postDto.setPhoto(filename);
+                postService.createPost(postDto);
+
+                // сохранение самого файла в папку юзера
                 byte[] bytes = file.getBytes();
-                name = filename;
-                final String rootPath = context.getRealPath("/resources/img/" + username); // getRealPath попробовать getContextPath
+                final String rootPath = context.getRealPath("/resources/img/" + username);
                 File dir = new File(rootPath);
                 if (!dir.exists()) {
                     dir.mkdirs();
                 }
-                File uploadedFile = new File(dir.getAbsolutePath() + File.separator + name);
+                File uploadedFile = new File(dir.getAbsolutePath() + File.separator + filename);
                 BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(uploadedFile));
                 stream.write(bytes);
                 stream.flush();
                 stream.close();
-               // return "You successfully uploaded file=" + name + " in " + rootPath;
                 return "redirect:/";
             } catch (Exception e) {
                 return "error";
-                //return "You failed to upload " + name + " => " + e.getMessage();
             }
         } else {
-          //  return "You failed to upload " + name + " because the file was empty.";
             return "error";
         }
 
@@ -120,10 +122,41 @@ public class PostController {
 
     @PostMapping("/post/edit")
     @PreAuthorize("hasRole('USER')")
-    public String postEdit(PostDto postDto) {
-        postService.checkAuthority(postDto.getPostId());
-        postService.update(postDto);
-        return "redirect:/";
+    public String postEdit(PostDto postDto, @RequestParam("file") MultipartFile file) {
+
+        if (!file.isEmpty()) {
+            try {
+                // изменение и генерация ноового имени файла
+                BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+                String filename = encoder.encode(file.getOriginalFilename()).substring(8, 15) + ".jpg";
+
+                // получаем имя юзера для формирования пути сохранения фото
+                final String username = SecurityContextHolder.getContext().getAuthentication().getName();
+
+                // получение имени фото и сохранение имени фото и данных поста в БД
+                postService.checkAuthority(postDto.getPostId());
+                postDto.setPhoto(filename);
+                postService.update(postDto);
+
+                // сохранение самого файла в папку юзера
+                byte[] bytes = file.getBytes();
+                final String rootPath = context.getRealPath("/resources/img/" + username);
+                File dir = new File(rootPath);
+                if (!dir.exists()) {
+                    dir.mkdirs();
+                }
+                File uploadedFile = new File(dir.getAbsolutePath() + File.separator + filename);
+                BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(uploadedFile));
+                stream.write(bytes);
+                stream.flush();
+                stream.close();
+                return "redirect:/";
+            } catch (Exception e) {
+                return "error";
+            }
+        } else {
+            return "error";
+        }
     }
 
     @GetMapping("/post/{id}")

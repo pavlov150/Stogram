@@ -10,6 +10,14 @@ CREATE TABLE users (
     user_id bigserial PRIMARY KEY,
     username varchar(150) not null UNIQUE,
     password varchar(150) not null,
+    surname varchar(150),
+    firstname varchar(150),
+    photo varchar(50),
+    info varchar(255),
+    www varchar(150),
+    email varchar(50),
+    phone varchar(20),
+    sex varchar(7),
     created_at timestamp not null,
     is_active boolean
 );
@@ -27,10 +35,8 @@ CREATE TABLE user_role (
 
 CREATE TABLE post (
     post_id bigserial PRIMARY KEY,
-    photo varchar(250),
-    title varchar(100) NOT NULL,
+    photo varchar(15),
     content text NOT NULL,
-    test text,
     user_id bigint REFERENCES users(user_id),
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone
@@ -62,14 +68,14 @@ insert into role values (2, 'USER');
 --пароль 1
 insert into users (username, password, created_at, is_active) values ('admin', '$2a$10$nzYRhy8lWbVTxvr7xnZFqu8BLBP0pNQaTU1hslTl0xoR6yA2CgsbC', now()::timestamp, true);
 insert into users (username, password, created_at, is_active) values ('pavlov89312', '$2a$10$nzYRhy8lWbVTxvr7xnZFqu8BLBP0pNQaTU1hslTl0xoR6yA2CgsbC', now()::timestamp, true);
-insert into users (username, password, created_at, is_active) values ('user', '$2a$10$nzYRhy8lWbVTxvr7xnZFqu8BLBP0pNQaTU1hslTl0xoR6yA2CgsbC', now()::timestamp, true);
+insert into users (username, password, created_at, is_active) values ('user1', '$2a$10$nzYRhy8lWbVTxvr7xnZFqu8BLBP0pNQaTU1hslTl0xoR6yA2CgsbC', now()::timestamp, true);
 
 insert into user_role values (1, 1);
 insert into user_role values (2, 2);
 
-insert into post (photo, title, content, user_id, created_at, updated_at) values ('test.jpg', 'Day 1', 'It''s all good!', 2, '2020-12-12 16:10:23'::timestamp, null);
-insert into post (photo, title, content, user_id, created_at, updated_at) values ('test.jpg', 'Day 2', 'It''s all ok!', 3, '2022-12-12 16:10:23'::timestamp, null);
-insert into post (photo, title, content, user_id, created_at, updated_at) values ('test2.jpg', 'Day 3', 'It''s all bad!', 2, '2020-12-12 16:10:23'::timestamp, null);
+insert into post (photo, content, user_id, created_at, updated_at) values ('test.jpg', 'It''s all good!', 2, '2020-12-12 16:10:23'::timestamp, null);
+insert into post (photo, content, user_id, created_at, updated_at) values ('test.jpg', 'It''s all ok!', 3, '2022-12-12 16:10:23'::timestamp, null);
+insert into post (photo, content, user_id, created_at, updated_at) values ('test2.jpg', 'It''s all bad!', 2, '2020-12-12 16:10:23'::timestamp, null);
 
 insert into comment (post_id, content, created_at) values (2, 'Nice!', current_timestamp);
 insert into comment (post_id, content, created_at) values (1, 'Awesome!', current_timestamp);

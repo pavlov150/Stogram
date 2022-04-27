@@ -16,7 +16,7 @@
             <div class="row">
                 <!-- Post Content Column -->
                 <div class="col-lg-8">
-                    <form method="POST" th:action="@{/post/edit}" th:object="${post}">
+                    <form method="POST" th:action="@{/post/edit}" th:object="${post}" enctype="multipart/form-data">
                         <div class="form-group">
                             <input type="hidden" th:field="*{postId}"/>
                             <img th:src="@{'/resources/img/' + ${user} + '/' + ${post.photo}}" th:height="600px">
@@ -24,12 +24,11 @@
                             <textarea th:field="*{content}" class="form-control" rows="9" placeholder="Введите текст поста"></textarea>
                             <br>
                             <input th:field="*{tags}" class="form-control" type="text" placeholder="Введите теги"/>
-                            <form method="POST" enctype="multipart/form-data"
-                                  action="/upload">
-                                File to upload: <input type="file" name="file"><br /> Name: <input
-                                    type="text" name="name"><br /> <br /> <input type="submit"
-                                                                                 value="Upload"> Press here to upload the file!
-                            </form>
+                            <br>
+                            Выберите новое фото для загрузки: <input type="file" name="file">
+
+                            <br>
+                            <br>
                         </div>
                         <br>
                         <button type="submit" class="btn btn-primary">Отредактировать пост</button>

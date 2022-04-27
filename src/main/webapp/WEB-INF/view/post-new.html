@@ -18,16 +18,13 @@
                 <div class="col-lg-8">
                     <form method="POST" th:action="@{/post/new}" enctype="multipart/form-data">
                         <div class="form-group">
-                            <h1 class="mt-4">
-                                <input name="title" class="form-control form-control-lg mt-4" type="text" placeholder="Введите заголовок"/>
-                            </h1>
                             <br>
                             <textarea name="content" class="form-control" rows="9" placeholder="Введите текст поста"></textarea>
                             <br>
                             <input name="tags" class="form-control" type="text" placeholder="Введите теги"/>
                         </div>
                         <br>
-                            Выберите файл для загрузки: <input type="file" name="file">
+                            Выберите фото для загрузки: <input type="file" name="file">
 
                         <br>
                         <br>
