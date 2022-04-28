@@ -27,6 +27,8 @@ public interface PostService {
 
     List<Post> findByUserName(String username);
 
+    int countPosts(String username);
+
 
 
 }

@@ -17,10 +17,9 @@
                     <img th:src="@{'/resources/img/' + ${user} + '/profile/' + ${userinfo.photo}}" th:height="100px" class="round">
                     <br>
                     <h1 class="display-4" th:text="${user}"></h1>
-
                     <p><a th:href="@{/profile_edit/{user}(user = ${user})}" class="btn btn-primary my-2">Редактировать профиль</a></p>
                     <hr class="my-4">
-                    <p class="lead">67 публикаций   234 подписчиков   12 подписок</p>
+                    <p class="lead" th:text="${countPosts} + ' публикаций   234 подписчиков   12 подписок'"></p>
                 </div>
             </section>
 

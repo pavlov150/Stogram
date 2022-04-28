@@ -22,6 +22,11 @@ public interface PostRepository extends JpaRepository<Post, Long> {
             "GROUP BY p.post_id, u.username;" , nativeQuery = true)
     List<Post> findByUserName(String username);
 
+    @Query(value = "select count(p.post_id) from post p " +
+    "join users u on p.user_id = u.user_id " +
+    "where u.username = ? ", nativeQuery = true)
+    int countPosts(String username);
+
 
 
 

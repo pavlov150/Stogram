@@ -131,6 +131,11 @@ public class PostServiceImpl implements PostService {
         return posts;
     }
 
+    @Override
+    public int countPosts(String username) {
+        int count = postRepository.countPosts(username);
+        return count;
+    }
 
 
     private PostDto toDto(Post post) {

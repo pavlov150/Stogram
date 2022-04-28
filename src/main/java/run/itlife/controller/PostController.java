@@ -51,6 +51,7 @@ public class PostController {
         modelMap.put("posts", postService.findByUser(SecurityContextHolder.getContext().getAuthentication().getName()));
         modelMap.put("user", SecurityContextHolder.getContext().getAuthentication().getName());
         modelMap.put("userinfo", userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
+        modelMap.put("countPosts", postService.countPosts(SecurityContextHolder.getContext().getAuthentication().getName()));
         //modelMap.put("test", userRepository.findById(4L).orElseThrow().getUsername());
         return "posts";
     }
