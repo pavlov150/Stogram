@@ -13,22 +13,14 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" th:insert="fragments.html :: navigation"></nav>
 
         <!-- Page Content -->
-
         <main role="main">
+            <br><br><br><br>
             <div class="row">
                 <div class="row-cols-md-2" th:each="post: ${posts}" th:id="'post-' + ${post.postId}">
                     <div class="card mb-4 shadow-sm">
                         <h2 class="text-start" th:text="${post.user.username}"></h2>
-
-
-
-
-
-
                         <a th:if="${#authentication.name == post.user.username}" th:href="@{/post/{postId}/edit(postId = ${post.postId})}" class="btn btn-warning">Изменить</a>
                         <a th:if="${#authentication.name == post.user.username or #authorization.expression('hasRole(''ADMIN'')')}" th:onclick="'deletePost(\'' + ${post.postId} + '\');'" class="btn btn-danger">Удалить</a>
-
-
                         <a th:href="@{/post/{postId}(postId = ${post.postId})}">
                             <img th:src="@{'/resources/img/' + ${post.user.username} + '/' + ${post.photo}}" th:width="600px">
                         </a>
@@ -39,16 +31,8 @@
                                 <a th:text="${post.tags}" th:href="@{/tag/{tagName}(tagName=${post.tags})}"></a>
                             </p>
                             <!-- Single Comment -->
-                            <b>Комментарии:</b>
-                            <br>
-                            <br>
-                            <div th:each="comment: ${post.comments}" class="media mb-4">
-                                <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
-                                <div class="media-body">
-                                    <b class="mt-0" th:text="${comment.user.username} + ' ' + ${#temporals.format(comment.createdAt, 'dd.MM.yyyy HH:mm')}"></b>
-                                    <p class="mt-0" th:text="${comment.content}"></p>
-                                </div>
-                            </div>
+                            <a th:href="@{/post/{postId}(postId = ${post.postId})}">Посмотреть комментарии</a>
+                            <br><br>
                             <div class="d-flex justify-content-between align-items-center">
                                 <p th:text="'Опубликовано ' + ${#temporals.format(post.createdAt, 'dd.MM.yyyy')} + ' г.'"></p>
                             </div>
@@ -59,23 +43,11 @@
             </div>
         </main>
 
-
-
-
-
-
-
-
-
-
-
-
         <!-- Footer -->
         <footer th:insert="fragments.html :: footer"></footer>
 
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
         <script>window.jQuery || document.write('<script src="../assets/js/vendor/jquery.slim.min.js"><\/script>')</script>
-
 
     </body>
 </html>

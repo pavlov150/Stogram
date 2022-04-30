@@ -29,6 +29,8 @@ public interface PostService {
 
     int countPosts(String username);
 
+    Long countComments(Long id);
+
 
 
 }

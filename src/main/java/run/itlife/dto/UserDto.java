@@ -21,21 +21,6 @@ public class UserDto {
     private String phone;
     private String sex;
 
-    public UserDto() {}
-
-    public UserDto(Long userId, String username, String password, String surname, String firstname, String photo, String info, String www, String email, String phone, String sex) {
-        this.userId = userId;
-        this.username = username;
-        this.password = password;
-        this.surname = surname;
-        this.firstname = firstname;
-        this.photo = photo;
-        this.info = info;
-        this.www = www;
-        this.email = email;
-        this.phone = phone;
-        this.sex = sex;
-    }
 
     public Long getUserId() {
         return userId;

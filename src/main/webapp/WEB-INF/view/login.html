@@ -7,6 +7,7 @@
 
     <!-- Page Content -->
     <body class="text-center">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" th:insert="fragments.html :: navigation"></nav>
         <form class="form-signin" action="login" method="POST">
             <h1 class="h3 mb-3 font-weight-normal">Вход</h1>
             <label class="sr-only">Логин</label>
@@ -18,7 +19,7 @@
                 <label><input type="checkbox" value="remember-me">Запомнить меня</label>
             </div>
             <button class="btn btn-lg btn-primary btn-block" type="submit">Войти</button>
-            <button class="btn btn-lg btn-primary btn-block" onclick="window.location='register'" type="button">Регистрация</button>
+            <button class="btn btn-lg btn-light btn-block" onclick="window.location='register'" type="button">Регистрация</button>
             <p th:insert="fragments.html :: footer-login"></p>
         </form>
 

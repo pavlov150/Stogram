@@ -137,6 +137,13 @@ public class PostServiceImpl implements PostService {
         return count;
     }
 
+    @Override
+    public Long countComments(Long id) {
+        Long countComments = postRepository.countComments(id);
+        if(countComments == null) countComments = 0L;
+        return countComments;
+    }
+
 
     private PostDto toDto(Post post) {
         PostDto dto = new PostDto();

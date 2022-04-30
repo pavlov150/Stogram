@@ -52,6 +52,7 @@ public class PostController {
         modelMap.put("user", SecurityContextHolder.getContext().getAuthentication().getName());
         modelMap.put("userinfo", userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
         modelMap.put("countPosts", postService.countPosts(SecurityContextHolder.getContext().getAuthentication().getName()));
+
         //modelMap.put("test", userRepository.findById(4L).orElseThrow().getUsername());
         return "posts";
     }
@@ -62,6 +63,7 @@ public class PostController {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         modelMap.put("posts", postService.findByUserName(username));
         modelMap.put("user", username);
+
         return "posts-detail";
     }
 
@@ -163,6 +165,7 @@ public class PostController {
     @GetMapping("/post/{id}")
     public String post(@PathVariable long id, ModelMap modelMap){
         modelMap.put("post", postService.findById(id));
+        modelMap.put("countComments", postService.countComments(id));
         setCommonParams(modelMap);
         return "post-view";
     }
