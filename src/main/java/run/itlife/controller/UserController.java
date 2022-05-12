@@ -16,10 +16,15 @@ import run.itlife.entity.User;
 import run.itlife.repository.UserRepository;
 import run.itlife.service.UserService;
 
+import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
+import java.awt.image.BufferedImage;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+
+import static run.itlife.utils.EditImage.cropImage;
+import static run.itlife.utils.EditImage.resizeImage;
 
 //UserController, отвечающий за логин юзеров и т.д.
 //Создаем в папке view страницу register.html. Далее необходимо сделать, чтобы мы пересылали данные в контроллер.
@@ -58,10 +63,7 @@ public class UserController {
     @GetMapping("/profile_edit/{user}")
     @PreAuthorize("hasRole('USER')")
     public String profile_edit(ModelMap modelMap, @PathVariable String user){
-      //  String username = SecurityContextHolder.getContext().getAuthentication().getName();
         modelMap.put("userinfo", userService.findByUsername(user));
-       // modelMap.put("test", userRepository.findById(user).orElseThrow().getUsername());
-        //modelMap.put("user", username);
         return "profile-edit";
     }
 
@@ -84,17 +86,22 @@ public class UserController {
                 userService.update(userDto);
 
                 // сохранение самого файла в папку юзера
-                byte[] bytes = file.getBytes();
-                final String rootPath = context.getRealPath("/resources/img/" + username + "/profile/");
-                File dir = new File(rootPath);
+                File dir = new File(context.getRealPath("/resources/img/" + username + "/profile/"));
                 if (!dir.exists()) {
                     dir.mkdirs();
                 }
-                File uploadedFile = new File(dir.getAbsolutePath() + File.separator + filename);
-                BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(uploadedFile));
-                stream.write(bytes);
-                stream.flush();
-                stream.close();
+
+                // Обрезаем изображение
+                BufferedImage cropImage = null;
+                cropImage = cropImage(file);
+
+                // Уменьшаем или увеличиваем размер до 500
+                BufferedImage resizeImage = null;
+                File newFileJPG = null;
+                resizeImage = resizeImage(cropImage, 500, 500);
+                newFileJPG = new File(dir.getAbsolutePath() + File.separator + filename);
+                ImageIO.write(resizeImage, "jpg", newFileJPG);
+
                 return "redirect:/";
             } catch (Exception e) {
                 return "error";

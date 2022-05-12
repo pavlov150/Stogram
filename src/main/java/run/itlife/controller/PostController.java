@@ -8,6 +8,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+
+import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -18,9 +20,18 @@ import run.itlife.service.PostService;
 import run.itlife.service.TagService;
 import run.itlife.service.UserService;
 
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.awt.image.CropImageFilter;
+import java.awt.image.FilteredImageSource;
+import java.awt.image.ImageFilter;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
+
+import static run.itlife.utils.EditImage.cropImage;
+import static run.itlife.utils.EditImage.resizeImage;
 
 //Контроллер для постов (создание, редактирование, удаление)
 @Controller
@@ -82,7 +93,7 @@ public class PostController {
             try {
                 // изменение и генерация ноового имени файла
                 BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-                String filename = encoder.encode(file.getOriginalFilename()).substring(8, 15) + ".jpg";
+                String filename = encoder.encode(file.getOriginalFilename()).substring(8, 15) + ".jpg"; // TODO переделать имя тк функция генерит слэши и из-за этого ошибка при сохранении фото
 
                 // получаем имя юзера для формирования пути сохранения фото
                 final String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -92,17 +103,22 @@ public class PostController {
                 postService.createPost(postDto);
 
                 // сохранение самого файла в папку юзера
-                byte[] bytes = file.getBytes();
-                final String rootPath = context.getRealPath("/resources/img/" + username);
-                File dir = new File(rootPath);
+                File dir = new File(context.getRealPath("/resources/img/" + username));
                 if (!dir.exists()) {
                     dir.mkdirs();
                 }
-                File uploadedFile = new File(dir.getAbsolutePath() + File.separator + filename);
-                BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(uploadedFile));
-                stream.write(bytes);
-                stream.flush();
-                stream.close();
+
+                // Обрезаем изображение
+                BufferedImage cropImage = null;
+                cropImage = cropImage(file);
+
+                // Уменьшаем или увеличиваем размер до 500
+                BufferedImage resizeImage = null;
+                File newFileJPG = null;
+                resizeImage = resizeImage(cropImage, 500, 500);
+                newFileJPG = new File(dir.getAbsolutePath() + File.separator + filename);
+                ImageIO.write(resizeImage, "jpg", newFileJPG);
+
                 return "redirect:/";
             } catch (Exception e) {
                 return "error";
@@ -142,17 +158,22 @@ public class PostController {
                 postService.update(postDto);
 
                 // сохранение самого файла в папку юзера
-                byte[] bytes = file.getBytes();
-                final String rootPath = context.getRealPath("/resources/img/" + username);
-                File dir = new File(rootPath);
+                File dir = new File(context.getRealPath("/resources/img/" + username));
                 if (!dir.exists()) {
                     dir.mkdirs();
                 }
-                File uploadedFile = new File(dir.getAbsolutePath() + File.separator + filename);
-                BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(uploadedFile));
-                stream.write(bytes);
-                stream.flush();
-                stream.close();
+
+                // Обрезаем изображение
+                BufferedImage cropImage = null;
+                cropImage = cropImage(file);
+
+                // Уменьшаем или увеличиваем размер до 500
+                BufferedImage resizeImage = null;
+                File newFileJPG = null;
+                resizeImage = resizeImage(cropImage, 500, 500);
+                newFileJPG = new File(dir.getAbsolutePath() + File.separator + filename);
+                ImageIO.write(resizeImage, "jpg", newFileJPG);
+
                 return "redirect:/";
             } catch (Exception e) {
                 return "error";

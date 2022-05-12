@@ -12,12 +12,13 @@
     <body>
         <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" th:insert="fragments.html :: navigation"></nav>
 
+
         <!-- Page Content -->
         <main role="main">
             <br><br><br><br>
             <div class="row">
                 <div class="row-cols-md-2" th:each="post: ${posts}" th:id="'post-' + ${post.postId}">
-                    <div class="card mb-4 shadow-sm">
+                    <div>
                         <h2 class="text-start" th:text="${post.user.username}"></h2>
                         <a th:if="${#authentication.name == post.user.username}" th:href="@{/post/{postId}/edit(postId = ${post.postId})}" class="btn btn-warning">Изменить</a>
                         <a th:if="${#authentication.name == post.user.username or #authorization.expression('hasRole(''ADMIN'')')}" th:onclick="'deletePost(\'' + ${post.postId} + '\');'" class="btn btn-danger">Удалить</a>
@@ -36,8 +37,10 @@
                             <div class="d-flex justify-content-between align-items-center">
                                 <p th:text="'Опубликовано ' + ${#temporals.format(post.createdAt, 'dd.MM.yyyy')} + ' г.'"></p>
                             </div>
+                            <hr class="my-4">
                         </div>
                     </div>
+
                 </div>
 
             </div>
