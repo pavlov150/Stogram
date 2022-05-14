@@ -17,18 +17,10 @@ import run.itlife.dto.PostDto;
 import run.itlife.repository.PostRepository;
 import run.itlife.repository.UserRepository;
 import run.itlife.service.PostService;
-import run.itlife.service.TagService;
 import run.itlife.service.UserService;
 
-import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.awt.image.CropImageFilter;
-import java.awt.image.FilteredImageSource;
-import java.awt.image.ImageFilter;
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 
 import static run.itlife.utils.EditImage.cropImage;
 import static run.itlife.utils.EditImage.resizeImage;
@@ -39,7 +31,6 @@ public class PostController {
 
     private final PostService postService;
     private final UserService userService;
-    private final TagService tagService;
     private final ServletContext context;
     private final UserRepository userRepository;
     private final PostRepository postRepository;
@@ -48,10 +39,9 @@ public class PostController {
     ServletContext servletContext;
 
     @Autowired
-    public PostController(PostService postsService, UserService userService, TagService tagService, ServletContext context, UserRepository userRepository, PostRepository postRepository) {
+    public PostController(PostService postsService, UserService userService, ServletContext context, UserRepository userRepository, PostRepository postRepository) {
         this.postService = postsService;
         this.userService = userService;
-        this.tagService = tagService;
         this.context = context;
         this.userRepository = userRepository;
         this.postRepository = postRepository;
@@ -74,6 +64,7 @@ public class PostController {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         modelMap.put("posts", postService.findByUserName(username));
         modelMap.put("user", username);
+        modelMap.put("userinfo", userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
 
         return "posts-detail";
     }
@@ -84,6 +75,14 @@ public class PostController {
         setCommonParams(modelMap);
         return "post-new";
     }
+
+   /* @GetMapping("/fragments")
+    public String view_header(ModelMap modelMap) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        modelMap.put("user", username);
+        modelMap.put("userinfo", userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
+        return "fragments";
+    }*/ //TODO разобраться как вывести иконку в хедере, при редактировании профиля ошибки не было а в post-new и edit ругалось на photo
 
     @PostMapping("/post/new")
     @PreAuthorize("hasRole('USER')")
@@ -103,14 +102,15 @@ public class PostController {
                 postService.createPost(postDto);
 
                 // сохранение самого файла в папку юзера
-                File dir = new File(context.getRealPath("/resources/img/" + username));
+                File dir = new File(context.getRealPath("/resources/img/users/" + username));
                 if (!dir.exists()) {
                     dir.mkdirs();
                 }
 
                 // Обрезаем изображение
                 BufferedImage cropImage = null;
-                cropImage = cropImage(file);
+                BufferedImage originalImage = ImageIO.read(file.getInputStream());
+                cropImage = cropImage(originalImage);
 
                 // Уменьшаем или увеличиваем размер до 500
                 BufferedImage resizeImage = null;
@@ -158,14 +158,15 @@ public class PostController {
                 postService.update(postDto);
 
                 // сохранение самого файла в папку юзера
-                File dir = new File(context.getRealPath("/resources/img/" + username));
+                File dir = new File(context.getRealPath("/resources/img/users/" + username));
                 if (!dir.exists()) {
                     dir.mkdirs();
                 }
 
                 // Обрезаем изображение
                 BufferedImage cropImage = null;
-                cropImage = cropImage(file);
+                BufferedImage originalImage = ImageIO.read(file.getInputStream());
+                cropImage = cropImage(originalImage);
 
                 // Уменьшаем или увеличиваем размер до 500
                 BufferedImage resizeImage = null;
@@ -188,6 +189,10 @@ public class PostController {
         modelMap.put("post", postService.findById(id));
         modelMap.put("countComments", postService.countComments(id));
         setCommonParams(modelMap);
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        modelMap.put("user", username);
+        modelMap.put("userinfo", userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
+
         return "post-view";
     }
 
@@ -198,7 +203,6 @@ public class PostController {
     }
 
     private void setCommonParams(ModelMap modelMap) {
-        modelMap.put("tags", tagService.findAll());
         modelMap.put("users", userService.findAll());
         modelMap.put("contextPath", context.getContextPath());
     }

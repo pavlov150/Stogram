@@ -10,7 +10,7 @@ import java.io.IOException;
 public class EditImage {
 
     // изменение размера картинки
-    public static BufferedImage resizeImage(final Image image, int width, int height) {
+    public static BufferedImage resizeImage(final BufferedImage image, int width, int height) {
         final BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         final Graphics2D graphics2D = bufferedImage.createGraphics();
         graphics2D.setComposite(AlphaComposite.Src);
@@ -22,17 +22,14 @@ public class EditImage {
         return bufferedImage;
     }
 
-    // обрезка картинки
-    public static BufferedImage cropImage(MultipartFile file) throws IOException {
-        // изменение размера и обрезка изображения
+    // обрезка изображения
+    public static BufferedImage cropImage(BufferedImage originalImage) throws IOException {
         BufferedImage cropImage = null;
-        BufferedImage originalImage = ImageIO.read(file.getInputStream());
         float imgWidth = originalImage.getWidth();
         float imgHeight = originalImage.getHeight();
         float imgResize = 0;
         float x = 0;
         float y = 0;
-
         if(imgHeight > imgWidth) {
             imgResize = imgWidth;
             x = 0;

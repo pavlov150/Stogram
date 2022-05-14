@@ -12,7 +12,6 @@ public class PostDto {
     private Long postId;
     private String photo;
     private String content;
-    private String tags;
     private String username;
 
     public PostDto() {}
@@ -46,14 +45,6 @@ public class PostDto {
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    public String getTags() {
-        return tags;
-    }
-
-    public void setTags(String tags) {
-        this.tags = tags;
     }
 
     public String getUsername() {

@@ -13,23 +13,20 @@
         <br>
         <br>
         <div class="container">
-            <br><br><br><br>
+
             <div class="row">
                 <!-- Post Content Column -->
                 <div class="col-lg-8">
                     <form method="POST" th:action="@{/post/new}" enctype="multipart/form-data">
                         <div class="form-group">
                             <br>
-                            <textarea name="content" class="form-control" rows="9" placeholder="Введите текст поста"></textarea>
+                            Выберите фото для загрузки: <input type="file" name="file">
                             <br>
-                            <input name="tags" class="form-control" type="text" placeholder="Введите теги"/>
+                            <br>
+                            <textarea name="content" class="form-control" rows="4" placeholder="Введите текст поста"></textarea>
                         </div>
                         <br>
-                            Выберите фото для загрузки: <input type="file" name="file">
-
-                        <br>
-                        <br>
-                        <button type="submit" class="btn btn-primary">Опубликовать пост</button>
+                        <button type="submit" class="btn btn-outline-dark">Опубликовать пост</button>
                     </form>
                 </div>
             </div>

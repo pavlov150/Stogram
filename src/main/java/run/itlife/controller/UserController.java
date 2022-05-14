@@ -86,14 +86,15 @@ public class UserController {
                 userService.update(userDto);
 
                 // сохранение самого файла в папку юзера
-                File dir = new File(context.getRealPath("/resources/img/" + username + "/profile/"));
+                File dir = new File(context.getRealPath("/resources/img/users/" + username + "/profile/"));
                 if (!dir.exists()) {
                     dir.mkdirs();
                 }
 
                 // Обрезаем изображение
                 BufferedImage cropImage = null;
-                cropImage = cropImage(file);
+                BufferedImage originalImage = ImageIO.read(file.getInputStream());
+                cropImage = cropImage(originalImage);
 
                 // Уменьшаем или увеличиваем размер до 500
                 BufferedImage resizeImage = null;

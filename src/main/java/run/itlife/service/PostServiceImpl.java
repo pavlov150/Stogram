@@ -6,12 +6,9 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-import org.thymeleaf.expression.Lists;
 import run.itlife.dto.PostDto;
 import run.itlife.entity.Post;
-import run.itlife.entity.Tag;
 import run.itlife.repository.PostRepository;
-import run.itlife.repository.TagRepository;
 import run.itlife.repository.UserRepository;
 import run.itlife.utils.SecurityUtils;
 import javax.persistence.EntityNotFoundException;
@@ -32,26 +29,21 @@ public class PostServiceImpl implements PostService {
     // сервисы в свою очередь включают репозиторий
     private final PostRepository postRepository;
     private final UserRepository userRepository;
-    private final TagRepository tagRepository;
 
     @Autowired
-    public PostServiceImpl(PostRepository postRepository, UserRepository userRepository, TagRepository tagRepository) {
+    public PostServiceImpl(PostRepository postRepository, UserRepository userRepository) {
         this.postRepository = postRepository;
         this.userRepository = userRepository;
-        this.tagRepository = tagRepository;
     }
 
     @Override
     public List<Post> listAllPosts() {
         List<Post> posts =  postRepository.findAll(Sort.by("createdAt").descending());
         for (Post p : posts) {
-            p.getTags().size();
             p.getComments().size();
         }
         return posts;
     }
-
-
 
     @Override
     public List<Post> findByUser(String username) {
@@ -67,7 +59,6 @@ public class PostServiceImpl implements PostService {
         Post post = new Post();
         post.setPhoto(postDto.getPhoto());
         post.setContent(postDto.getContent());
-        post.setTags(parseTags(postDto.getTags()));
         post.setCreatedAt(LocalDateTime.now());
         String username = SecurityUtils.getCurrentUserDetails().getUsername();
         post.setUser(userRepository.findByUsername(username)
@@ -96,8 +87,6 @@ public class PostServiceImpl implements PostService {
             post.setPhoto(postDto.getPhoto());
         if (!StringUtils.isEmpty(postDto.getContent()))
             post.setContent(postDto.getContent());
-        if (!StringUtils.isEmpty(postDto.getTags()))
-            post.setTags(parseTags(postDto.getTags()));
         postRepository.save(post);
     }
 
@@ -105,7 +94,6 @@ public class PostServiceImpl implements PostService {
     public Post findById(long id) {
         Post post = postRepository.findById(id)
                 .orElseThrow(EntityNotFoundException::new);
-        post.getTags().size();
         post.getComments().size();
         return post;
     }
@@ -125,7 +113,6 @@ public class PostServiceImpl implements PostService {
     public List<Post> findByUserName(String username) {
         List<Post> posts = postRepository.findByUserName(username);
         for (Post p : posts) {
-            p.getTags().size();
             p.getComments().size();
         }
         return posts;
@@ -150,19 +137,14 @@ public class PostServiceImpl implements PostService {
         dto.setPostId(post.getPostId());
         dto.setPhoto(post.getPhoto());
         dto.setContent(post.getContent());
-        dto.setTags(post.getTags()// TODO пример для получения тегов конкретного поста
+        /*dto.setTags(post.getTags()
                 .stream()
                 .map(Tag::getName)
-                .collect(Collectors.joining(" ")));
+                .collect(Collectors.joining(" ")));*/
+        // TODO пример для получения тегов конкретного поста
         return dto;
     }
 
-    private List<Tag> parseTags(String tags) {
-        if (tags == null) return Collections.emptyList();
-        return Arrays
-                .stream(tags.split(" "))
-                .map(tagName -> tagRepository.save(new Tag(tagName)))
-                .collect(Collectors.toList());
-    }
+
 
 }

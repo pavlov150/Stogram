@@ -21,14 +21,6 @@ public class Post {
 
     private String content;
 
-    @ManyToMany
-    @JoinTable(
-            name = "post_tag",
-            joinColumns = @JoinColumn(name = "post_id"),
-            inverseJoinColumns = @JoinColumn(name = "tag_id")
-    )
-    private List<Tag> tags;
-
     @OneToMany(mappedBy = "post")
     private List<Comment> comments;
 
@@ -72,14 +64,6 @@ public class Post {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
-    }
-
-    public List<Tag> getTags() {
-        return tags;
-    }
-
-    public void setTags(List<Tag> tags) {
-        this.tags = tags;
     }
 
     public User getUser() {

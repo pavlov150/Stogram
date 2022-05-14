@@ -3,7 +3,6 @@ package run.itlife.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import run.itlife.entity.Post;
-import run.itlife.entity.Tag;
 
 import java.util.List;
 
@@ -14,10 +13,8 @@ import java.util.List;
 //автоматически понимает какой запрос нужно сделать.
 public interface PostRepository extends JpaRepository<Post, Long> {
 
-    @Query(value = "select p.*, u.username, string_agg(t.name, '') name_t from post p " +
+    @Query(value = "select p.*, u.username from post p " +
             "join users u on p.user_id = u.user_id " +
-            "join post_tag pt on p.post_id = pt.post_id " +
-            "join tag t on pt.tag_id = t.tag_id " +
             "where u.username = ? " +
             "GROUP BY p.post_id, u.username;" , nativeQuery = true)
     List<Post> findByUserName(String username);

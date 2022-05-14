@@ -9,25 +9,38 @@
     <body>
         <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" th:insert="fragments.html :: navigation"></nav>
 
+
+
         <!-- Page Content -->
         <main role="main">
-            <section class="text-center">
-                <div sec:authorize="isAuthenticated()" class="jumbotron">
 
-                    <img th:src="@{'/resources/img/' + ${user} + '/profile/' + ${userinfo.photo}}" th:height="100px" class="round">
-                    <br>
-                    <h1 class="display-4" th:text="${user}"></h1>
-                    <p><a th:href="@{/profile_edit/{user}(user = ${user})}" class="btn btn-primary my-2">Редактировать профиль</a></p>
-                    <hr class="my-4">
-                    <p class="lead" th:text="${countPosts} + ' публикаций   0 подписчиков   0 подписок'"></p>
+
+
+            <section class="text-center">
+
+
+                <div sec:authorize="isAuthenticated()" class="info-main">
+                    <div class="user-main">
+                        <div class="profile-pic-main"><img th:src="@{'/resources/img/users/' + ${user} + '/profile/' + ${userinfo.photo}}" alt=""></div>
+                        <div>
+                            <p class="username-main" th:text="${user}"></p>
+                            <p class="description-main" th:text="${countPosts} + ' публикаций   0 подписчиков   0 подписок'"></p>
+                        </div>
+                    </div>
+                    <a th:href="@{/profile_edit/{user}(user = ${user})}" class="btn btn-outline-dark">Редактировать профиль</a>
+
+
                 </div>
+
             </section>
+
+
 
             <div class="row">
                 <div class="col-md-4" th:each="post: ${posts}" th:id="'post-' + ${post.postId}">
                     <a th:href="@{/posts_detail}">
                     <div class="card mb-4">
-                        <img th:src="@{'/resources/img/' + ${post.user.username} + '/' + ${post.photo}}">
+                        <img th:src="@{'/resources/img/users/' + ${post.user.username} + '/' + ${post.photo}}">
                     </div>
                     </a>
                 </div>

@@ -51,17 +51,6 @@ CREATE TABLE comment (
     updated_at timestamp without time zone
 );
 
-CREATE TABLE tag (
-    tag_id bigserial PRIMARY KEY,
-    name varchar(50) not null
-);
-
-CREATE TABLE post_tag (
-    post_id bigint REFERENCES post(post_id) ON DELETE CASCADE,
-    tag_id bigint REFERENCES tag(tag_id),
-    PRIMARY KEY (post_id, tag_id)
-);
-
 insert into role values (1, 'ADMIN');
 insert into role values (2, 'USER');
 
@@ -83,20 +72,3 @@ insert into comment (post_id, content, created_at) values (1, 'Excellent!', curr
 insert into comment (post_id, content, created_at) values (1, 'Wonderful!', current_timestamp);
 insert into comment (post_id, content, created_at) values (3, 'Disgusting!', current_timestamp);
 insert into comment (post_id, content, created_at) values (3, 'Atrocious!', current_timestamp);
-
-insert into tag (name) values ('news');
-insert into tag (name) values ('life');
-insert into tag (name) values ('day');
-insert into tag (name) values ('mood');
-insert into tag (name) values ('ideas');
-insert into tag (name) values ('thoughts');
-
-insert into post_tag(post_id, tag_id) values (1, 1);
-insert into post_tag(post_id, tag_id) values (1, 2);
-insert into post_tag(post_id, tag_id) values (2, 3);
-insert into post_tag(post_id, tag_id) values (2, 2);
-insert into post_tag(post_id, tag_id) values (2, 1);
-insert into post_tag(post_id, tag_id) values (2,5);
-insert into post_tag(post_id, tag_id) values (3, 3);
-insert into post_tag(post_id, tag_id) values (3, 2);
-insert into post_tag(post_id, tag_id) values (3, 6);

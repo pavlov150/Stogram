@@ -15,69 +15,148 @@
             $a.on('click', function(event) {
                 event.preventDefault();
                 $a.not(this).next().slideUp(500);
-                $a.not(this).text('Посмотреть все комментарии');
+                $a.not(this).text('Смотреть все комментарии');
                 $(this).next().slideToggle(500);
-                $(this).text($(this).text()=='Скрыть комментарии'?'Посмотреть все комментарии':'Скрыть комментарии');
+                $(this).text($(this).text()=='Скрыть комментарии'?'Смотреть все комментарии':'Скрыть комментарии');
             });
         });
     </script>
     <!-- Navigation -->
     <body>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" th:insert="fragments.html :: navigation"></nav>
+        <nav class="navbar" th:insert="fragments.html :: navigation"></nav>
 
         <!-- Page Content -->
-
-        <br>
-        <br>
-        <div class="container">
-            <br><br><br><br>
-            <div class="row">
-                <!-- Post Content Column -->
-                <div class="col-lg-8">
-                    <div class="form-group" th:object="${post}">
+        <section class="main">
+            <div class="wrapper">
+                <div class="left-col">
+                    <div class="post" th:object="${post}">
                         <input type="hidden" th:field="*{postId}"/>
-                        <a th:if="${#authentication.name == post.user.username}" th:href="@{/post/{postId}/edit(postId = ${post.postId})}" class="btn btn-warning">Изменить</a>
-                        <a th:if="${#authentication.name == post.user.username or #authorization.expression('hasRole(''ADMIN'')')}" th:href="@{/post/{postId}/delete(postId = ${post.postId})}" class="btn btn-danger">Удалить</a>
-                        <img th:src="@{'/resources/img/' + ${post.user.username} + '/' + ${post.photo}}" th:height="600px">
-                        <p th:text="*{content}"></p>
-                            <span th:each="tag: *{tags}">
-                                <a th:text="${tag.name}" th:href="@{/tag/{tagName}(tagName=${tag.name})}"></a>
-                            </span>
-                    </div>
+                        <div class="info">
+                            <div class="user">
+                                <div class="profile-pic"><img th:src="@{'/resources/img/users/' + ${user} + '/profile/' + ${userinfo.photo}}" alt=""></div>
+                                <p class="username" th:text="${post.user.username}"></p>
+                            </div>
+                            <a th:if="${#authentication.name == post.user.username or #authorization.expression('hasRole(''ADMIN'')')}" th:href="@{/post/{postId}/delete(postId = ${post.postId})}"><img th:src="@{/resources/img/nav/delete.png}" class="options" alt=""></a>
+                            <a th:if="${#authentication.name == post.user.username}" th:href="@{/post/{postId}/edit(postId = ${post.postId})}"><img th:src="@{/resources/img/nav/option.png}" class="options" alt=""></a>
+                        </div>
+                            <img th:src="@{'/resources/img/users/' + ${post.user.username} + '/' + ${post.photo}}" class="post-image" alt="">
 
-                    <!-- Single Comment -->
-                    <br>
-                    <div class="view-source">
-                        <a href="#" th:text="'Посмотреть все ' + ${countComments} + ' комментариев'"></a>
-                        <div class="hide">
-                            <br>
-                            <div th:each="comment: ${post.comments}" class="media mb-4">
-                                <div class="media-body">
-                                    <b class="mt-0" th:text="${comment.user.username} + ' ' + ${#temporals.format(comment.createdAt, 'dd.MM.yyyy HH:mm')}"></b>
-                                    <span th:text="${comment.content}"></span>
+                        <div class="post-content">
+                            <div class="reaction-wrapper">
+                                <img th:src="@{/resources/img/nav/like.png}" class="icon" alt="">
+                                <a th:href="@{/post/{postId}(postId = ${post.postId})}"><img th:src="@{/resources/img/nav/comment.png}" class="icon" alt=""></a>
+                                <img th:src="@{/resources/img/nav/send.png}" class="icon" alt="">
+                                <img th:src="@{/resources/img/nav/save.png}" class="save icon" alt="">
+                            </div>
+                            <p class="likes">1,012 likes</p>
+                            <p class="description"><span th:text="${post.user.username}"></span></p>
+                            <p class="description" th:text="${post.content}"></p>
+
+                            <!-- Comments -->
+                            <div class="view-source comments-view">
+                                <a href="#" class="description" th:text="'Смотреть все комментарии (' + ${countComments} + ')'"></a>
+                                <div class="hide">
+
+                                    <div th:each="comment: ${post.comments}">
+                                        <div class="media-body">
+                                            <b class="description" th:text="${comment.user.username} + ' ' + ${#temporals.format(comment.createdAt, 'dd.MM.yyyy HH:mm')}"></b>
+                                            <span class="description" th:text="${comment.content}"></span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
+
+                            <p class="post-time" th:text="${#temporals.format(post.createdAt, 'dd.MM.yyyy')} + ' г.'"></p>
                         </div>
-                    </div>
 
-                    <!-- Comments Form -->
-                    <br>
-                    <div sec:authorize="hasAnyRole('USER')">
-                        <form method="POST" th:action="@{/comment/create}">
-                            <div class="form-group">
-                                <input type="hidden" name="postId" th:value="${post.postId}" />
-                                <textarea class="form-control"  name="content" rows="3" placeholder="Написать комментарий"></textarea>
-                            </div>
-                            <br>
-                            <button type="submit" class="btn btn-primary">-></button>
-                        </form>
-                    </div>
+                        <!-- Comments Form -->
+                        <div sec:authorize="hasAnyRole('USER')">
+                            <form class="comment-wrapper" method="POST" th:action="@{/comment/create}">
+                                    <input type="hidden" name="postId" th:value="${post.postId}" />
+                                <div class="info-view">
+                                    <div class="user">
+                                        <div class="profile-pic"><img th:src="@{'/resources/img/users/' + ${user} + '/profile/' + ${userinfo.photo}}" alt=""></div>
+                                    </div>
+                                </div>
+                                    <input type="text" class="comment-box description" name="content"  th:placeholder="'Комментировать как ' + ${user} + '...'">
+                                <br>
+                                <button class="comment-btn">Опубликовать</button>
+                            </form>
+                        </div>
 
+
+
+
+
+
+                    </div>
+                </div>
+
+                <div class="right-col">
+                    <div class="profile-card">
+                        <div class="profile-pic">
+                            <img th:src="@{'/resources/img/users/' + ${user} + '/profile/' + ${userinfo.photo}}" alt="">
+                        </div>
+                        <div>
+                            <p class="username" th:text="${user}"></p>
+                            <p class="sub-text">ФИО</p>
+                        </div>
+                        <button class="action-btn">switch</button>
+                    </div>
+                    <p class="suggestion-text">Suggestions for you</p>
+                    <div class="profile-card">
+                        <div class="profile-pic">
+                            <img th:src="@{/resources/img/nav/cover 9.png}" alt="">
+                        </div>
+                        <div>
+                            <p class="username">modern_web_channel</p>
+                            <p class="sub-text">followed bu user</p>
+                        </div>
+                        <button class="action-btn">follow</button>
+                    </div>
+                    <div class="profile-card">
+                        <div class="profile-pic">
+                            <img th:src="@{/resources/img/nav/cover 10.png}" alt="">
+                        </div>
+                        <div>
+                            <p class="username">modern_web_channel</p>
+                            <p class="sub-text">followed bu user</p>
+                        </div>
+                        <button class="action-btn">follow</button>
+                    </div>
+                    <div class="profile-card">
+                        <div class="profile-pic">
+                            <img th:src="@{/resources/img/nav/cover 11.png}" alt="">
+                        </div>
+                        <div>
+                            <p class="username">modern_web_channel</p>
+                            <p class="sub-text">followed bu user</p>
+                        </div>
+                        <button class="action-btn">follow</button>
+                    </div>
+                    <div class="profile-card">
+                        <div class="profile-pic">
+                            <img th:src="@{/resources/img/nav/cover 12.png}" alt="">
+                        </div>
+                        <div>
+                            <p class="username">modern_web_channel</p>
+                            <p class="sub-text">followed bu user</p>
+                        </div>
+                        <button class="action-btn">follow</button>
+                    </div>
+                    <div class="profile-card">
+                        <div class="profile-pic">
+                            <img th:src="@{/resources/img/nav/cover 13.png}" alt="">
+                        </div>
+                        <div>
+                            <p class="username">modern_web_channel</p>
+                            <p class="sub-text">followed bu user</p>
+                        </div>
+                        <button class="action-btn">follow</button>
+                    </div>
                 </div>
             </div>
-            <!-- /.row -->
-        </div>
-        <!-- /.container -->
+        </section>
 
         <!-- Footer -->
         <footer th:insert="fragments.html :: footer"></footer>

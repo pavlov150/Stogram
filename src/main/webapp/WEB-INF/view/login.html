@@ -1,27 +1,71 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-    <head th:include="fragments.html :: header-login">
-        <title id="pageTitle">Stogram - Вход</title>
+    <head>
+        <title>Stogram - Вход</title>
+        <link th:href="@{/resources/css/login.css}" rel="stylesheet">
     </head>
 
     <!-- Page Content -->
-    <body class="text-center">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" th:insert="fragments.html :: navigation"></nav>
-        <form class="form-signin" action="login" method="POST">
-            <h1 class="h3 mb-3 font-weight-normal">Вход</h1>
-            <label class="sr-only">Логин</label>
-            <input type="text" name="username" class="form-control" placeholder="Логин" required="" autofocus="">
-            <br>
-            <label class="sr-only">Пароль</label>
-            <input type="password" name="password" class="form-control" placeholder="Пароль" required="">
-            <div class="checkbox mb-4">
-                <label><input type="checkbox" value="remember-me">Запомнить меня</label>
-            </div>
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Войти</button>
-            <button class="btn btn-lg btn-light btn-block" onclick="window.location='register'" type="button">Регистрация</button>
-            <p th:insert="fragments.html :: footer-login"></p>
-        </form>
+    <div class="wrapper">
+        <div class="header">
+            <div class="top">
+                <div class="logo">
+                    <img th:src="@{/resources/img/nav/stogram.png}" alt="instagram" style="width: 120px;">
+                </div>
 
-    </body>
+                <form action="login" method="POST">
+                <div class="form">
+                    <div class="input_field">
+                        <input type="text" name="username" placeholder="Телефоный номер, имя пользователя или email" class="input">
+                    </div>
+                    <div class="input_field">
+                        <input type="password" name="password" placeholder="Пароль" class="input">
+                    </div>
+                    <button class="btn" type="submit">Войти</button>
+                </div>
+                </form>
+
+                <div class="or">
+                    <div class="line"></div>
+                    <p>ИЛИ</p>
+                    <div class="line"></div>
+                </div>
+                <div class="dif">
+                    <div class="fb">
+                        <img th:src="@{/resources/img/login/facebook.png}" alt="facebook">
+                        <p>Войти через Facebook</p>
+                    </div>
+                    <div class="forgot">
+                        <a href="#">Забыли пароль?</a>
+                    </div>
+                </div>
+            </div>
+            <div class="signup">
+                <p>У меня нет аккаунта? <a onclick="window.location='register'" href="#">Регистрация</a></p>
+            </div>
+            <div class="apps">
+                <p>Скачать приложение</p>
+                <div class="icons">
+                    <a href="#"><img th:src="@{/resources/img/login/appstore.png}" alt="appstore"></a>
+                    <a href="#"><img th:src="@{/resources/img/login/googleplay.png}" alt="googleplay"></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="links">
+                <ul>
+                    <li><a href="#">О НАС</a></li>
+                    <li><a href="#">ПОДДЕРЖКА</a></li>
+                    <li><a href="#">API</a></li>
+                    <li><a href="#">КОНФИДЕНЦИАЛЬНОСТЬ</a></li>
+                    <li><a href="#">УСЛОВИЯ</a></li>
+                </ul>
+            </div>
+            <!-- Footer -->
+            <div class="copyright">
+                <p th:insert="fragments.html :: footer-login"></p>
+            </div>
+        </div>
+    </div>
 </html>

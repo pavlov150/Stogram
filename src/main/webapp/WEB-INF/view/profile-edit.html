@@ -20,11 +20,11 @@
                     <form method="POST" th:action="@{/profile_edit}" th:object="${userinfo}" enctype="multipart/form-data">
                         <div class="form-group">
                             <input type="hidden" th:field="*{userId}"/>
-                            <br><br><br>
-                            <img th:src="@{'/resources/img/' + ${user} + '/profile/' + ${userinfo.photo}}" th:height="300px">
                             <br>
+                            <img th:src="@{'/resources/img/users/' + ${user} + '/profile/' + ${userinfo.photo}}" th:height="300px">
+                            <br><br>
                             Выберите фото для аватарки: <input type="file" name="file">
-                            <br><br><br>
+                            <br><br>
                             <input th:field="*{username}" class="form-control" rows="9" placeholder="Введите имя"></input>
                             <br>
 
@@ -49,8 +49,7 @@
                             <br>
 
                         </div>
-                        <br>
-                        <button type="submit" class="btn btn-primary">Изменить данные профиля</button>
+                        <button type="submit" class="btn btn-outline-dark">Изменить данные профиля</button>
                     </form>
                 </div>
             </div>
