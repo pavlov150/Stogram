@@ -65,6 +65,7 @@ public class PostController {
         modelMap.put("posts", postService.findByUserName(username));
         modelMap.put("user", username);
         modelMap.put("userinfo", userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
+     //   modelMap.put("countComments", postService.countComments(id));
 
         return "posts-detail";
     }
@@ -82,7 +83,7 @@ public class PostController {
         modelMap.put("user", username);
         modelMap.put("userinfo", userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
         return "fragments";
-    }*/ //TODO разобраться как вывести иконку в хедере, при редактировании профиля ошибки не было а в post-new и edit ругалось на photo
+    }*/
 
     @PostMapping("/post/new")
     @PreAuthorize("hasRole('USER')")
@@ -92,7 +93,7 @@ public class PostController {
             try {
                 // изменение и генерация ноового имени файла
                 BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-                String filename = encoder.encode(file.getOriginalFilename()).substring(8, 15) + ".jpg"; // TODO переделать имя тк функция генерит слэши и из-за этого ошибка при сохранении фото
+                String filename = encoder.encode(file.getOriginalFilename()).substring(8, 15) + ".jpg";
 
                 // получаем имя юзера для формирования пути сохранения фото
                 final String username = SecurityContextHolder.getContext().getAuthentication().getName();

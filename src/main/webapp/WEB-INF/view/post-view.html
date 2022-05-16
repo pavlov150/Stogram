@@ -44,7 +44,7 @@
                         <div class="post-content">
                             <div class="reaction-wrapper">
                                 <img th:src="@{/resources/img/nav/like.png}" class="icon" alt="">
-                                <a th:href="@{/post/{postId}(postId = ${post.postId})}"><img th:src="@{/resources/img/nav/comment.png}" class="icon" alt=""></a>
+                                <a th:href="@{/comment/{postId}(postId = ${post.postId})}"><img th:src="@{/resources/img/nav/comment.png}" class="icon" alt=""></a>
                                 <img th:src="@{/resources/img/nav/send.png}" class="icon" alt="">
                                 <img th:src="@{/resources/img/nav/save.png}" class="save icon" alt="">
                             </div>
@@ -54,13 +54,24 @@
 
                             <!-- Comments -->
                             <div class="view-source comments-view">
-                                <a href="#" class="description" th:text="'Смотреть все комментарии (' + ${countComments} + ')'"></a>
+                                <a href="#" class="description comments" th:text="'Смотреть все комментарии (' + ${countComments} + ')'"></a>
                                 <div class="hide">
-
                                     <div th:each="comment: ${post.comments}">
                                         <div class="media-body">
-                                            <b class="description" th:text="${comment.user.username} + ' ' + ${#temporals.format(comment.createdAt, 'dd.MM.yyyy HH:mm')}"></b>
-                                            <span class="description" th:text="${comment.content}"></span>
+                                            <div class="info-comments">
+                                                <div class="user-comments">
+                                                    <div class="profile-pic-comments"><img th:src="@{'/resources/img/users/' + ${comment.user.username} + '/profile/' + ${comment.user.photo}}" alt=""></div>
+                                                    <div>
+                                                        <b class="description-comments-user"><span th:text="${comment.user.username}"></span></b>
+                                                        <span class="description-comments" th:text="${comment.content}"></span>
+                                                        <div>
+                                                            <p class="post-time-comments" th:text="${#temporals.format(comment.createdAt, 'dd.MM.yyyy HH:mm')} + ' ' + 'Ответить'"></p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
                                         </div>
                                     </div>
                                 </div>
@@ -99,11 +110,11 @@
                         </div>
                         <div>
                             <p class="username" th:text="${user}"></p>
-                            <p class="sub-text">ФИО</p>
+                            <p class="sub-text"></p>
                         </div>
-                        <button class="action-btn">switch</button>
+                        <button class="action-btn">Переключиться</button>
                     </div>
-                    <p class="suggestion-text">Suggestions for you</p>
+                    <p class="suggestion-text">Рекомендации для вас</p>
                     <div class="profile-card">
                         <div class="profile-pic">
                             <img th:src="@{/resources/img/nav/cover 9.png}" alt="">
@@ -112,7 +123,7 @@
                             <p class="username">modern_web_channel</p>
                             <p class="sub-text">followed bu user</p>
                         </div>
-                        <button class="action-btn">follow</button>
+                        <button class="action-btn">Подписаться</button>
                     </div>
                     <div class="profile-card">
                         <div class="profile-pic">
@@ -122,7 +133,7 @@
                             <p class="username">modern_web_channel</p>
                             <p class="sub-text">followed bu user</p>
                         </div>
-                        <button class="action-btn">follow</button>
+                        <button class="action-btn">Подписаться</button>
                     </div>
                     <div class="profile-card">
                         <div class="profile-pic">
@@ -132,7 +143,7 @@
                             <p class="username">modern_web_channel</p>
                             <p class="sub-text">followed bu user</p>
                         </div>
-                        <button class="action-btn">follow</button>
+                        <button class="action-btn">Подписаться</button>
                     </div>
                     <div class="profile-card">
                         <div class="profile-pic">
@@ -142,7 +153,7 @@
                             <p class="username">modern_web_channel</p>
                             <p class="sub-text">followed bu user</p>
                         </div>
-                        <button class="action-btn">follow</button>
+                        <button class="action-btn">Подписаться</button>
                     </div>
                     <div class="profile-card">
                         <div class="profile-pic">
@@ -152,7 +163,7 @@
                             <p class="username">modern_web_channel</p>
                             <p class="sub-text">followed bu user</p>
                         </div>
-                        <button class="action-btn">follow</button>
+                        <button class="action-btn">Подписаться</button>
                     </div>
                 </div>
             </div>

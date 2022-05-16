@@ -33,8 +33,8 @@
                 </div>
                 <div class="dif">
                     <div class="fb">
-                        <img th:src="@{/resources/img/login/facebook.png}" alt="facebook">
-                        <p>Войти через Facebook</p>
+                        <img th:src="@{/resources/img/login/vk.png}" alt="facebook">
+                        <p>Войти через ВКонтакте</p>
                     </div>
                     <div class="forgot">
                         <a href="#">Забыли пароль?</a>
@@ -42,7 +42,7 @@
                 </div>
             </div>
             <div class="signup">
-                <p>У меня нет аккаунта? <a onclick="window.location='register'" href="#">Регистрация</a></p>
+                <p>У меня нет аккаунта? <a th:href="@{/register}">Регистрация</a></p>
             </div>
             <div class="apps">
                 <p>Скачать приложение</p>

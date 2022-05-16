@@ -138,6 +138,15 @@ body{
   background: linear-gradient(45deg, rgb(255, 230, 0), rgb(255, 0, 128) 80%);
 }
 
+.profile-pic-comments{
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  overflow: hidden;
+  padding: 3px;
+  background: linear-gradient(45deg, rgb(255, 230, 0), rgb(255, 0, 128) 80%);
+}
+
 .profile-pic-main{
   width: 70px;
   height: 70px;
@@ -155,6 +164,14 @@ body{
   border: 2px solid #fff;
 }
 
+.profile-pic-comments img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid #fff;
+}
+
 .profile-pic-main img{
   width: 100%;
   height: 100%;
@@ -164,6 +181,15 @@ body{
 }
 
 .username{
+  width: 100%;
+  overflow: hidden;
+  text-align: center;
+  font-size: 12px;
+  margin-top:5px;
+  color: rgba(0, 0, 0, 0.5)
+}
+
+.username-comments{
   width: 100%;
   overflow: hidden;
   text-align: center;
@@ -198,6 +224,16 @@ body{
   padding: 0 20px;
 }
 
+.info-comments{
+  width: 100%;
+  /*height: 60px;*/
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 0px;
+  margin-bottom: 10px;
+}
+
 .info-main{
   width: 100%;
   height: 120px;
@@ -226,6 +262,22 @@ body{
   margin-left: 10px;
 }
 
+.info-comments .username-comments{
+  width: auto;
+  font-weight: bold;
+  color: #000;
+  font-size: 14px;
+  margin-left: 10px;
+}
+
+.info .comments-logo{
+  width: auto;
+  font-weight: normal;
+  color: #000;
+  font-size: 24px;
+  margin-left: 10px;
+}
+
 .info-main .username-main{
   width: auto;
   color: #000;
@@ -240,6 +292,11 @@ body{
 }
 
 .info .user{
+  display: flex;
+  align-items: center;
+}
+
+.info-comments .user-comments{
   display: flex;
   align-items: center;
 }
@@ -259,6 +316,16 @@ body{
   width: 40px;
   padding: 0;
   background: none;
+}
+
+.info-comments .profile-pic-comments{
+  height: 40px;
+  width: 40px;
+  padding: 0;
+  background: none;
+  min-width: 40px;
+  align-self: baseline;
+  margin-right: 10px;
 }
 
 .info-view .profile-pic{
@@ -308,6 +375,35 @@ body{
   line-height: 20px;
 }
 
+.description-comments{
+  margin: 5px 0;
+  font-size: 14px;
+  line-height: 20px;
+  margin-left: 0px;
+}
+
+.description-comments-user{
+  margin: 5px 0;
+  font-size: 14px;
+  line-height: 20px;
+  margin-left: 0px;
+}
+
+.description-normal {
+  margin: 5px 0;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: normal;
+}
+
+.comments {
+  color: #808080;
+}
+
+a:hover {
+  color: #A9A9A9;
+}
+
 .description-main{
   margin-top: 5px;
   font-size: 14px;
@@ -319,13 +415,27 @@ body{
 
 .description span{
   font-weight: bold;
-  margin-right: 10px;
+  margin-right: 0px;
+}
+
+.description-normal span{
+  font-weight: normal;
+  margin-right: 5px;
 }
 
 .post-time{
   color: rgba(0, 0, 0, 0.5);
   font-size: 12px;
   margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.post-time-comments{
+  color: rgba(0, 0, 0, 0.5);
+  font-size: 12px;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  margin-left: 0px;
 }
 
 .comment-wrapper{

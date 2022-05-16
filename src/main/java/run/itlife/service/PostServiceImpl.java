@@ -141,7 +141,7 @@ public class PostServiceImpl implements PostService {
                 .stream()
                 .map(Tag::getName)
                 .collect(Collectors.joining(" ")));*/
-        // TODO пример для получения тегов конкретного поста
+
         return dto;
     }
 
