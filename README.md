@@ -27,4 +27,9 @@
 
 **Внешний вид приложения на текущий момент:**
 
-![2022-04-27_23-22-01](https://user-images.githubusercontent.com/15989675/165627334-3bce6d39-34c3-43bf-a693-267128c198cc.jpg)
+![2022-05-14_22-20-08](https://user-images.githubusercontent.com/15989675/168445639-d471c2f4-d616-44b6-8aea-c1ce368c54b7.jpg)
+
+![2022-05-14_22-19-10](https://user-images.githubusercontent.com/15989675/168445642-2bce1d08-5712-4a3a-8ddf-8d2249695a90.jpg)
+
+![2022-05-14_22-21-10](https://user-images.githubusercontent.com/15989675/168445648-4c0690a6-119a-4970-a6ab-ac949a744759.jpg)
+
