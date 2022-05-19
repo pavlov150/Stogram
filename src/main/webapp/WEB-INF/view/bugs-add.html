@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:include="fragments.html :: header">
+    <title id="pageTitle">Stogram - Отправка отзыва</title>
+</head>
+
+<!-- Navigation -->
+<body class="text-center">
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" th:insert="fragments.html :: navigation"></nav>
+
+<!-- Page Content -->
+<br>
+<br>
+<div class="container">
+
+    <div class="row">
+        <!-- Post Content Column -->
+        <div class="col-lg-8">
+            <form method="POST" th:action="@{/bug/new}">
+                <div class="form-group">
+                    <br><br>
+                    <textarea name="bugText" class="form-control" rows="4" placeholder="Опишите ошибку"></textarea>
+                </div>
+                <br>
+                <button type="submit" class="btn btn-outline-dark">Отправить сообщение об ошибке</button>
+            </form>
+        </div>
+    </div>
+    <!-- /.row -->
+</div>
+<!-- /.container -->
+
+<!-- Footer -->
+<footer th:insert="fragments.html :: footer"></footer>
+
+<!-- Bootstrap core JavaScript -->
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

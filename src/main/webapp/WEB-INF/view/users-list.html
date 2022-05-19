@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:include="fragments.html :: header">
-    <title id="pageTitle">Stogram - Просмотр поста</title>
+    <title id="pageTitle">Stogram - Пользователи</title>
 </head>
 
 <script type="text/javascript" th:src="@{/resources/js/delete-post.js}"></script>
@@ -16,76 +16,43 @@
     <div class="wrapper">
         <div class="left-col">
 
-
             <div class="post">
                 <div class="info">
                     <div class="user">
-                        <div class="profile-pic">
-                            <a th:href="@{/posts_detail}">
-                                <img th:src="@{'/resources/img/nav/arrow-left.png'}" alt="">
-                            </a>
-                        </div>
-                        <p class="comments-logo">Комментарии</p>
+                        <p class="comments-logo">Пользователи</p>
                     </div>
-                    <a th:if="${#authentication.name == post.user.username}" th:href="@{/post/{postId}/edit(postId = ${post.postId})}"><img th:src="@{/resources/img/nav/option.png}" class="options" alt=""></a>
                 </div>
             </div>
 
-            <div class="post" th:object="${post}">
-
-                <input type="hidden" th:field="*{postId}"/>
+            <div class="post">
                 <div class="post-content">
 
-                    <b class="description"><span th:text="${post.user.username}"></span></b>
-                    <span class="description-normal" th:text="${post.content}"></span>
-                    <p class="post-time" th:text="${#temporals.format(post.createdAt, 'dd.MM.yyyy')} + ' г.'"></p>
-                <hr>
-                    <!-- Comments -->
+                    <!-- Users -->
                     <div class="view-source comments-view">
-                            <div th:each="comment: ${post.comments}">
-                                <div class="media-body">
-                                    <div class="info-comments">
-                                        <div class="user-comments">
-                                            <div class="profile-pic-comments"><img th:src="@{'/resources/img/users/' + ${comment.user.username} + '/profile/' + ${comment.user.photo}}" alt=""></div>
-                                            <div>
-                                                <b class="description-comments-user"><span th:text="${comment.user.username}"></span></b>
-                                                <span class="description-comments" th:text="${comment.content}"></span>
-                                                <div>
-                                                    <p class="post-time-comments" th:text="${#temporals.format(comment.createdAt, 'dd.MM.yyyy HH:mm')} + ' ' + 'Ответить'"></p>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-
-
-
-
-                                </div>
-                            </div>
+                       <div th:each="users: ${userslist}">
+                          <div class="media-body">
+                             <div class="info-comments">
+                                 <div class="user-comments">
+                                     <div class="profile-card">
+                                         <div class="profile-pic-comments">
+                                             <a th:href="@{/sub-posts/{user}(user = ${users.username})}">
+                                                 <img th:src="@{'/resources/img/users/' + ${users.username} + '/profile/' + ${users.photo}}" alt="">
+                                             </a>
+                                         </div>
+                                         <div>
+                                             <b class="description-comments-user"><span th:text="${users.username}"></span></b>
+                                             <div>
+                                                 <p class="post-time-comments" th:text="${users.firstname} + ' ' + ${users.surname}"></p>
+                                             </div>
+                                         </div>
+                                         <button class="action-btn">Подписаться</button>
+                                     </div>
+                                 </div>
+                             </div>
+                          </div>
+                       </div>
                     </div>
                 </div>
-
-                <!-- Comments Form -->
-                <div sec:authorize="hasAnyRole('USER')">
-                    <form class="comment-wrapper" method="POST" th:action="@{/comment/create_comment}">
-                        <input type="hidden" name="postId" th:value="${post.postId}" />
-                        <div class="info-view">
-                            <div class="user">
-                                <div class="profile-pic"><img th:src="@{'/resources/img/users/' + ${user} + '/profile/' + ${userinfo.photo}}" alt=""></div>
-                            </div>
-                        </div>
-                        <input type="text" class="comment-box description" name="content"  th:placeholder="'Комментировать как ' + ${user} + '...'">
-                        <br>
-                        <button class="comment-btn">Опубликовать</button>
-                    </form>
-                </div>
-
-
-
-
-
-
             </div>
         </div>
 

@@ -24,6 +24,7 @@ import java.io.File;
 
 import static run.itlife.utils.EditImage.cropImage;
 import static run.itlife.utils.EditImage.resizeImage;
+import static run.itlife.utils.OtherUtils.generateFileName;
 
 //Контроллер для постов (создание, редактирование, удаление)
 @Controller
@@ -92,8 +93,7 @@ public class PostController {
         if (!file.isEmpty()) {
             try {
                 // изменение и генерация ноового имени файла
-                BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-                String filename = encoder.encode(file.getOriginalFilename()).substring(8, 15) + ".jpg";
+                String filename = generateFileName() + ".jpg";
 
                 // получаем имя юзера для формирования пути сохранения фото
                 final String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -147,8 +147,7 @@ public class PostController {
         if (!file.isEmpty()) {
             try {
                 // изменение и генерация ноового имени файла
-                BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-                String filename = encoder.encode(file.getOriginalFilename()).substring(8, 15) + ".jpg";
+                String filename = generateFileName() + ".jpg";
 
                 // получаем имя юзера для формирования пути сохранения фото
                 final String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -181,7 +180,9 @@ public class PostController {
                 return "error";
             }
         } else {
-            return "error";
+            postService.checkAuthority(postDto.getPostId());
+            postService.update(postDto);
+            return "redirect:/";
         }
     }
 

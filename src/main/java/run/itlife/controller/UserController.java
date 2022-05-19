@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import run.itlife.dto.UserDto;
 import run.itlife.entity.User;
+import run.itlife.enums.Sex;
 import run.itlife.repository.UserRepository;
 import run.itlife.service.UserService;
 
@@ -25,6 +26,7 @@ import java.io.FileOutputStream;
 
 import static run.itlife.utils.EditImage.cropImage;
 import static run.itlife.utils.EditImage.resizeImage;
+import static run.itlife.utils.OtherUtils.generateFileName;
 
 //UserController, отвечающий за логин юзеров и т.д.
 //Создаем в папке view страницу register.html. Далее необходимо сделать, чтобы мы пересылали данные в контроллер.
@@ -61,21 +63,22 @@ public class UserController {
     }
 
     @GetMapping("/profile_edit/{user}")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public String profile_edit(ModelMap modelMap, @PathVariable String user){
         modelMap.put("userinfo", userService.findByUsername(user));
+        modelMap.put("sex_male", Sex.MALE);
+        modelMap.put("sex_female", Sex.FEMALE);
         return "profile-edit";
     }
 
     @PostMapping("/profile_edit")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public String profile_edit(UserDto userDto, @RequestParam("file") MultipartFile file) {
 
        if (!file.isEmpty()) {
             try {
                 // изменение и генерация ноового имени файла
-                BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-                String filename = encoder.encode(file.getOriginalFilename()).substring(8, 15) + ".jpg";
+                String filename = generateFileName() + ".jpg";
 
                 // получаем имя юзера для формирования пути сохранения фото
                 final String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -108,8 +111,21 @@ public class UserController {
                 return "error";
             }
         } else {
-            return "error";
+           userService.checkAuthority(userDto.getUserId());
+           userService.update(userDto);
+           return "redirect:/";
         }
+    }
+
+
+    @GetMapping("/users")
+    public String index(ModelMap modelMap) {
+     //  modelMap.put("posts", postService.findByUser(SecurityContextHolder.getContext().getAuthentication().getName()));
+        modelMap.put("userslist", userService.findAll());
+        modelMap.put("user", SecurityContextHolder.getContext().getAuthentication().getName());
+        modelMap.put("userinfo", userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
+
+        return "users-list";
     }
 
 }

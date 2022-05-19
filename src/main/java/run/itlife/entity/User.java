@@ -50,6 +50,9 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user" )
     private List<Post> posts;
 
+    @OneToMany(mappedBy = "userId" )
+    private List<Bugs> bugs;
+
     @Column(name = "is_active")
     private boolean isActive;
 

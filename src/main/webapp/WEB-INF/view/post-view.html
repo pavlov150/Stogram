@@ -6,6 +6,7 @@
     </head>
 
     <script th:inline="javascript">var contextPath = [[${#httpServletRequest.getContextPath()}]];</script>
+    <script th:inline="javascript">var countComments = [[${countComments}]];</script>
     <script type="text/javascript" th:src="@{/resources/js/delete-post.js}"></script>
     <script type="text/javascript" th:src="@{/resources/js/jquery-1.11.0.min.js}"></script>
     <script>
@@ -15,9 +16,9 @@
             $a.on('click', function(event) {
                 event.preventDefault();
                 $a.not(this).next().slideUp(500);
-                $a.not(this).text('Смотреть все комментарии');
+                $a.not(this).text('Смотреть все комментарии(' + countComments + ')');
                 $(this).next().slideToggle(500);
-                $(this).text($(this).text()=='Скрыть комментарии'?'Смотреть все комментарии':'Скрыть комментарии');
+                $(this).text($(this).text()=='Скрыть комментарии'?'Смотреть все комментарии (' + countComments + ')':'Скрыть комментарии');
             });
         });
     </script>

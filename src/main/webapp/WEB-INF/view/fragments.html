@@ -71,9 +71,9 @@
                 <input type="text" class="search-box" placeholder="Найти">
                 <div class="nav-items">
                     <a class="icon" th:href="@{/}"><img th:src="@{/resources/img/nav/home.png}" class="icon" alt=""></a>
-                    <img th:src="@{/resources/img/nav/messenger.png}" class="icon" alt="">
+                    <a class="icon" sec:authorize="hasRole('ADMIN')" th:href="@{/bugs_view}"><img th:src="@{/resources/img/nav/messenger.png}" class="icon" alt=""></a>
                     <a class="icon" sec:authorize="hasRole('USER')" th:href="@{/post/new}"><img th:src="@{/resources/img/nav/add.png}" class="icon" alt=""></a>
-                    <img th:src="@{/resources/img/nav/explore.png}" class="icon" alt="">
+                    <a class="icon" sec:authorize="hasRole('USER')" th:href="@{/users}"><img th:src="@{/resources/img/nav/explore.png}" class="icon" alt=""></a>
                     <img th:src="@{/resources/img/nav/like.png}" class="icon" alt="">
 
                     <div class="icon user-profile" sec:authorize="isAuthenticated()" ><a th:href="@{/logout}">
@@ -85,8 +85,8 @@
         </nav>
 
         <!-- Footer -->
-        <p class="text-muted" th:fragment="footer-login">© 2022 Stogram (version 1.13.5 Pre-Alpha). Обнаружили ошибку? Напишите нам</p>
-        <footer class="text-muted" th:fragment="footer">© 2022 Stogram (version 1.13.5 Pre-Alpha). Обнаружили ошибку? Напишите нам</footer>
+        <p class="text-muted" th:fragment="footer-login">© 2022 Stogram (version 1.14.0 Pre-Alpha). Обнаружили ошибку? <a class="description comments" th:href="@{bug/new}">Напишите нам</a></p>
+        <footer class="text-muted" th:fragment="footer">© 2022 Stogram (version 1.14.0 Pre-Alpha). Обнаружили ошибку? <a class="description comments" th:href="@{bug/new}">Напишите нам</a></footer>
 
     </body>
 </html>

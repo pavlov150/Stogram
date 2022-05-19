@@ -43,8 +43,8 @@
                             <input th:field="*{phone}" class="form-control" rows="9" placeholder="Введите телефон"></input>
                             <br>
                             <select class="form-control" rows="9" th:field="*{sex}">
-                                <option th:value="male" th:text="Мужской"></option>
-                                <option th:value="female" th:text="Женский"></option>
+                                <option th:value="${sex_male}" th:text="${sex_male.getTitle()}"></option>
+                                <option th:value="${sex_female}" th:text="${sex_female.getTitle()}"></option>
                             </select>
                             <br>
 

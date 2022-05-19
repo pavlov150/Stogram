@@ -37,6 +37,12 @@ public class CommentController {
         return "redirect:/post/" + comment.getPostId();
     }
 
+    @PostMapping("/create_comment_detail")
+    public String create_comment_detail(CommentDto comment){
+        commentService.create(comment);
+        return "redirect:/posts_detail/";
+    }
+
     @PostMapping("/create_comment")
     public String create_comment(CommentDto comment){
         commentService.create(comment);

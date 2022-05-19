@@ -5,6 +5,8 @@ drop table if exists post;
 drop table if exists user_role;
 drop table if exists role;
 drop table if exists users;
+drop table if exists subscriptions;
+drop table if exists bugs;
 
 CREATE TABLE users (
     user_id bigserial PRIMARY KEY,
@@ -51,6 +53,20 @@ CREATE TABLE comment (
     updated_at timestamp without time zone
 );
 
+CREATE TABLE subscriptions (
+    user_id bigint REFERENCES users(user_id),
+    user_sub_id bigint REFERENCES users(user_id),
+    PRIMARY KEY (user_id, user_sub_id)
+);
+
+CREATE TABLE bugs (
+    bug_id bigserial PRIMARY KEY,
+    user_id bigint REFERENCES users(user_id),
+    username varchar(150),
+    bug_text text,
+    created_at timestamp without time zone
+);
+
 insert into role values (1, 'ADMIN');
 insert into role values (2, 'USER');
 
@@ -61,6 +77,9 @@ insert into users (username, password, created_at, is_active) values ('user1', '
 
 insert into user_role values (1, 1);
 insert into user_role values (2, 2);
+
+insert into subscriptions values (4, 11);
+insert into subscriptions values (4, 2);
 
 insert into post (photo, content, user_id, created_at, updated_at) values ('test.jpg', 'It''s all good!', 2, '2020-12-12 16:10:23'::timestamp, null);
 insert into post (photo, content, user_id, created_at, updated_at) values ('test.jpg', 'It''s all ok!', 3, '2022-12-12 16:10:23'::timestamp, null);

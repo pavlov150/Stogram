@@ -107,11 +107,22 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="comment-wrapper">
-                            <img th:src="@{/resources/img/nav/smile.png}" class="icon" alt="">
-                            <input type="text" class="comment-box" placeholder="Add a comment">
-                            <button class="comment-btn">Опубликовать</button>
+
+                        <!-- Comments Form -->
+                        <div sec:authorize="hasAnyRole('USER')">
+                            <form class="comment-wrapper" method="POST" th:action="@{/comment/create_comment_detail}">
+                                <input type="hidden" name="postId" th:value="${post.postId}" />
+                                <div class="info-view">
+                                    <div class="user">
+                                        <div class="profile-pic"><img th:src="@{'/resources/img/users/' + ${user} + '/profile/' + ${userinfo.photo}}" alt=""></div>
+                                    </div>
+                                </div>
+                                <input type="text" class="comment-box description" name="content"  th:placeholder="'Комментировать как ' + ${user} + '...'">
+                                <br>
+                                <button class="comment-btn">Опубликовать</button>
+                            </form>
                         </div>
+
                     </div>
 
                 </div>

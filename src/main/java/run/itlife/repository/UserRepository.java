@@ -3,6 +3,8 @@ package run.itlife.repository;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import run.itlife.entity.User;
+
+import java.util.List;
 import java.util.Optional;
 
 // Уровень доступа к БД
@@ -12,6 +14,8 @@ import java.util.Optional;
 //автоматически понимает какой запрос нужно сделать.
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    Optional<User> findByUsername(String username); //Возвращает нам юзера
+    Optional<User> findByUsername(String username); // Возвращает юзера
+
+    // List<User> findAll(); // Возвращает юзеров
 
 }
