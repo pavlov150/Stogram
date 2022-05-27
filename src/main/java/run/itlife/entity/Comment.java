@@ -21,7 +21,8 @@ public class Comment {
     @JoinColumn(name = "user_id")
     private User user;
 
-    private String content;
+    @Column(name = "comment_text")
+    private String commentText;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
@@ -45,12 +46,12 @@ public class Comment {
         this.post = post;
     }
 
-    public String getContent() {
-        return content;
+    public String getCommentText() {
+        return commentText;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setCommentText(String commentText) {
+        this.commentText = commentText;
     }
 
     public LocalDateTime getCreatedAt() {

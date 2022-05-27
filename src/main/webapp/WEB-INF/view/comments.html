@@ -15,8 +15,6 @@
 <section class="main">
     <div class="wrapper">
         <div class="left-col">
-
-
             <div class="post">
                 <div class="info">
                     <div class="user">
@@ -42,14 +40,15 @@
                 <hr>
                     <!-- Comments -->
                     <div class="view-source comments-view">
-                            <div th:each="comment: ${post.comments}">
+                            <div th:each="comment: ${comments}">
                                 <div class="media-body">
                                     <div class="info-comments">
                                         <div class="user-comments">
-                                            <div class="profile-pic-comments"><img th:src="@{'/resources/img/users/' + ${comment.user.username} + '/profile/' + ${comment.user.photo}}" alt=""></div>
+
+                                           <div class="profile-pic-comments"><img th:src="@{'/resources/img/users/' + ${comment.user.username} + '/profile/' + ${comment.user.photo}}" alt=""></div>
                                             <div>
                                                 <b class="description-comments-user"><span th:text="${comment.user.username}"></span></b>
-                                                <span class="description-comments" th:text="${comment.content}"></span>
+                                                <span class="description-comments" th:text="${comment.commentText}"></span>
                                                 <div>
                                                     <p class="post-time-comments" th:text="${#temporals.format(comment.createdAt, 'dd.MM.yyyy HH:mm')} + ' ' + 'Ответить'"></p>
                                                 </div>
@@ -72,10 +71,11 @@
                         <input type="hidden" name="postId" th:value="${post.postId}" />
                         <div class="info-view">
                             <div class="user">
-                                <div class="profile-pic"><img th:src="@{'/resources/img/users/' + ${user} + '/profile/' + ${userinfo.photo}}" alt=""></div>
+                                <img th:src="@{/resources/img/nav/smile.png}" class="icon" alt="">
+                               <!-- <div class="profile-pic"><img th:src="@{'/resources/img/users/' + ${user} + '/profile/' + ${userinfo.photo}}" alt=""></div>-->
                             </div>
                         </div>
-                        <input type="text" class="comment-box description" name="content"  th:placeholder="'Комментировать как ' + ${user} + '...'">
+                        <input type="text" class="comment-box description" name="commentText"  th:placeholder="'Комментировать как ' + ${user} + '...'">
                         <br>
                         <button class="comment-btn">Опубликовать</button>
                     </form>

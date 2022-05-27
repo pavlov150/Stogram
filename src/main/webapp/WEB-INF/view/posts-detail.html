@@ -2,7 +2,7 @@
 <html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
     <head th:include="fragments.html :: header">
-        <title id="pageTitle">Stogram - Главная</title>
+        <title id="pageTitle">Stogram - Мои посты</title>
     </head>
 
     <script th:inline="javascript">var contextPath = [[${#httpServletRequest.getContextPath()}]];</script>
@@ -18,7 +18,7 @@
         <section class="main">
             <div class="wrapper">
                 <div class="left-col">
-                    <div class="status-wrapper">
+                   <!-- <div class="status-wrapper">
                         <div class="status-card">
                             <div class="profile-pic"><img th:src="@{/resources/img/nav/cover 1.png}" alt=""></div>
                             <p class="username">user_name_1</p>
@@ -55,7 +55,7 @@
                             <div class="profile-pic"><img th:src="@{/resources/img/nav/cover 1.png}" alt=""></div>
                             <p class="username">user_name_3</p>
                         </div>
-                    </div>
+                    </div>-->
 
                     <div class="post" th:each="post: ${posts}" th:id="'post-' + ${post.postId}">
                         <div class="info">
@@ -63,7 +63,7 @@
                                 <div class="profile-pic"><img th:src="@{'/resources/img/users/' + ${user} + '/profile/' + ${userinfo.photo}}" alt=""></div>
                                 <p class="username" th:text="${post.user.username}"></p>
                             </div>
-                            <a th:if="${#authentication.name == post.user.username or #authorization.expression('hasRole(''ADMIN'')')}" th:onclick="'deletePost(\'' + ${post.postId} + '\');'"><img th:src="@{/resources/img/nav/delete.png}" class="options" alt=""></a>
+                            <a th:if="${#authentication.name == post.user.username or #authorization.expression('hasRole(''ADMIN'')')}" th:onclick="'deletePost(\'' + ${post.postId} + '\');'"><img th:src="@{/resources/img/nav/delete.png}" class="delete" alt=""></a>
                             <a th:if="${#authentication.name == post.user.username}" th:href="@{/post/{postId}/edit(postId = ${post.postId})}"><img th:src="@{/resources/img/nav/option.png}" class="options" alt=""></a>
                         </div>
                         <a th:href="@{/post/{postId}(postId = ${post.postId})}">
@@ -76,7 +76,7 @@
                                 <img th:src="@{/resources/img/nav/send.png}" class="icon" alt="">
                                 <img th:src="@{/resources/img/nav/save.png}" class="save icon" alt="">
                             </div>
-                            <p class="likes">1,012 likes</p>
+                            <p class="likes">Нравится...</p>
                             <b class="description"><span th:text="${post.user.username}"></span></b>
                             <span class="description-normal" th:text="${post.content}"></span>
                             <p class="post-time" th:text="${#temporals.format(post.createdAt, 'dd.MM.yyyy')} + ' г.'"></p>
@@ -93,7 +93,7 @@
                                                     <div class="profile-pic-comments"><img th:src="@{'/resources/img/users/' + ${comment.user.username} + '/profile/' + ${comment.user.photo}}" alt=""></div>
                                                     <div>
                                                         <b class="description-comments-user"><span th:text="${comment.user.username}"></span></b>
-                                                        <span class="description-comments" th:text="${comment.content}"></span>
+                                                        <span class="description-comments" th:text="${comment.commentText}"></span>
                                                         <div>
                                                             <p class="post-time-comments" th:text="${#temporals.format(comment.createdAt, 'dd.MM.yyyy HH:mm')} + ' ' + 'Ответить'"></p>
                                                         </div>
@@ -114,10 +114,11 @@
                                 <input type="hidden" name="postId" th:value="${post.postId}" />
                                 <div class="info-view">
                                     <div class="user">
-                                        <div class="profile-pic"><img th:src="@{'/resources/img/users/' + ${user} + '/profile/' + ${userinfo.photo}}" alt=""></div>
+                                        <img th:src="@{/resources/img/nav/smile.png}" class="icon" alt="">
+                                       <!-- <div class="profile-pic"><img th:src="@{'/resources/img/users/' + ${user} + '/profile/' + ${userinfo.photo}}" alt=""></div>-->
                                     </div>
                                 </div>
-                                <input type="text" class="comment-box description" name="content"  th:placeholder="'Комментировать как ' + ${user} + '...'">
+                                <input type="text" class="comment-box description" name="commentText"  th:placeholder="'Комментировать как ' + ${user} + '...'">
                                 <br>
                                 <button class="comment-btn">Опубликовать</button>
                             </form>
@@ -126,69 +127,9 @@
                     </div>
 
                 </div>
-                <div class="right-col">
-                    <div class="profile-card">
-                        <div class="profile-pic">
-                            <img th:src="@{'/resources/img/users/' + ${user} + '/profile/' + ${userinfo.photo}}" alt="">
-                        </div>
-                        <div>
-                            <p class="username" th:text="${user}"></p>
-                            <p class="sub-text"></p>
-                        </div>
-                        <button class="action-btn">Переключиться</button>
-                    </div>
-                    <p class="suggestion-text">Рекомендации для вас</p>
-                    <div class="profile-card">
-                        <div class="profile-pic">
-                            <img th:src="@{/resources/img/nav/cover 9.png}" alt="">
-                        </div>
-                        <div>
-                            <p class="username">modern_web_channel</p>
-                            <p class="sub-text">followed bu user</p>
-                        </div>
-                        <button class="action-btn">Подписаться</button>
-                    </div>
-                    <div class="profile-card">
-                        <div class="profile-pic">
-                            <img th:src="@{/resources/img/nav/cover 10.png}" alt="">
-                        </div>
-                        <div>
-                            <p class="username">modern_web_channel</p>
-                            <p class="sub-text">followed bu user</p>
-                        </div>
-                        <button class="action-btn">Подписаться</button>
-                    </div>
-                    <div class="profile-card">
-                        <div class="profile-pic">
-                            <img th:src="@{/resources/img/nav/cover 11.png}" alt="">
-                        </div>
-                        <div>
-                            <p class="username">modern_web_channel</p>
-                            <p class="sub-text">followed bu user</p>
-                        </div>
-                        <button class="action-btn">Подписаться</button>
-                    </div>
-                    <div class="profile-card">
-                        <div class="profile-pic">
-                            <img th:src="@{/resources/img/nav/cover 12.png}" alt="">
-                        </div>
-                        <div>
-                            <p class="username">modern_web_channel</p>
-                            <p class="sub-text">followed bu user</p>
-                        </div>
-                        <button class="action-btn">Подписаться</button>
-                    </div>
-                    <div class="profile-card">
-                        <div class="profile-pic">
-                            <img th:src="@{/resources/img/nav/cover 13.png}" alt="">
-                        </div>
-                        <div>
-                            <p class="username">modern_web_channel</p>
-                            <p class="sub-text">followed bu user</p>
-                        </div>
-                        <button class="action-btn">Подписаться</button>
-                    </div>
-                </div>
+
+                <!-- Right Column -->
+                <div th:insert="fragments.html :: right-column"></div>
             </div>
 
         </section>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:include="fragments.html :: header">
+    <title id="pageTitle">Stogram - Подписки</title>
+</head>
+
+<!-- Navigation -->
+<body>
+<nav class="navbar" th:insert="fragments.html :: navigation"></nav>
+
+
+<!-- Page Content -->
+
+<section class="main">
+    <div class="wrapper">
+        <div class="left-col">
+            <!-- <div class="status-wrapper">
+                 <div class="status-card">
+                     <div class="profile-pic"><img th:src="@{/resources/img/nav/cover 1.png}" alt=""></div>
+                     <p class="username">user_name_1</p>
+                 </div>
+                 <div class="status-card">
+                     <div class="profile-pic"><img th:src="@{/resources/img/nav/cover 2.png}" alt=""></div>
+                     <p class="username">user_name_2</p>
+                 </div>
+                 <div class="status-card">
+                     <div class="profile-pic"><img th:src="@{/resources/img/nav/cover 3.png}" alt=""></div>
+                     <p class="username">user_name_3</p>
+                 </div>
+                 <div class="status-card">
+                     <div class="profile-pic"><img th:src="@{/resources/img/nav/cover 1.png}" alt=""></div>
+                     <p class="username">user_name_3</p>
+                 </div>
+                 <div class="status-card">
+                     <div class="profile-pic"><img th:src="@{/resources/img/nav/cover 1.png}" alt=""></div>
+                     <p class="username">user_name_3</p>
+                 </div>
+                 <div class="status-card">
+                     <div class="profile-pic"><img th:src="@{/resources/img/nav/cover 1.png}" alt=""></div>
+                     <p class="username">user_name_3</p>
+                 </div>
+                 <div class="status-card">
+                     <div class="profile-pic"><img th:src="@{/resources/img/nav/cover 1.png}" alt=""></div>
+                     <p class="username">user_name_3</p>
+                 </div>
+                 <div class="status-card">
+                     <div class="profile-pic"><img th:src="@{/resources/img/nav/cover 1.png}" alt=""></div>
+                     <p class="username">user_name_3</p>
+                 </div>
+                 <div class="status-card">
+                     <div class="profile-pic"><img th:src="@{/resources/img/nav/cover 1.png}" alt=""></div>
+                     <p class="username">user_name_3</p>
+                 </div>
+             </div>-->
+
+            <div class="post" th:each="post_sub: ${posts_sub}">
+                <div class="info">
+                    <div class="user">
+                        <div class="profile-pic"><img th:src="@{'/resources/img/users/' + ${post_sub.user.username} + '/profile/' + ${post_sub.user.photo}}" alt=""></div>
+                        <p class="username" th:text="${post_sub.user.username}"></p>
+                    </div>
+                </div>
+                <a th:href="@{/post/{postId}(postId = ${post_sub.postId})}">
+                    <img th:src="@{'/resources/img/users/' + ${post_sub.user.username} + '/' + ${post_sub.photo}}" class="post-image" alt="">
+                </a>
+                <div class="post-content">
+                    <div class="reaction-wrapper">
+                        <img th:src="@{/resources/img/nav/like.png}" class="icon" alt="">
+                        <a th:href="@{/comment/{postId}(postId = ${post_sub.postId})}"><img th:src="@{/resources/img/nav/comment.png}" class="icon" alt=""></a>
+                        <img th:src="@{/resources/img/nav/send.png}" class="icon" alt="">
+                        <img th:src="@{/resources/img/nav/save.png}" class="save icon" alt="">
+                    </div>
+                    <p class="likes">Нравится...</p>
+                    <b class="description"><span th:text="${post_sub.user.username}"></span></b>
+                    <span class="description-normal" th:text="${post_sub.content}"></span>
+                    <p class="post-time" th:text="${#temporals.format(post_sub.createdAt, 'dd.MM.yyyy')} + ' г.'"></p>
+
+                    <!-- Comments -->
+                    <div class="view-source comments-view">
+                        <!-- FIXME <a href="#" class="description comments" th:text="'Смотреть все комментарии (' + ${countComments} + ')'"></a> -->
+                        <b class="description" th:text="'Комментарии:'"></b>
+                        <div class="hide">
+                            <div th:each="comment_sub: ${post_sub.comments}">
+                                <div class="media-body">
+                                    <div class="info-comments">
+                                        <div class="user-comments">
+                                            <div class="profile-pic-comments"><img th:src="@{'/resources/img/users/' + ${comment_sub.user.username} + '/profile/' + ${comment_sub.user.photo}}" alt=""></div>
+                                            <div>
+                                                <b class="description-comments-user"><span th:text="${comment_sub.user.username}"></span></b>
+                                                <span class="description-comments" th:text="${comment_sub.commentText}"></span>
+                                                <div>
+                                                    <p class="post-time-comments" th:text="${#temporals.format(comment_sub.createdAt, 'dd.MM.yyyy HH:mm')} + ' ' + 'Ответить'"></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Comments Form -->
+                <div sec:authorize="hasAnyRole('USER')">
+                    <form class="comment-wrapper" method="POST" th:action="@{/comment/create_comment_detail_sub}">
+                        <input type="hidden" name="postId" th:value="${post_sub.postId}" />
+                        <div class="info-view">
+                            <div class="user">
+                                <img th:src="@{/resources/img/nav/smile.png}" class="icon" alt="">
+                               <!-- <div class="profile-pic"><img th:src="@{'/resources/img/users/' + ${user} + '/profile/' + ${userinfo.photo}}" alt=""></div>-->
+                            </div>
+                        </div>
+                        <input type="text" class="comment-box description" name="commentText"  th:placeholder="'Комментировать как ' + ${user} + '...'">
+                        <br>
+                        <button class="comment-btn">Опубликовать</button>
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Right Column -->
+        <div th:insert="fragments.html :: right-column"></div>
+    </div>
+
+</section>
+
+
+<!-- Footer -->
+<footer th:insert="fragments.html :: footer"></footer>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script>window.jQuery || document.write('<script src="../assets/js/vendor/jquery.slim.min.js"><\/script>')</script>
+
+</body>
+</html>

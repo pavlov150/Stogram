@@ -7,6 +7,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import run.itlife.dto.PostDto;
+import run.itlife.entity.Bugs;
+import run.itlife.entity.Comment;
 import run.itlife.entity.Post;
 import run.itlife.repository.PostRepository;
 import run.itlife.repository.UserRepository;
@@ -52,6 +54,7 @@ public class PostServiceImpl implements PostService {
                 .getPosts();
         posts.size();
         return posts;
+
     }
 
     @Override
@@ -131,6 +134,15 @@ public class PostServiceImpl implements PostService {
         return countComments;
     }
 
+    @Override
+    public List<Post> sortedPostsByDate(String username) {
+        List<Post> posts = postRepository.sortedPostsByDate(username);
+        for (Post p : posts) {
+            p.getComments().size();
+        }
+        return posts;
+    }
+
 
     private PostDto toDto(Post post) {
         PostDto dto = new PostDto();
@@ -145,6 +157,13 @@ public class PostServiceImpl implements PostService {
         return dto;
     }
 
-
+    @Override
+    public List<Post> findSubscribesPosts(String username) {
+        List<Post> posts = postRepository.findSubscribesPosts(username);
+        for (Post p : posts) {
+            p.getComments().size();
+        }
+        return posts;
+    }
 
 }

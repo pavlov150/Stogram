@@ -41,7 +41,10 @@ public class BugsController {
     @PreAuthorize("hasRole('ADMIN')")
     public String index(ModelMap modelMap) {
         modelMap.put("bugs", bugsService.listAllBugs());
-        modelMap.put("userinfo", userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
+        modelMap.put("userslist", userService.findAll());
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        modelMap.put("user", username);
+        modelMap.put("userinfo", userService.findByUsername(username));
         return "bugs";
     }
 

@@ -16,20 +16,13 @@ public class PostDto {
 
     public PostDto() {}
 
-    public PostDto(String content) {
-        this.content = content;
-    }
 
-    public PostDto(String photo, String content) {
-        this.photo = photo;
-        this.content = content;
-    }
 
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
 
-    private List<CommentDto> commets;
+    private List<CommentDto> comments;
 
     public Long getPostId() {
         return postId;
@@ -43,8 +36,8 @@ public class PostDto {
         return content;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setContent(String content1) {
+        this.content = content1;
     }
 
     public String getUsername() {
@@ -72,11 +65,11 @@ public class PostDto {
     }
 
     public List<CommentDto> getCommets() {
-        return commets;
+        return comments;
     }
 
     public void setComments(List<CommentDto> comments) {
-        this.commets = comments;
+        this.comments = comments;
     }
 
     public String getPhoto() {

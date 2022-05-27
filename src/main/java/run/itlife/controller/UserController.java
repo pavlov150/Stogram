@@ -3,7 +3,6 @@ package run.itlife.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,15 +13,14 @@ import org.springframework.web.multipart.MultipartFile;
 import run.itlife.dto.UserDto;
 import run.itlife.entity.User;
 import run.itlife.enums.Sex;
+import run.itlife.repository.SubscriptionsRepository;
 import run.itlife.repository.UserRepository;
 import run.itlife.service.UserService;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
 import java.awt.image.BufferedImage;
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 
 import static run.itlife.utils.EditImage.cropImage;
 import static run.itlife.utils.EditImage.resizeImage;
@@ -38,12 +36,14 @@ public class UserController {
     private final UserService userService;
     private final ServletContext context;
     private final UserRepository userRepository;
+    private final SubscriptionsRepository subscriptionsRepository;
 
     @Autowired
-    public UserController(UserService userService, ServletContext context, UserRepository userRepository) {
+    public UserController(UserService userService, ServletContext context, UserRepository userRepository, SubscriptionsRepository subscriptionsRepository) {
         this.userService = userService;
         this.context = context;
         this.userRepository = userRepository;
+        this.subscriptionsRepository = subscriptionsRepository;
     }
 
     @GetMapping("/login")
@@ -118,14 +118,26 @@ public class UserController {
     }
 
 
-    @GetMapping("/users")
-    public String index(ModelMap modelMap) {
+    @GetMapping("/subscriptions")
+    public String find_Subscribes(ModelMap modelMap) {
      //  modelMap.put("posts", postService.findByUser(SecurityContextHolder.getContext().getAuthentication().getName()));
         modelMap.put("userslist", userService.findAll());
         modelMap.put("user", SecurityContextHolder.getContext().getAuthentication().getName());
         modelMap.put("userinfo", userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
+        modelMap.put("sub", subscriptionsRepository.findSubscribes(SecurityContextHolder.getContext().getAuthentication().getName()));
 
-        return "users-list";
+        return "subscriptions";
+    }
+
+    @GetMapping("/subscribers")
+    public String find_Subscribers(ModelMap modelMap) {
+        //  modelMap.put("posts", postService.findByUser(SecurityContextHolder.getContext().getAuthentication().getName()));
+        modelMap.put("userslist", userService.findAll());
+        modelMap.put("user", SecurityContextHolder.getContext().getAuthentication().getName());
+        modelMap.put("userinfo", userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
+        modelMap.put("sub", subscriptionsRepository.findSubscribers(SecurityContextHolder.getContext().getAuthentication().getName()));
+
+        return "subscribers";
     }
 
 }

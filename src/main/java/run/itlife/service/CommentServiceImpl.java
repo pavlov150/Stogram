@@ -4,8 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import run.itlife.dto.CommentDto;
 import run.itlife.entity.Comment;
+import run.itlife.entity.Post;
 import run.itlife.repository.CommentRepository;
 import java.time.LocalDateTime;
+import java.util.List;
+
 import static run.itlife.utils.SecurityUtils.getCurrentUserDetails;
 
 // Уровень обслуживания
@@ -32,10 +35,17 @@ public class CommentServiceImpl implements CommentService {
     public void create(CommentDto commentDto) {
         Comment comment = new Comment();
         comment.setPost(postService.findById(commentDto.getPostId()));
-        comment.setContent(commentDto.getContent());
+        comment.setCommentText(commentDto.getCommentText());
         comment.setUser(userService.findByUsername(getCurrentUserDetails().getUsername()));
         comment.setCreatedAt(LocalDateTime.now());
         commentRepository.save(comment);
     }
+
+    @Override
+    public List<Comment> sortCommentsByDate(long id) {
+            List<Comment> comments = commentRepository.sortCommentsByDate(id);
+            return comments;
+    }
+
 
 }

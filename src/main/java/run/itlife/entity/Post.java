@@ -19,6 +19,7 @@ public class Post {
     @Column(name="photo")
     private String photo;
 
+    @Column(name = "content")
     private String content;
 
     @OneToMany(mappedBy = "post")

@@ -43,6 +43,12 @@ public class CommentController {
         return "redirect:/posts_detail/";
     }
 
+    @PostMapping("/create_comment_detail_sub")
+    public String create_comment_detail_sub(CommentDto comment){
+        commentService.create(comment);
+        return "redirect:/";
+    }
+
     @PostMapping("/create_comment")
     public String create_comment(CommentDto comment){
         commentService.create(comment);
@@ -52,12 +58,13 @@ public class CommentController {
     @GetMapping("/{id}")
     public String comments(@PathVariable long id, ModelMap modelMap){
         modelMap.put("post", postService.findById(id));
+        modelMap.put("comments", commentService.sortCommentsByDate(id));
         modelMap.put("countComments", postService.countComments(id));
       //  modelMap.put("users", userService.findAll());
       //  modelMap.put("contextPath", context.getContextPath());
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         modelMap.put("user", username);
-        modelMap.put("userinfo", userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
+        modelMap.put("userinfo", userService.findByUsername(username));
 
         return "comments";
     }

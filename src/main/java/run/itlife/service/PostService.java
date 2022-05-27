@@ -1,6 +1,7 @@
 package run.itlife.service;
 
 import run.itlife.dto.PostDto;
+import run.itlife.entity.Comment;
 import run.itlife.entity.Post;
 
 import java.util.List;
@@ -30,6 +31,8 @@ public interface PostService {
 
     Long countComments(Long id);
 
+    List<Post> sortedPostsByDate(String username);
 
+    List<Post> findSubscribesPosts(String username);
 
 }

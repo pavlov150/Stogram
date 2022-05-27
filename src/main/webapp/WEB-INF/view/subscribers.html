@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:include="fragments.html :: header">
+    <title id="pageTitle">Stogram - Подписчики</title>
+</head>
+
+<!-- Navigation -->
+<body>
+<nav class="navbar" th:insert="fragments.html :: navigation"></nav>
+
+<!-- Page Content -->
+<section class="main">
+    <div class="wrapper">
+        <div class="left-col">
+
+
+
+            <div class="post">
+                <div class="info">
+                    <div class="user">
+                        <p class="comments-logo">Подписчики</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="post">
+                <div class="post-content">
+
+                    <!-- Subscribes -->
+                    <div class="view-source comments-view">
+                        <div th:each="subs: ${sub}">
+                            <div class="media-body">
+                                <div class="info-comments">
+                                    <div class="user-comments">
+                                        <div class="profile-card">
+                                            <div class="profile-pic-comments">
+                                                <a th:href="@{/sub-posts/{user}(user = ${subs.currentUserId.username})}">
+                                                    <img th:src="@{'/resources/img/users/' + ${subs.currentUserId.username} + '/profile/' + ${subs.currentUserId.photo}}" alt="">
+                                                </a>
+                                            </div>
+                                            <div>
+                                                <b class="description-comments-user"><span th:text="${subs.currentUserId.username}"></span></b>
+                                                <div>
+                                                    <p class="post-time-comments" th:text="${subs.currentUserId.surname} + ' ' + ${subs.currentUserId.firstname}"></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column -->
+        <div th:insert="fragments.html :: right-column"></div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer th:insert="fragments.html :: footer"></footer>
+
+<!-- Bootstrap core JavaScript -->
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

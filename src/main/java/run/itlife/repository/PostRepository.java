@@ -2,6 +2,7 @@ package run.itlife.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import run.itlife.entity.Comment;
 import run.itlife.entity.Post;
 
 import java.util.List;
@@ -28,6 +29,20 @@ public interface PostRepository extends JpaRepository<Post, Long> {
             "join comment c on c.post_id = p.post_id where c.post_id = ? " +
             "GROUP BY p.post_id ", nativeQuery = true)
     Long countComments(Long id);
+
+    @Query(value = "select p.*, u.username from post p " +
+            "join users u on p.user_id = u.user_id " +
+            "where u.username = ? " +
+            "order by p.created_at desc ", nativeQuery = true)
+    List<Post> sortedPostsByDate(String username);
+
+    @Query(value = "select * from post p " +
+            "join subscriptions s on s.user_sub_id = p.user_id " +
+            "join users u on u.user_id = s.user_id " +
+            "where u.username = ? " +
+            "order by p.created_at desc; ", nativeQuery = true)
+    List<Post> findSubscribesPosts(String username);
+
 
 
 

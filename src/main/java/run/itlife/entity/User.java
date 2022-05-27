@@ -215,4 +215,5 @@ public class User implements UserDetails {
     public void setSex(String sex) {
         this.sex = sex;
     }
+
 }

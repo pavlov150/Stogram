@@ -7,15 +7,19 @@ public class CommentDto {
 
     private Long postId;
 
-    private String content;
+    private String commentText;
 
     private String username;
 
     public CommentDto() { }
 
-    public CommentDto(long commentId, String content) {
+    public CommentDto(long commentId, String commentText) {
         this.commentId = commentId;
-        this.content = content;
+        this.commentText = commentText;
+    }
+
+    public CommentDto(String commentText) {
+        this.commentText = commentText;
     }
 
     public Long getCommentId() {
@@ -34,12 +38,12 @@ public class CommentDto {
         this.postId = postId;
     }
 
-    public String getContent() {
-        return content;
+    public String getCommentText() {
+        return commentText;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setCommentText(String commentText) {
+        this.commentText = commentText;
     }
 
     public String getUsername() {

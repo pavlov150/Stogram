@@ -27,11 +27,10 @@
                     <p class="description-main" th:text="${countPosts} + ' публикаций   0 подписчиков   0 подписок'"></p>
                 </div>
             </div>
+            <a th:if="${isSub == 0}" th:href="@{/subscription/{user}(user = ${user})}" class="btn btn-outline-dark">Подписаться</a>
+            <a th:unless="${isSub == 0}" th:href="@{/unsubscription/{user}(user = ${user})}" class="btn btn-outline-danger">Отписаться</a>
         </div>
-
     </section>
-
-
 
     <div class="row">
         <div class="col-md-4" th:each="post: ${posts}" th:id="'post-' + ${post.postId}">

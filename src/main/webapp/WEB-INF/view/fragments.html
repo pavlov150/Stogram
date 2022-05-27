@@ -10,6 +10,8 @@
         <meta name="generator" content="Jekyll v4.1.1">
         <link th:href="@{/webjars/bootstrap/5.1.3/css/bootstrap.min.css}" rel="stylesheet">
         <link th:href="@{/resources/css/posts.css}" rel="stylesheet">
+        <link th:href="@{/resources/css/menu.css}" rel="stylesheet">
+        <script type="text/javascript" th:src="@{/resources/js/menu.js}"></script>
         <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/album/">
         <title th:include=":: #pageTitle"></title>
         <style>
@@ -73,20 +75,69 @@
                     <a class="icon" th:href="@{/}"><img th:src="@{/resources/img/nav/home.png}" class="icon" alt=""></a>
                     <a class="icon" sec:authorize="hasRole('ADMIN')" th:href="@{/bugs_view}"><img th:src="@{/resources/img/nav/messenger.png}" class="icon" alt=""></a>
                     <a class="icon" sec:authorize="hasRole('USER')" th:href="@{/post/new}"><img th:src="@{/resources/img/nav/add.png}" class="icon" alt=""></a>
-                    <a class="icon" sec:authorize="hasRole('USER')" th:href="@{/users}"><img th:src="@{/resources/img/nav/explore.png}" class="icon" alt=""></a>
-                    <img th:src="@{/resources/img/nav/like.png}" class="icon" alt="">
+                  <!--  <a class="icon" sec:authorize="hasRole('USER')" th:href="@{/users}"><img th:src="@{/resources/img/nav/explore.png}" class="icon" alt=""></a>-->
+                 <!--   <img th:src="@{/resources/img/nav/like.png}" class="icon" alt="">-->
 
-                    <div class="icon user-profile" sec:authorize="isAuthenticated()" ><a th:href="@{/logout}">
-                        <img class="icon user-profile" th:src="@{/resources/img/nav/profile-pic.png}"></a>
+                    <div class="icon user-profile" sec:authorize="isAuthenticated()" >
 
+                        <ul class="icon user-profile nav-list" sec:authorize="isAuthenticated()">
+                            <li>
+                                <img class="icon user-profile" th:src="@{/resources/img/nav/profile-pic.png}">
+                                <ul class="nalumes-nucludem">
+                                    <li>
+                                        <a th:href="@{/posts}">Профиль</a>
+                                    </li>
+                                    <li>
+                                        <a th:href="@{/profile_edit/{user}(user = ${user})}">Настройки</a>
+                                    </li>
+                                    <li>
+                                        <a th:href="@{/logout}">Выйти</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
                     </div>
+
+
+
+
+
                 </div>
             </div>
         </nav>
 
+        <!-- Right Column -->
+        <div class="right-col" th:fragment="right-column">
+            <div class="profile-card">
+                <div class="profile-pic">
+
+                    <img th:src="@{'/resources/img/users/' + ${user} + '/profile/' + ${userinfo.photo}}" alt="">
+
+                </div>
+                <div>
+                    <p class="username" th:text="${user}"></p>
+                    <p class="sub-text"></p>
+                </div>
+                <button class="action-btn">Переключиться</button>
+            </div>
+            <p class="suggestion-text">Рекомендации для вас</p>
+            <div class="profile-card" th:each="users: ${userslist}">
+                <div class="profile-pic">
+                    <a th:href="@{/sub-posts/{user}(user = ${users.username})}">
+                    <img th:src="@{'/resources/img/users/' + ${users.username} + '/profile/' + ${users.photo}}" alt="">
+                    </a>
+                </div>
+                <div>
+                    <p th:text="${users.username}" class="username"></p>
+                    <p th:text="${users.surname} + ' ' + ${users.firstname}" class="sub-text"></p>
+                </div>
+              <!--  <button class="action-btn">Подписаться</button> -->
+            </div>
+        </div>
+
         <!-- Footer -->
-        <p class="text-muted" th:fragment="footer-login">© 2022 Stogram (version 1.14.0 Pre-Alpha). Обнаружили ошибку? <a class="description comments" th:href="@{bug/new}">Напишите нам</a></p>
-        <footer class="text-muted" th:fragment="footer">© 2022 Stogram (version 1.14.0 Pre-Alpha). Обнаружили ошибку? <a class="description comments" th:href="@{bug/new}">Напишите нам</a></footer>
+        <p class="text-muted" th:fragment="footer-login">© 2022 Stogram (version 1.15.0 Pre-Alpha). Обнаружили ошибку? <a class="description comments" th:href="@{bug/new}">Напишите нам</a></p>
+        <footer class="text-muted" th:fragment="footer">© 2022 Stogram (version 1.15.0 Pre-Alpha). Обнаружили ошибку? <a class="description comments" th:href="@{bug/new}">Напишите нам</a></footer>
 
     </body>
 </html>

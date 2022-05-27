@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +15,9 @@ import org.springframework.web.multipart.MultipartFile;
 import run.itlife.dto.PostDto;
 import run.itlife.repository.PostRepository;
 import run.itlife.repository.UserRepository;
+import run.itlife.service.CommentService;
 import run.itlife.service.PostService;
+import run.itlife.service.SubscriptionsService;
 import run.itlife.service.UserService;
 
 import java.awt.image.BufferedImage;
@@ -32,44 +33,67 @@ public class PostController {
 
     private final PostService postService;
     private final UserService userService;
+    private final CommentService commentService;
     private final ServletContext context;
     private final UserRepository userRepository;
     private final PostRepository postRepository;
+    private final SubscriptionsService subscriptionsService;
 
     @Autowired
     ServletContext servletContext;
 
     @Autowired
-    public PostController(PostService postsService, UserService userService, ServletContext context, UserRepository userRepository, PostRepository postRepository) {
+    public PostController(PostService postsService, UserService userService, CommentService commentService, ServletContext context, UserRepository userRepository, PostRepository postRepository, SubscriptionsService subscriptionsService) {
         this.postService = postsService;
         this.userService = userService;
+        this.commentService = commentService;
         this.context = context;
         this.userRepository = userRepository;
         this.postRepository = postRepository;
+        this.subscriptionsService = subscriptionsService;
     }
 
     @GetMapping("/")
     public String index(ModelMap modelMap) {
-        modelMap.put("posts", postService.findByUser(SecurityContextHolder.getContext().getAuthentication().getName()));
-        modelMap.put("user", SecurityContextHolder.getContext().getAuthentication().getName());
-        modelMap.put("userinfo", userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
-        modelMap.put("countPosts", postService.countPosts(SecurityContextHolder.getContext().getAuthentication().getName()));
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        modelMap.put("posts_sub", postService.findSubscribesPosts(username));
+        modelMap.put("userslist", userService.findAll());
+        modelMap.put("user", username);
+        modelMap.put("userinfo", userService.findByUsername(username));
 
-        //modelMap.put("test", userRepository.findById(4L).orElseThrow().getUsername());
-        return "posts";
+        return "posts-detail-sub";
     }
+
+    @GetMapping("/posts")
+    public String posts(ModelMap modelMap) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        modelMap.put("posts", postService.sortedPostsByDate(username));
+        modelMap.put("user", username);
+        modelMap.put("userinfo", userService.findByUsername(username));
+        modelMap.put("countPosts", postService.countPosts(username));
+        modelMap.put("countSubscribe", subscriptionsService.countSubscribe(username));
+        modelMap.put("countSubscribers", subscriptionsService.countSubscribers(username));
+     //   modelMap.put("test", userRepository.findById(4L).orElseThrow().getUsername());
+        return "posts";
+
+    }
+
 
     //@RequestMapping(value = "/posts_detail", method = RequestMethod.GET)
     @GetMapping("/posts_detail") // такая же запись как и выше, но в другом виде, более современная
     public String posts_detail(ModelMap modelMap) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        modelMap.put("posts", postService.findByUserName(username));
+        modelMap.put("posts", postService.sortedPostsByDate(username));
+        modelMap.put("userslist", userService.findAll());
+      //  modelMap.put("comments", commentService.sortCommentsByDate(id));
         modelMap.put("user", username);
-        modelMap.put("userinfo", userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
+        modelMap.put("userinfo", userService.findByUsername(username));
+
      //   modelMap.put("countComments", postService.countComments(id));
 
         return "posts-detail";
     }
+
 
     @GetMapping("/post/new")
     @PreAuthorize("hasRole('USER')")
@@ -189,11 +213,13 @@ public class PostController {
     @GetMapping("/post/{id}")
     public String post(@PathVariable long id, ModelMap modelMap){
         modelMap.put("post", postService.findById(id));
+        modelMap.put("comments", commentService.sortCommentsByDate(id));
         modelMap.put("countComments", postService.countComments(id));
         setCommonParams(modelMap);
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         modelMap.put("user", username);
-        modelMap.put("userinfo", userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
+        modelMap.put("userinfo", userService.findByUsername(username));
+        modelMap.put("userslist", userService.findAll());
 
         return "post-view";
     }
@@ -202,6 +228,13 @@ public class PostController {
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable long id){
         postService.delete(id);
+    }
+
+    @GetMapping("/post/{id}/delete_one_post")
+    @PreAuthorize("hasRole('USER')")
+    public String delete_one_post(@PathVariable long id){
+        postService.delete(id);
+        return "redirect:/posts_detail";
     }
 
     private void setCommonParams(ModelMap modelMap) {
