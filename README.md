@@ -1,6 +1,8 @@
 # Stogram
 Аналог Instagram (веб-версия)
 
+**Старт проекта:** 15 марта 2022 г.
+
 **Участие в проекте:**
 В проекте может участвовать любой желающий. Очень нужен дизайнер и верстальщик
 
@@ -33,9 +35,12 @@
 
 **Внешний вид приложения на текущий момент:**
 
-![2022-05-14_22-20-08](https://user-images.githubusercontent.com/15989675/168445639-d471c2f4-d616-44b6-8aea-c1ce368c54b7.jpg)
+![2022-05-28_02-47-01](https://user-images.githubusercontent.com/15989675/170801016-85f74ed0-7558-4545-88fe-dd26b7bbe4ae.jpg)
 
-![2022-05-14_22-19-10](https://user-images.githubusercontent.com/15989675/168445642-2bce1d08-5712-4a3a-8ddf-8d2249695a90.jpg)
+![2022-05-28_02-47-24](https://user-images.githubusercontent.com/15989675/170801024-36ce810a-3ee4-4545-86ef-af1421ae7cbd.jpg)
 
-![2022-05-14_22-21-10](https://user-images.githubusercontent.com/15989675/168445648-4c0690a6-119a-4970-a6ab-ac949a744759.jpg)
+![2022-05-28_02-48-52](https://user-images.githubusercontent.com/15989675/170801034-f15adb24-7acf-43cc-808d-306a1850dc78.jpg)
 
+![2022-05-28_02-49-19](https://user-images.githubusercontent.com/15989675/170801037-0fd4e30e-7502-42d5-be40-368a4e9f7db1.jpg)
+
+![2022-05-28_02-49-34](https://user-images.githubusercontent.com/15989675/170801044-e14b25c9-53fa-4630-84e1-18e5a8022de3.jpg)
