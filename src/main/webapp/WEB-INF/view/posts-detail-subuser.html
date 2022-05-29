@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-      xmlns="http://www.w3.org/1999/html">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:include="fragments.html :: header">
-    <title id="pageTitle">Stogram - Подписки</title>
+    <title id="pageTitle">Stogram - Посты</title>
 </head>
+
+<script th:inline="javascript">var contextPath = [[${#httpServletRequest.getContextPath()}]];</script>
+<script type="text/javascript" th:src="@{/resources/js/delete-post.js}"></script>
 
 <!-- Navigation -->
 <body>
@@ -55,64 +57,60 @@
                  </div>
              </div>-->
 
-                <div class="no_public" th:if="${countPosts == 0}" >
-                    <img th:src="@{'/resources/img/icons/face.png'}" alt="">
-                    <h1 class="h3 mb-3 font-weight-normal no_public">Пока нет подписок</h1>
-                </div>
-
-
-            <div th:unless="${countPosts == 0}" class="post" th:each="post_sub: ${posts_sub}">
+            <div class="post" th:each="post: ${posts}" th:id="'post-' + ${post.postId}">
                 <div class="info">
                     <div class="user">
                         <div class="profile-pic">
-                            <a th:href="@{/sub-posts/{user}(user = ${post_sub.user.username})}">
-                                <img th:if="${post_sub.user.photo == null}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
-                                <img th:unless="${post_sub.user.photo == null}" th:src="@{'/resources/img/users/' + ${post_sub.user.username} + '/profile/' + ${post_sub.user.photo}}" alt="">
-                        </div>
-                        <p class="username" th:text="${post_sub.user.username}"></p></a>
+                            <a th:href="@{/sub-posts/{user}(user = ${post.user.username})}">
+                            <img th:src="@{'/resources/img/users/' + ${user_sub} + '/profile/' + ${userinfo_sub.photo}}" alt=""></div>
+                        <p class="username" th:text="${post.user.username}"></p></a>
                     </div>
+                    <a th:if="${#authentication.name == post.user.username or #authorization.expression('hasRole(''ADMIN'')')}" th:onclick="'deletePost(\'' + ${post.postId} + '\');'"><img th:src="@{/resources/img/nav/delete.png}" class="delete" alt=""></a>
+                    <a th:if="${#authentication.name == post.user.username}" th:href="@{/post/{postId}/edit(postId = ${post.postId})}"><img th:src="@{/resources/img/nav/option.png}" class="options" alt=""></a>
                 </div>
-                <a th:href="@{/post/{postId}(postId = ${post_sub.postId})}">
-                    <img th:src="@{'/resources/img/users/' + ${post_sub.user.username} + '/' + ${post_sub.photo}}" class="post-image" alt="">
+                <a th:href="@{/post-view-sub/{postId}(postId = ${post.postId})}">
+                    <img th:src="@{'/resources/img/users/' + ${post.user.username} + '/' + ${post.photo}}" class="post-image" alt="">
                 </a>
                 <div class="post-content">
                     <div class="reaction-wrapper">
                         <img th:src="@{/resources/img/nav/like.png}" class="icon" alt="">
-                        <a th:href="@{/comment/{postId}(postId = ${post_sub.postId})}">
-                            <img th:src="@{/resources/img/nav/comment.png}" class="icon" alt=""></a>
+                        <a th:href="@{/comment/sub/{postId}(postId = ${post.postId})}"><img th:src="@{/resources/img/nav/comment.png}" class="icon" alt=""></a>
                         <img th:src="@{/resources/img/nav/send.png}" class="icon" alt="">
                         <img th:src="@{/resources/img/nav/save.png}" class="save icon" alt="">
                     </div>
                     <p class="likes">Нравится...</p>
-                    <b class="description"><span th:text="${post_sub.user.username}"></span></b>
-                    <span class="description-normal" th:text="${post_sub.content}"></span>
-                    <p class="post-time" th:text="${#temporals.format(post_sub.createdAt, 'dd.MM.yyyy')} + ' г.'"></p>
+                    <b class="description"><span th:text="${post.user.username}"></span></b>
+                    <span class="description-normal" th:text="${post.content}"></span>
+                    <p class="post-time" th:text="${#temporals.format(post.createdAt, 'dd.MM.yyyy')} + ' г.'"></p>
 
                     <!-- Comments -->
                     <div class="view-source comments-view">
                         <!-- FIXME <a href="#" class="description comments" th:text="'Смотреть все комментарии (' + ${countComments} + ')'"></a> -->
                         <b class="description" th:text="'Комментарии:'"></b>
                         <div class="hide">
-                            <div th:each="comment_sub: ${post_sub.comments}">
+                            <div th:each="comment: ${post.comments}">
                                 <div class="media-body">
                                     <div class="info-comments">
                                         <div class="user-comments">
                                             <div class="profile-pic-comments">
-                                                <a th:href="@{/sub-posts/{user}(user = ${comment_sub.user.username})}">
+                                                <a th:href="@{/sub-posts/{user}(user = ${comment.user.username})}">
 
-                                                    <img th:if="${comment_sub.user.photo == null}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
-                                                    <img th:unless="${comment_sub.user.photo == null}" th:src="@{'/resources/img/users/' + ${comment_sub.user.username} + '/profile/' + ${comment_sub.user.photo}}" alt="">
+                                                    <img th:if="${comment.user.photo == null}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
+                                                    <img th:unless="${comment.user.photo == null}" th:src="@{'/resources/img/users/' + ${comment.user.username} + '/profile/' + ${comment.user.photo}}" alt="">
+
 
                                             </div>
                                             <div>
-                                                <b class="description-comments-user"><span th:text="${comment_sub.user.username}"></span></b></a>
-                                                <span class="description-comments" th:text="${comment_sub.commentText}"></span>
+                                                <b class="description-comments-user"><span th:text="${comment.user.username}"></span></b></a>
+                                                <span class="description-comments" th:text="${comment.commentText}"></span>
                                                 <div>
-                                                    <p class="post-time-comments" th:text="${#temporals.format(comment_sub.createdAt, 'dd.MM.yyyy HH:mm')} + ' ' + 'Ответить'"></p>
+                                                    <p class="post-time-comments" th:text="${#temporals.format(comment.createdAt, 'dd.MM.yyyy HH:mm')} + ' ' + 'Ответить'"></p>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+
+
                                 </div>
                             </div>
                         </div>
@@ -121,12 +119,13 @@
 
                 <!-- Comments Form -->
                 <div sec:authorize="hasAnyRole('USER')">
-                    <form class="comment-wrapper" method="POST" th:action="@{/comment/create_comment_detail_sub}">
-                        <input type="hidden" name="postId" th:value="${post_sub.postId}" />
+                    <form class="comment-wrapper" method="GET" th:action="@{/comment/create_comment_detail_subuser/{user}(user = ${user_sub})}">
+
+                        <input type="hidden" name="postId" th:value="${post.postId}" />
                         <div class="info-view">
                             <div class="user">
                                 <img th:src="@{/resources/img/nav/smile.png}" class="icon" alt="">
-                               <!-- <div class="profile-pic"><img th:src="@{'/resources/img/users/' + ${user} + '/profile/' + ${userinfo.photo}}" alt=""></div>-->
+                                <!-- <div class="profile-pic"><img th:src="@{'/resources/img/users/' + ${user} + '/profile/' + ${userinfo.photo}}" alt=""></div>-->
                             </div>
                         </div>
                         <input type="text" class="comment-box description" name="commentText"  th:placeholder="'Комментировать как ' + ${user} + '...'">

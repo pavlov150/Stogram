@@ -19,7 +19,7 @@
                 <div class="info">
                     <div class="user">
                         <div class="profile-pic">
-                            <a th:href="@{/posts_detail}">
+                            <a th:href="@{/posts_detail_subuser/{postId}/(postId = ${post.user.username})}">
                                 <img th:src="@{'/resources/img/nav/arrow-left.png'}" alt="">
                             </a>
                         </div>
@@ -30,55 +30,45 @@
             </div>
 
             <div class="post" th:object="${post}">
-
                 <input type="hidden" th:field="*{postId}"/>
                 <div class="post-content">
-
                     <b class="description"><span th:text="${post.user.username}"></span></b>
                     <span class="description-normal" th:text="${post.content}"></span>
                     <p class="post-time" th:text="${#temporals.format(post.createdAt, 'dd.MM.yyyy')} + ' г.'"></p>
-                <hr>
+                    <hr>
+
                     <!-- Comments -->
                     <div class="view-source comments-view">
-                            <div th:each="comment: ${comments}">
-                                <div class="media-body">
-                                    <div class="info-comments">
-                                        <div class="user-comments">
-
-                                           <div class="profile-pic-comments">
-
-                                               <img th:if="${comment.user.photo == null}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
-                                               <img th:unless="${comment.user.photo == null}" th:src="@{'/resources/img/users/' + ${comment.user.username} + '/profile/' + ${comment.user.photo}}" alt="">
-
-
-                                           </div>
+                        <div th:each="comment: ${comments}">
+                            <div class="media-body">
+                                <div class="info-comments">
+                                    <div class="user-comments">
+                                        <div class="profile-pic-comments">
+                                            <img th:if="${comment.user.photo == null}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
+                                            <img th:unless="${comment.user.photo == null}" th:src="@{'/resources/img/users/' + ${comment.user.username} + '/profile/' + ${comment.user.photo}}" alt="">
+                                        </div>
+                                        <div>
+                                            <b class="description-comments-user"><span th:text="${comment.user.username}"></span></b>
+                                            <span class="description-comments" th:text="${comment.commentText}"></span>
                                             <div>
-                                                <b class="description-comments-user"><span th:text="${comment.user.username}"></span></b>
-                                                <span class="description-comments" th:text="${comment.commentText}"></span>
-                                                <div>
-                                                    <p class="post-time-comments" th:text="${#temporals.format(comment.createdAt, 'dd.MM.yyyy HH:mm')} + ' ' + 'Ответить'"></p>
-                                                </div>
+                                                <p class="post-time-comments" th:text="${#temporals.format(comment.createdAt, 'dd.MM.yyyy HH:mm')} + ' ' + 'Ответить'"></p>
                                             </div>
-
                                         </div>
                                     </div>
-
-
-
-
                                 </div>
                             </div>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Comments Form -->
                 <div sec:authorize="hasAnyRole('USER')">
-                    <form class="comment-wrapper" method="POST" th:action="@{/comment/create_comment}">
+                    <form class="comment-wrapper" method="POST" th:action="@{/comment/create_comment_subuser}">
                         <input type="hidden" name="postId" th:value="${post.postId}" />
                         <div class="info-view">
                             <div class="user">
                                 <img th:src="@{/resources/img/nav/smile.png}" class="icon" alt="">
-                               <!-- <div class="profile-pic"><img th:src="@{'/resources/img/users/' + ${user} + '/profile/' + ${userinfo.photo}}" alt=""></div>-->
+                                <!-- <div class="profile-pic"><img th:src="@{'/resources/img/users/' + ${user} + '/profile/' + ${userinfo.photo}}" alt=""></div>-->
                             </div>
                         </div>
                         <input type="text" class="comment-box description" name="commentText"  th:placeholder="'Комментировать как ' + ${user} + '...'">
@@ -86,12 +76,6 @@
                         <button class="comment-btn">Опубликовать</button>
                     </form>
                 </div>
-
-
-
-
-
-
             </div>
         </div>
         <!-- Right Column -->

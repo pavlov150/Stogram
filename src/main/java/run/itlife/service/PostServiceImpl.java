@@ -166,4 +166,10 @@ public class PostServiceImpl implements PostService {
         return posts;
     }
 
+    @Override
+    public int countSubscribesPosts(String username) {
+        int count = postRepository.countSubscribesPosts(username);
+        return count;
+    }
+
 }

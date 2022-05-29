@@ -47,5 +47,10 @@ public class CommentServiceImpl implements CommentService {
             return comments;
     }
 
+/*    @Override
+    public List<Comment> getLastComments() {
+        return commentRepository.getLastComments();
+    }*/
+
 
 }

@@ -65,6 +65,7 @@ public class UserController {
     @GetMapping("/profile_edit/{user}")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public String profile_edit(ModelMap modelMap, @PathVariable String user){
+        modelMap.put("user", user);
         modelMap.put("userinfo", userService.findByUsername(user));
         modelMap.put("sex_male", Sex.MALE);
         modelMap.put("sex_female", Sex.FEMALE);
@@ -138,6 +139,33 @@ public class UserController {
         modelMap.put("sub", subscriptionsRepository.findSubscribers(SecurityContextHolder.getContext().getAuthentication().getName()));
 
         return "subscribers";
+    }
+
+
+    @GetMapping("/subscriptions_subuser/{user}")
+    public String find_Subscribes_subuser(ModelMap modelMap, @PathVariable String user) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        modelMap.put("user", username);
+        modelMap.put("userinfo", userService.findByUsername(username));
+        modelMap.put("userslist", userService.findAll());
+        modelMap.put("sub", subscriptionsRepository.findSubscribes(user));
+     //   modelMap.put("userinfo_sub", userService.findByUsername(user));
+      //  modelMap.put("user_sub", user);
+
+        return "subscriptions-subuser";
+    }
+
+    @GetMapping("/subscribers_subuser/{user}")
+    public String find_Subscribers_subuser(ModelMap modelMap, @PathVariable String user) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        modelMap.put("user", username);
+        modelMap.put("userinfo", userService.findByUsername(username));
+        modelMap.put("userslist", userService.findAll());
+      //  modelMap.put("user_sub", user);
+      //  modelMap.put("userinfo_sub", userService.findByUsername(user));
+        modelMap.put("sub", subscriptionsRepository.findSubscribers(user));
+
+        return "subscribers-subuser";
     }
 
 }

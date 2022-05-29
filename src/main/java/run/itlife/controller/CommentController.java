@@ -1,6 +1,7 @@
 package run.itlife.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -37,13 +38,31 @@ public class CommentController {
         return "redirect:/post/" + comment.getPostId();
     }
 
+    @PostMapping("/create_subuser_comment")
+    public String create_subuser_comment(CommentDto comment){
+        commentService.create(comment);
+        return "redirect:/post-view-sub/" + comment.getPostId();
+    }
+
+
+
+
+
     @PostMapping("/create_comment_detail")
     public String create_comment_detail(CommentDto comment){
         commentService.create(comment);
         return "redirect:/posts_detail/";
     }
 
+    @GetMapping("/create_comment_detail_subuser/{user}")
+    @PreAuthorize("hasRole('USER')")
+    public String create_comment_detail_subuser(CommentDto comment, @PathVariable String user){
+        commentService.create(comment);
+        return "redirect:/posts_detail_subuser/" + user;
+    }
+
     @PostMapping("/create_comment_detail_sub")
+    @PreAuthorize("hasRole('USER')")
     public String create_comment_detail_sub(CommentDto comment){
         commentService.create(comment);
         return "redirect:/";
@@ -55,18 +74,37 @@ public class CommentController {
         return "redirect:/comment/" + comment.getPostId();
     }
 
+
+    @PostMapping("/create_comment_subuser")
+    public String create_comment_subuser(CommentDto comment){
+        commentService.create(comment);
+        return "redirect:/comment/sub/" + comment.getPostId();
+    }
+
     @GetMapping("/{id}")
     public String comments(@PathVariable long id, ModelMap modelMap){
         modelMap.put("post", postService.findById(id));
         modelMap.put("comments", commentService.sortCommentsByDate(id));
         modelMap.put("countComments", postService.countComments(id));
-      //  modelMap.put("users", userService.findAll());
-      //  modelMap.put("contextPath", context.getContextPath());
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         modelMap.put("user", username);
         modelMap.put("userinfo", userService.findByUsername(username));
+        modelMap.put("userslist", userService.findAll());
 
         return "comments";
+    }
+
+    @GetMapping("/sub/{id}")
+    public String comments_sub(@PathVariable long id, ModelMap modelMap){
+        modelMap.put("post", postService.findById(id));
+        modelMap.put("comments", commentService.sortCommentsByDate(id));
+        modelMap.put("countComments", postService.countComments(id));
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        modelMap.put("user", username);
+        modelMap.put("userinfo", userService.findByUsername(username));
+        modelMap.put("userslist", userService.findAll());
+
+        return "comments-sub";
     }
 
 }

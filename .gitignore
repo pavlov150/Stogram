@@ -8,6 +8,7 @@
 build/
 src/main/gen
 target/
+src/main/webapp/resources/img/users
 
 # Compiled class file
 *.class

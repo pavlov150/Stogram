@@ -12,4 +12,6 @@ public interface CommentService {
 
     List<Comment> sortCommentsByDate(long id);
 
+    //List<Comment> getLastComments();
+
 }

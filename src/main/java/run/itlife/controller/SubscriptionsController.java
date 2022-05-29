@@ -1,16 +1,12 @@
 package run.itlife.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import run.itlife.repository.SubscriptionsRepository;
 import run.itlife.service.PostService;
 import run.itlife.service.SubscriptionsService;
 import run.itlife.service.UserService;
@@ -35,15 +31,18 @@ public class SubscriptionsController {
     @GetMapping("/sub-posts/{user}")
     @PreAuthorize("hasRole('USER')")
     public String index(ModelMap modelMap, @PathVariable String user) {
-        modelMap.put("userinfo", userService.findByUsername(user));
+        modelMap.put("userinfo_sub", userService.findByUsername(user));
+        modelMap.put("user_sub", user);
         modelMap.put("posts", postService.sortedPostsByDate(user));
-        modelMap.put("user", user);
-       // modelMap.put("userinfo", userService.findByUsername(user));
         modelMap.put("countPosts", postService.countPosts(user));
         modelMap.put("isSub", subscriptionsService.isSubscribe(SecurityContextHolder.getContext().getAuthentication().getName(), user));
-       // modelMap.put("unsub", subscriptionsService.searchForUnSubscribes(SecurityContextHolder.getContext().getAuthentication().getName(), user));
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        modelMap.put("user", username);
+        modelMap.put("userinfo", userService.findByUsername(username));
+        modelMap.put("countSubscribe", subscriptionsService.countSubscribe(user));
+        modelMap.put("countSubscribers", subscriptionsService.countSubscribers(user));
 
-        return "sub-posts";
+        return "posts-sub";
     }
 
     @GetMapping("/subscription/{user}")

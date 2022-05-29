@@ -21,10 +21,9 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
             "order by c.created_at ", nativeQuery = true)
     List<Comment> sortCommentsByDate(long id);
 
-
-
-
-
-
+   /* @Query(value = "select * from comment " +
+            "order by created_at desc " +
+            "LIMIT 2 ", nativeQuery = true)
+    List<Comment> getLastComments();*/ /* TODO для post-detail вывести последние 2 сообщения и добавить счетчик */
 
 }

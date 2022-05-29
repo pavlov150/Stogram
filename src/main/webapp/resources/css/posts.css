@@ -75,7 +75,7 @@ body{
 }
 
 .user-profile{
-  width: 22px;
+  width: 28px;
   border-radius: 50%;
   background-size: cover;
 }
@@ -474,7 +474,11 @@ a {
   /*opacity: 0.4;*/
 }
 
+.no_public {
+  text-align: center;
+  padding-top: 30px;
 
+}
 .comment-btn,
 .action-btn{
   width: 150px;
@@ -489,7 +493,7 @@ a {
 }
 
 .comments-view {
-  margin-top: -7px;
+  margin-top: 0px;
   margin-bottom: 5px;
 }
 

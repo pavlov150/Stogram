@@ -35,4 +35,6 @@ public interface PostService {
 
     List<Post> findSubscribesPosts(String username);
 
+    int countSubscribesPosts(String username);
+
 }

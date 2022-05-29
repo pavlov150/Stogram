@@ -21,7 +21,9 @@
                         <div class="form-group">
                             <input type="hidden" th:field="*{userId}"/>
                             <br>
-                            <img th:src="@{'/resources/img/users/' + ${user} + '/profile/' + ${userinfo.photo}}" th:height="300px">
+                            <img th:if="${userinfo.photo == null}" th:src="@{'/resources/img/icons/avatar.jpg'}" th:height="300px" alt="">
+                            <img th:unless="${userinfo.photo == null}" th:src="@{'/resources/img/users/' + ${user} + '/profile/' + ${userinfo.photo}}" th:height="300px" alt="">
+
                             <br><br>
                             Выберите фото для аватарки: <input type="file" name="file">
                             <br><br>

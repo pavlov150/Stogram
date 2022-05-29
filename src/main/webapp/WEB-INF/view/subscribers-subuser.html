@@ -14,7 +14,6 @@
     <div class="wrapper">
         <div class="left-col">
 
-
             <!-- Subscribes -->
             <div class="post">
                 <div class="info">
@@ -53,46 +52,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Recomendations -->
-            <div class="post">
-                <div class="info">
-                    <div class="user">
-                        <p class="comments-logo">Рекомендации для вас</p>
-                    </div>
-                </div>
-            </div>
-            <div class="post">
-                <div class="post-content">
-                    <div class="view-source comments-view">
-                        <div th:each="users: ${userslist}">
-                            <div class="media-body">
-                                <div class="info-comments">
-                                    <div class="user-comments">
-                                        <div class="profile-card">
-                                            <div class="profile-pic-comments">
-                                                <a th:href="@{/sub-posts/{user}(user = ${users.username})}">
-
-                                                    <img th:if="${users.photo == null}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
-                                                    <img th:unless="${users.photo == null}" th:src="@{'/resources/img/users/' + ${users.username} + '/profile/' + ${users.photo}}" alt="">
-
-                                                </a>
-                                            </div>
-                                            <div>
-                                                <b class="description-comments-user"><span th:text="${users.username}"></span></b>
-                                                <div>
-                                                    <p th:if="${users.surname != null && users.firstname != null}" class="post-time-comments" th:text="${users.surname} + ' ' + ${users.firstname}" ></p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
 
         </div>
 

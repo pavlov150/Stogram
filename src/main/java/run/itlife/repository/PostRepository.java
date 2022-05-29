@@ -43,7 +43,11 @@ public interface PostRepository extends JpaRepository<Post, Long> {
             "order by p.created_at desc; ", nativeQuery = true)
     List<Post> findSubscribesPosts(String username);
 
-
+    @Query(value = "select count(p.post_id) from post p " +
+            "join subscriptions s on s.user_sub_id = p.user_id " +
+            "join users u on u.user_id = s.user_id " +
+            "where u.username = ? ", nativeQuery = true)
+    int countSubscribesPosts(String username);
 
 
 

@@ -6,22 +6,9 @@
     </head>
 
     <script th:inline="javascript">var contextPath = [[${#httpServletRequest.getContextPath()}]];</script>
-    <script th:inline="javascript">var countComments = [[${countComments}]];</script>
     <script type="text/javascript" th:src="@{/resources/js/delete-post.js}"></script>
     <script type="text/javascript" th:src="@{/resources/js/jquery-1.11.0.min.js}"></script>
-    <script>
-        $(function(){
-            $('.view-source .hide').hide();
-            $a = $('.view-source a');
-            $a.on('click', function(event) {
-                event.preventDefault();
-                $a.not(this).next().slideUp(500);
-                $a.not(this).text('Смотреть все комментарии(' + countComments + ')');
-                $(this).next().slideToggle(500);
-                $(this).text($(this).text()=='Скрыть комментарии'?'Смотреть все комментарии (' + countComments + ')':'Скрыть комментарии');
-            });
-        });
-    </script>
+
     <!-- Navigation -->
     <body>
         <nav class="navbar" th:insert="fragments.html :: navigation"></nav>
@@ -34,14 +21,19 @@
                         <input type="hidden" th:field="*{postId}"/>
                         <div class="info">
                             <div class="user">
-                                <div class="profile-pic"><img th:src="@{'/resources/img/users/' + ${user} + '/profile/' + ${userinfo.photo}}" alt=""></div>
+                                <div class="profile-pic">
+
+                                    <img th:if="${userinfo.photo == null}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
+                                    <img th:unless="${userinfo.photo == null}" th:src="@{'/resources/img/users/' + ${user} + '/profile/' + ${userinfo.photo}}" alt="">
+                                    <!-- FIXME В ${user} заменить на post.user.username. Проверить везде и затем на самих страницах поменяв пользователя -->
+
+                                </div>
                                 <p class="username" th:text="${post.user.username}"></p>
                             </div>
                             <a th:if="${#authentication.name == post.user.username}" th:href="@{/post/{postId}/delete_one_post(postId = ${post.postId})}"><img th:src="@{/resources/img/nav/delete.png}" class="options" alt=""></a>
                             <a th:if="${#authentication.name == post.user.username}" th:href="@{/post/{postId}/edit(postId = ${post.postId})}"><img th:src="@{/resources/img/nav/option.png}" class="options" alt=""></a>
                         </div>
                             <img th:src="@{'/resources/img/users/' + ${post.user.username} + '/' + ${post.photo}}" class="post-image" alt="">
-
                         <div class="post-content">
                             <div class="reaction-wrapper">
                                 <img th:src="@{/resources/img/nav/like.png}" class="icon" alt="">
@@ -50,20 +42,26 @@
                                 <img th:src="@{/resources/img/nav/save.png}" class="save icon" alt="">
                             </div>
                             <p class="likes">Нравится...</p>
-                            <p class="description"><span th:text="${post.user.username}"></span></p>
-                            <p class="description" th:text="${post.content}"></p>
+                            <b class="description"><span th:text="${post.user.username}"></span></b>
+                            <span class="description" th:text="${post.content}"></span>
+                            <p class="post-time" th:text="${#temporals.format(post.createdAt, 'dd.MM.yyyy')} + ' г.'"></p>
 
                             <!-- Comments -->
                             <div class="view-source comments-view">
-                                <a href="#" class="description comments" th:text="'Смотреть все комментарии (' + ${countComments} + ')'"></a>
-                                <div class="hide">
+                              <!--  <a th:href="@{/comment/{postId}(postId = ${post.postId})}" class="description comments" th:text="'Смотреть все комментарии (' + ${countComments} + ')'"></a>-->
+                                <b class="description" th:text="'Комментарии:'"></b>
+                                <div>
                                     <div th:each="comment: ${comments}">
                                         <div class="media-body">
                                             <div class="info-comments">
                                                 <div class="user-comments">
-                                                    <div class="profile-pic-comments"><img th:src="@{'/resources/img/users/' + ${comment.user.username} + '/profile/' + ${comment.user.photo}}" alt=""></div>
+                                                    <div class="profile-pic-comments">
+                                                        <a th:href="@{/sub-posts/{user}(user = ${comment.user.username})}">
+                                                        <img th:if="${comment.user.photo == null}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
+                                                        <img th:unless="${comment.user.photo == null}" th:src="@{'/resources/img/users/' + ${comment.user.username} + '/profile/' + ${comment.user.photo}}" alt="">
+                                                    </div>
                                                     <div>
-                                                        <b class="description-comments-user"><span th:text="${comment.user.username}"></span></b>
+                                                        <b class="description-comments-user"><span th:text="${comment.user.username}"></span></b></a>
                                                         <span class="description-comments" th:text="${comment.commentText}"></span>
                                                         <div>
                                                             <p class="post-time-comments" th:text="${#temporals.format(comment.createdAt, 'dd.MM.yyyy HH:mm')} + ' ' + 'Ответить'"></p>
@@ -71,14 +69,10 @@
                                                     </div>
                                                 </div>
                                             </div>
-
-
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
-                            <p class="post-time" th:text="${#temporals.format(post.createdAt, 'dd.MM.yyyy')} + ' г.'"></p>
                         </div>
 
                         <!-- Comments Form -->

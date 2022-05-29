@@ -60,6 +60,7 @@ public class PostController {
         modelMap.put("userslist", userService.findAll());
         modelMap.put("user", username);
         modelMap.put("userinfo", userService.findByUsername(username));
+        modelMap.put("countPosts", postService.countSubscribesPosts(username));
 
         return "posts-detail-sub";
     }
@@ -86,6 +87,7 @@ public class PostController {
         modelMap.put("posts", postService.sortedPostsByDate(username));
         modelMap.put("userslist", userService.findAll());
       //  modelMap.put("comments", commentService.sortCommentsByDate(id));
+      //  modelMap.put("lastComments", commentService.getLastComments());
         modelMap.put("user", username);
         modelMap.put("userinfo", userService.findByUsername(username));
 
@@ -94,11 +96,32 @@ public class PostController {
         return "posts-detail";
     }
 
+    @GetMapping("/posts_detail_subuser/{user}")
+    @PreAuthorize("hasRole('USER')")
+    public String posts_detail_subuser(ModelMap modelMap, @PathVariable String user) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        modelMap.put("posts", postService.sortedPostsByDate(user));
+        modelMap.put("userslist", userService.findAll());
+        modelMap.put("user_sub", user);
+        modelMap.put("userinfo_sub", userService.findByUsername(user));
+        modelMap.put("user", username);
+        modelMap.put("userinfo", userService.findByUsername(username));
+
+        return "posts-detail-subuser";
+    }
+
+
+
+
+
 
     @GetMapping("/post/new")
     @PreAuthorize("hasRole('USER')")
     public String postNew(ModelMap modelMap) {
         setCommonParams(modelMap);
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        modelMap.put("user", username);
+        modelMap.put("userinfo", userService.findByUsername(username));
         return "post-new";
     }
 
@@ -124,8 +147,7 @@ public class PostController {
 
                 // получение имени фото и сохранение имени фото и данных поста в БД
                 postDto.setPhoto(filename);
-                postService.createPost(postDto);
-
+                long postId = postService.createPost(postDto);
                 // сохранение самого файла в папку юзера
                 File dir = new File(context.getRealPath("/resources/img/users/" + username));
                 if (!dir.exists()) {
@@ -144,7 +166,7 @@ public class PostController {
                 newFileJPG = new File(dir.getAbsolutePath() + File.separator + filename);
                 ImageIO.write(resizeImage, "jpg", newFileJPG);
 
-                return "redirect:/";
+                return "redirect:/post/" + postId;
             } catch (Exception e) {
                 return "error";
             }
@@ -159,7 +181,9 @@ public class PostController {
     public String postEdit(ModelMap modelMap, @PathVariable long postId) {
         postService.checkAuthority(postId);
         modelMap.put("post", postService.getAsDto(postId));
-        modelMap.put("user", SecurityContextHolder.getContext().getAuthentication().getName());
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        modelMap.put("user", username);
+        modelMap.put("userinfo", userService.findByUsername(username));
         setCommonParams(modelMap);
         return "post-edit";
     }
@@ -199,15 +223,29 @@ public class PostController {
                 newFileJPG = new File(dir.getAbsolutePath() + File.separator + filename);
                 ImageIO.write(resizeImage, "jpg", newFileJPG);
 
-                return "redirect:/";
+                return "redirect:/post/" + postDto.getPostId();
             } catch (Exception e) {
                 return "error";
             }
         } else {
             postService.checkAuthority(postDto.getPostId());
             postService.update(postDto);
-            return "redirect:/";
+            return "redirect:/post/" + postDto.getPostId();
         }
+    }
+
+    @GetMapping("/post-view-sub/{id}")
+    public String post_view_sub(@PathVariable long id, ModelMap modelMap){
+        modelMap.put("post", postService.findById(id));
+        modelMap.put("comments", commentService.sortCommentsByDate(id));
+        modelMap.put("countComments", postService.countComments(id));
+        setCommonParams(modelMap);
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        modelMap.put("user", username);
+        modelMap.put("userinfo", userService.findByUsername(username));
+        modelMap.put("userslist", userService.findAll());
+
+        return "post-view-sub";
     }
 
     @GetMapping("/post/{id}")

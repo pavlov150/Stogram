@@ -82,7 +82,8 @@
 
                         <ul class="icon user-profile nav-list" sec:authorize="isAuthenticated()">
                             <li>
-                                <img class="icon user-profile" th:src="@{/resources/img/nav/profile-pic.png}">
+                                <img th:if="${userinfo.photo == null}" class="icon user-profile" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
+                                <img th:unless="${userinfo.photo == null}" class="icon user-profile" th:src="@{'/resources/img/users/' + ${user} + '/profile/' + ${userinfo.photo}}" alt="">
                                 <ul class="nalumes-nucludem">
                                     <li>
                                         <a th:href="@{/posts}">Профиль</a>
@@ -108,36 +109,37 @@
 
         <!-- Right Column -->
         <div class="right-col" th:fragment="right-column">
-            <div class="profile-card">
+            <!--<div class="profile-card">
                 <div class="profile-pic">
-
-                    <img th:src="@{'/resources/img/users/' + ${user} + '/profile/' + ${userinfo.photo}}" alt="">
-
+                    <img th:if="${userinfo.photo == null}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
+                    <img th:unless="${userinfo.photo == null}" th:src="@{'/resources/img/users/' + ${user} + '/profile/' + ${userinfo.photo}}" alt="">
                 </div>
                 <div>
                     <p class="username" th:text="${user}"></p>
                     <p class="sub-text"></p>
                 </div>
                 <button class="action-btn">Переключиться</button>
-            </div>
+            </div>-->
             <p class="suggestion-text">Рекомендации для вас</p>
             <div class="profile-card" th:each="users: ${userslist}">
                 <div class="profile-pic">
                     <a th:href="@{/sub-posts/{user}(user = ${users.username})}">
-                    <img th:src="@{'/resources/img/users/' + ${users.username} + '/profile/' + ${users.photo}}" alt="">
-                    </a>
+                        <img th:if="${users.photo == null}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
+                        <img th:unless="${users.photo == null}" th:src="@{'/resources/img/users/' + ${users.username} + '/profile/' + ${users.photo}}" alt="">
+
+
                 </div>
                 <div>
-                    <p th:text="${users.username}" class="username"></p>
-                    <p th:text="${users.surname} + ' ' + ${users.firstname}" class="sub-text"></p>
+                    <p th:text="${users.username}" class="username"></p></a>
+                    <p th:if="${users.surname != null && users.firstname != null}" th:text="${users.surname} + ' ' + ${users.firstname}" class="sub-text"></p>
                 </div>
               <!--  <button class="action-btn">Подписаться</button> -->
             </div>
         </div>
 
         <!-- Footer -->
-        <p class="text-muted" th:fragment="footer-login">© 2022 Stogram (version 1.15.0 Pre-Alpha). Обнаружили ошибку? <a class="description comments" th:href="@{bug/new}">Напишите нам</a></p>
-        <footer class="text-muted" th:fragment="footer">© 2022 Stogram (version 1.15.0 Pre-Alpha). Обнаружили ошибку? <a class="description comments" th:href="@{bug/new}">Напишите нам</a></footer>
+        <p class="text-muted" th:fragment="footer-login">© 2022 Stogram (version 1.16.5 Pre-Alpha). Обнаружили ошибку? <a class="description comments" th:href="@{bug/new}">Напишите нам</a></p>
+        <footer class="text-muted" th:fragment="footer">© 2022 Stogram (version 1.16.5 Pre-Alpha). Обнаружили ошибку? <a class="description comments" th:href="@{bug/new}">Напишите нам</a></footer>
 
     </body>
 </html>
