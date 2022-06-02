@@ -27,12 +27,21 @@ public class BugsController {
     @GetMapping("/bug/new")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public String bugNew(ModelMap modelMap) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        modelMap.put("user", username);
+        modelMap.put("userinfo", userService.findByUsername(username));
+        modelMap.put("userOnlyList", userService.getUsersOnly());
+
         return "bugs-add";
     }
 
     @PostMapping("/bug/new")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public String postNew(BugsDto bugsDto) {
+    public String postNewBug(BugsDto bugsDto, ModelMap modelMap) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        modelMap.put("user", username);
+        modelMap.put("userinfo", userService.findByUsername(username));
+        modelMap.put("userOnlyList", userService.getUsersOnly());
         bugsService.create(bugsDto);
         return "message-send";
     }
@@ -45,7 +54,10 @@ public class BugsController {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         modelMap.put("user", username);
         modelMap.put("userinfo", userService.findByUsername(username));
+        modelMap.put("userOnlyList", userService.getUsersOnly());
+
         return "bugs";
     }
+
 
 }

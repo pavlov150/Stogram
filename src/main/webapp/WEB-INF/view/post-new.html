@@ -20,7 +20,7 @@
                     <form method="POST" th:action="@{/post/new}" enctype="multipart/form-data">
                         <div class="form-group">
                             <br>
-                            Выберите фото для загрузки: <input type="file" name="file">
+                            Выберите фото или видео для загрузки: <input type="file" name="file">
                             <br>
                             <br>
                             <textarea name="content" class="form-control" rows="4" placeholder="Введите текст поста"></textarea>
@@ -28,14 +28,15 @@
                         <br>
                         <button type="submit" class="btn btn-outline-dark">Опубликовать пост</button>
                     </form>
+                    <!-- Footer -->
+                    <footer th:insert="fragments.html :: footer"></footer>
                 </div>
             </div>
             <!-- /.row -->
         </div>
         <!-- /.container -->
 
-        <!-- Footer -->
-        <footer th:insert="fragments.html :: footer"></footer>
+
 
         <!-- Bootstrap core JavaScript -->
         <script src="vendor/jquery/jquery.min.js"></script>

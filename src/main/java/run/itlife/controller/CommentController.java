@@ -90,6 +90,7 @@ public class CommentController {
         modelMap.put("user", username);
         modelMap.put("userinfo", userService.findByUsername(username));
         modelMap.put("userslist", userService.findAll());
+        modelMap.put("userOnlyList", userService.getUsersOnly());
 
         return "comments";
     }
@@ -103,6 +104,7 @@ public class CommentController {
         modelMap.put("user", username);
         modelMap.put("userinfo", userService.findByUsername(username));
         modelMap.put("userslist", userService.findAll());
+        modelMap.put("userOnlyList", userService.getUsersOnly());
 
         return "comments-sub";
     }

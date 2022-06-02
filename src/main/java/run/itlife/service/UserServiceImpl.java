@@ -97,4 +97,19 @@ public class UserServiceImpl implements UserService {
                 .getUsername());
     }
 
+    @Override
+    public List<User> getUsersOnly() {
+        return userRepository.getUsersOnly();
+    }
+
+    @Override
+    public List<User> searchUsers(String substring) {
+        return userRepository.searchUsers("%" + substring +"%");
+    }
+
+    @Override
+    public int countSearchUsers(String substring) {
+        return userRepository.countSearchUsers("%" + substring +"%");
+    }
+
 }

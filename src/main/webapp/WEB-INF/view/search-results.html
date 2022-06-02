@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:include="fragments.html :: header">
+    <title id="pageTitle">Stogram - Профиль</title>
+</head>
+<!-- Navigation -->
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" th:insert="fragments.html :: navigation"></nav>
+
+<!-- Page Content -->
+<section class="main">
+    <div class="wrapper">
+        <div class="left-col">
+            <div class="post">
+                <div class="info">
+                    <div class="user">
+                        <p class="comments-logo">Найдено пользователей</p>
+                        <p class="comments-logo" th:text="'(' + ${countSearchUsers} + ')'"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="post">
+                <div class="post-content">
+                    <div class="view-source comments-view">
+                        <div th:each="results: ${findUsers}">
+                            <div class="media-body">
+                                <div class="info-comments">
+                                    <div class="user-comments">
+                                        <div  class="profile-card">
+                                            <div class="profile-pic-comments">
+                                                <a th:href="@{/sub-posts/{user}(user = ${results.username})}">
+                                                    <img th:if="${results.photo == null}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
+                                                    <img th:unless="${results.photo == null}" th:src="@{'/resources/img/users/' + ${results.username} + '/profile/' + ${results.photo}}" alt="">
+                                                </a>
+                                            </div>
+                                            <div>
+                                                <a th:href="@{/sub-posts/{user}(user = ${results.username})}">
+                                                    <b class="description-comments-user"><span th:text="${results.username}"></span></b>
+                                                </a>
+                                                <div>
+                                                    <p th:if="${results.surname != null && results.firstname != null}" class="post-time-comments" th:text="${results.surname} + ' ' + ${results.firstname}"></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="usersNotFound" th:if="${countSearchUsers == 0}">Пользователи не найдены</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="post">
+                <div class="info">
+                    <div class="user">
+                        <p class="comments-logo">Найдено постов с тегом</p>
+                        <p class="comments-logo" th:text="' #' + ${tagUserName}"></p>
+                        <p class="comments-logo" th:text="'(' + ${countSearchTags} + ')'"></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="post">
+                <div class="post-content">
+                    <div class="view-source comments-view">
+                        <div class="row">
+                            <div class="col-md-4" th:each="tag: ${findTags}">
+                                <a th:href="@{/post-view-sub/{postId}(postId = ${tag.postId})}">
+                                    <div class="card mb-4">
+                                        <img th:if="${tag.extFile == 'jpg'}" th:src="@{'/resources/img/users/' + ${tag.user.username} + '/' + ${tag.photo}}">
+                                        <video th:if="${tag.extFile == 'mp4'}" height="100%" autoplay controls loop muted>
+                                            <source th:src="@{'/resources/video/users/' + ${tag.user.username} + '/' + ${tag.photo}}" type=video/mp4>
+                                        </video>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <p class="usersNotFound" th:if="${countSearchTags == 0}" th:text="'Посты с тегом #' + ${tagUserName} + ' не найдены'"></p>
+                    </div>
+                </div>
+            </div>
+            <!-- Footer -->
+            <footer th:insert="fragments.html :: footer"></footer>
+        </div>
+
+        <!-- Right Column -->
+        <div th:insert="fragments.html :: right-column"></div>
+    </div>
+</section>
+
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script>window.jQuery || document.write('<script src="../assets/js/vendor/jquery.slim.min.js"><\/script>')</script>
+<script src="../resources/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

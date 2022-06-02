@@ -53,6 +53,9 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "userId" )
     private List<Bugs> bugs;
 
+    @OneToMany(mappedBy = "userLikeId")
+    private List<Likes> userLike;
+
     @Column(name = "is_active")
     private boolean isActive;
 
@@ -79,7 +82,15 @@ public class User implements UserDetails {
         this.roles = roles;
     }
 
-	@Override		 
+    public List<Likes> getUserLike() {
+        return userLike;
+    }
+
+    public void setUserLike(List<Likes> userLike) {
+        this.userLike = userLike;
+    }
+
+    @Override
     public String getUsername() {
         return username;
     }

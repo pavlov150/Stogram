@@ -1,3 +1,4 @@
+drop table if exists likes;
 drop table if exists post_tag;
 drop table if exists tag;
 drop table if exists comment;
@@ -37,9 +38,15 @@ CREATE TABLE subscriptions (
     user_id bigint REFERENCES users(user_id),
     user_sub_id bigint REFERENCES users(user_id));
 
+CREATE TABLE likes (
+    like_id bigserial PRIMARY KEY,
+    user_id bigint REFERENCES users(user_id),
+    post_id bigint REFERENCES post(post_id));
+
 CREATE TABLE post (
     post_id bigserial PRIMARY KEY,
     photo varchar(15),
+    extention varchar(5),
     content text NOT NULL,
     user_id bigint REFERENCES users(user_id),
     created_at timestamp without time zone NOT NULL,
@@ -52,8 +59,6 @@ CREATE TABLE comment (
     comment_text text,
     created_at timestamp without time zone,
     updated_at timestamp without time zone);
-
-
 
 CREATE TABLE bugs (
     bug_id bigserial PRIMARY KEY,

@@ -4,6 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import run.itlife.entity.Comment;
 import run.itlife.entity.Post;
+import run.itlife.entity.User;
 
 import java.util.List;
 
@@ -48,6 +49,18 @@ public interface PostRepository extends JpaRepository<Post, Long> {
             "join users u on u.user_id = s.user_id " +
             "where u.username = ? ", nativeQuery = true)
     int countSubscribesPosts(String username);
+
+    @Query(value = "select p.* from post p " +
+            "where p.content LIKE ? ", nativeQuery = true)
+    List<Post> searchTags(String substring);
+
+    @Query(value = "select count(p.*) from post p " +
+            "where p.content LIKE ? ", nativeQuery = true)
+    int countSearchTags(String substring);
+
+
+
+
 
 
 

@@ -10,6 +10,7 @@ import run.itlife.dto.PostDto;
 import run.itlife.entity.Bugs;
 import run.itlife.entity.Comment;
 import run.itlife.entity.Post;
+import run.itlife.entity.User;
 import run.itlife.repository.PostRepository;
 import run.itlife.repository.UserRepository;
 import run.itlife.utils.SecurityUtils;
@@ -61,6 +62,7 @@ public class PostServiceImpl implements PostService {
     public long createPost(PostDto postDto) {
         Post post = new Post();
         post.setPhoto(postDto.getPhoto());
+        post.setExtFile(postDto.getExtFile());
         post.setContent(postDto.getContent());
         post.setCreatedAt(LocalDateTime.now());
         String username = SecurityUtils.getCurrentUserDetails().getUsername();
@@ -90,6 +92,8 @@ public class PostServiceImpl implements PostService {
             post.setPhoto(postDto.getPhoto());
         if (!StringUtils.isEmpty(postDto.getContent()))
             post.setContent(postDto.getContent());
+        if (!StringUtils.isEmpty(postDto.getExtFile()))
+            post.setExtFile(postDto.getExtFile());
         postRepository.save(post);
     }
 
@@ -149,6 +153,7 @@ public class PostServiceImpl implements PostService {
         dto.setPostId(post.getPostId());
         dto.setPhoto(post.getPhoto());
         dto.setContent(post.getContent());
+        dto.setExtFile(post.getExtFile());
         /*dto.setTags(post.getTags()
                 .stream()
                 .map(Tag::getName)
@@ -171,5 +176,19 @@ public class PostServiceImpl implements PostService {
         int count = postRepository.countSubscribesPosts(username);
         return count;
     }
+
+    @Override
+    public List<Post> searchTags(String substring) {
+        List<Post> posts = postRepository.searchTags("%#" + substring +"%");
+
+        return posts;
+    }
+
+    @Override
+    public int countSearchTags(String substring) {
+
+        return postRepository.countSearchTags("%#" + substring +"%");
+    }
+
 
 }

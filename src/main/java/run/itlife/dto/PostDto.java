@@ -11,12 +11,19 @@ public class PostDto {
 
     private Long postId;
     private String photo;
+    private String extFile;
     private String content;
     private String username;
 
     public PostDto() {}
 
+    public String getExtFile() {
+        return extFile;
+    }
 
+    public void setExtFile(String extFile) {
+        this.extFile = extFile;
+    }
 
     private LocalDateTime createdAt;
 

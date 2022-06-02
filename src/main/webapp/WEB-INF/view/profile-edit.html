@@ -27,7 +27,7 @@
                             <br><br>
                             Выберите фото для аватарки: <input type="file" name="file">
                             <br><br>
-                            <input th:field="*{username}" class="form-control" rows="9" placeholder="Введите имя"></input>
+                            <input th:field="*{username}" class="form-control" rows="9" placeholder="Введите логин" readonly></input>
                             <br>
 
                             <input th:field="*{password}" type="password" class="form-control" rows="9" placeholder="Введите пароль"></input>
@@ -53,14 +53,15 @@
                         </div>
                         <button type="submit" class="btn btn-outline-dark">Изменить данные профиля</button>
                     </form>
+                    <!-- Footer -->
+                    <footer th:insert="fragments.html :: footer"></footer>
                 </div>
             </div>
             <!-- /.row -->
         </div>
         <!-- /.container -->
 
-        <!-- Footer -->
-        <footer th:insert="fragments.html :: footer"></footer>
+
 
         <!-- Bootstrap core JavaScript -->
         <script src="vendor/jquery/jquery.min.js"></script>

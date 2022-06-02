@@ -22,7 +22,7 @@
                         <form th:action="@{/register}" method="POST">
                             <div class="form">
                                 <div class="input_field">
-                                    <input type="text" name="username" placeholder="Телефоный номер, имя пользователя или email" class="input">
+                                    <input type="text" name="username" placeholder="Имя пользователя" class="input">
                                 </div>
                                 <div class="input_field">
                                     <input type="password" name="password" placeholder="Пароль" class="input">
@@ -30,23 +30,23 @@
                                 <button class="btn" type="submit">Зарегистрироваться</button>
                             </div>
                         </form>
-                        <div class="or">
+                    <!--    <div class="or">
                             <div class="line"></div>
                             <p>ИЛИ</p>
                             <div class="line"></div>
-                        </div>
+                        </div>-->
                         <div class="dif">
-                            <div class="fb">
+                           <!-- <div class="fb">
                                 <img th:src="@{/resources/img/login/vk.png}" alt="facebook">
                                 <p>Войти через ВКонтакте</p>
-                            </div>
+                            </div>-->
                             <div class="forgot">
                                 <a href="#">Забыли пароль?</a>
                             </div>
                         </div>
                     </div>
                     <div class="signup">
-                        <p>У меня есть аккаунт <a onclick="window.location='login'" href="#">Войти</a></p>
+                        <p>У меня есть аккаунт. <a onclick="window.location='login'" href="#">Войти</a></p>
                     </div>
                     <div class="apps">
                         <p>Скачать приложение</p>

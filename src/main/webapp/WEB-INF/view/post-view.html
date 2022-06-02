@@ -33,15 +33,27 @@
                             <a th:if="${#authentication.name == post.user.username}" th:href="@{/post/{postId}/delete_one_post(postId = ${post.postId})}"><img th:src="@{/resources/img/nav/delete.png}" class="options" alt=""></a>
                             <a th:if="${#authentication.name == post.user.username}" th:href="@{/post/{postId}/edit(postId = ${post.postId})}"><img th:src="@{/resources/img/nav/option.png}" class="options" alt=""></a>
                         </div>
-                            <img th:src="@{'/resources/img/users/' + ${post.user.username} + '/' + ${post.photo}}" class="post-image" alt="">
+                            <img th:if="${post.extFile == 'jpg'}" th:src="@{'/resources/img/users/' + ${post.user.username} + '/' + ${post.photo}}" class="post-image" alt="">
+                            <video th:if="${post.extFile == 'mp4'}" width="100%" autoplay controls loop muted>
+                                <source th:src="@{'/resources/video/users/' + ${post.user.username} + '/' + ${post.photo}}" type=video/mp4>
+                            </video>
+
+
                         <div class="post-content">
                             <div class="reaction-wrapper">
-                                <img th:src="@{/resources/img/nav/like.png}" class="icon" alt="">
-                                <a th:href="@{/comment/{postId}(postId = ${post.postId})}"><img th:src="@{/resources/img/nav/comment.png}" class="icon" alt=""></a>
-                                <img th:src="@{/resources/img/nav/send.png}" class="icon" alt="">
-                                <img th:src="@{/resources/img/nav/save.png}" class="save icon" alt="">
+                                <a th:if="${isLike != 0}" th:href="@{/unlike/{postId}(postId = ${post.postId})}">
+                                    <img th:src="@{/resources/img/icons/like.png}" class="icon" alt="">
+                                </a>
+                                <a th:if="${isLike == 0}" th:href="@{/like/{postId}(postId = ${post.postId})}">
+                                    <img th:src="@{/resources/img/icons/notlike.png}" class="icon" alt="">
+                                </a>
+                                <a th:href="@{/comment/{postId}(postId = ${post.postId})}">
+                                    <img th:src="@{/resources/img/nav/comment.png}" class="icon" alt="">
+                                </a>
+                             <!--   <img th:src="@{/resources/img/nav/send.png}" class="icon" alt="">
+                                <img th:src="@{/resources/img/nav/save.png}" class="save icon" alt="">-->
                             </div>
-                            <p class="likes">Нравится...</p>
+                            <p th:if="${countLikes != 0}" class="likes" th:text="'Нравится: ' + ${countLikes}"></p>
                             <b class="description"><span th:text="${post.user.username}"></span></b>
                             <span class="description" th:text="${post.content}"></span>
                             <p class="post-time" th:text="${#temporals.format(post.createdAt, 'dd.MM.yyyy')} + ' г.'"></p>
@@ -57,11 +69,16 @@
                                                 <div class="user-comments">
                                                     <div class="profile-pic-comments">
                                                         <a th:href="@{/sub-posts/{user}(user = ${comment.user.username})}">
-                                                        <img th:if="${comment.user.photo == null}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
-                                                        <img th:unless="${comment.user.photo == null}" th:src="@{'/resources/img/users/' + ${comment.user.username} + '/profile/' + ${comment.user.photo}}" alt="">
+                                                            <img th:if="${comment.user.photo == null}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
+                                                            <img th:unless="${comment.user.photo == null}" th:src="@{'/resources/img/users/' + ${comment.user.username} + '/profile/' + ${comment.user.photo}}" alt="">
+                                                        </a>
                                                     </div>
                                                     <div>
-                                                        <b class="description-comments-user"><span th:text="${comment.user.username}"></span></b></a>
+                                                        <a th:href="@{/sub-posts/{user}(user = ${comment.user.username})}">
+                                                            <b class="description-comments-user">
+                                                                <span th:text="${comment.user.username}"></span>
+                                                            </b>
+                                                        </a>
                                                         <span class="description-comments" th:text="${comment.commentText}"></span>
                                                         <div>
                                                             <p class="post-time-comments" th:text="${#temporals.format(comment.createdAt, 'dd.MM.yyyy HH:mm')} + ' ' + 'Ответить'"></p>
@@ -97,6 +114,9 @@
 
 
                     </div>
+
+                    <!-- Footer -->
+                    <footer th:insert="fragments.html :: footer"></footer>
                 </div>
 
                 <!-- Right Column -->
@@ -104,8 +124,7 @@
             </div>
         </section>
 
-        <!-- Footer -->
-        <footer th:insert="fragments.html :: footer"></footer>
+
 
         <!-- Bootstrap core JavaScript -->
         <script src="vendor/jquery/jquery.min.js"></script>

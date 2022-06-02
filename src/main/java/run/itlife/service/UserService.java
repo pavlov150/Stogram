@@ -19,4 +19,10 @@ public interface UserService extends UserDetailsService {
 
     public void checkAuthority(long userId);
 
+    List<User> getUsersOnly();
+
+    List<User> searchUsers(String substring);
+
+    int countSearchUsers(String substring);
+
 }

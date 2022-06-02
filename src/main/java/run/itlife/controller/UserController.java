@@ -15,6 +15,7 @@ import run.itlife.entity.User;
 import run.itlife.enums.Sex;
 import run.itlife.repository.SubscriptionsRepository;
 import run.itlife.repository.UserRepository;
+import run.itlife.service.PostService;
 import run.itlife.service.UserService;
 
 import javax.imageio.ImageIO;
@@ -37,13 +38,17 @@ public class UserController {
     private final ServletContext context;
     private final UserRepository userRepository;
     private final SubscriptionsRepository subscriptionsRepository;
+    private final PostService postService;
+
 
     @Autowired
-    public UserController(UserService userService, ServletContext context, UserRepository userRepository, SubscriptionsRepository subscriptionsRepository) {
+    public UserController(UserService userService, ServletContext context, UserRepository userRepository, SubscriptionsRepository subscriptionsRepository, PostService postService) {
         this.userService = userService;
         this.context = context;
         this.userRepository = userRepository;
         this.subscriptionsRepository = subscriptionsRepository;
+
+        this.postService = postService;
     }
 
     @GetMapping("/login")
@@ -123,6 +128,7 @@ public class UserController {
     public String find_Subscribes(ModelMap modelMap) {
      //  modelMap.put("posts", postService.findByUser(SecurityContextHolder.getContext().getAuthentication().getName()));
         modelMap.put("userslist", userService.findAll());
+        modelMap.put("userOnlyList", userService.getUsersOnly());
         modelMap.put("user", SecurityContextHolder.getContext().getAuthentication().getName());
         modelMap.put("userinfo", userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
         modelMap.put("sub", subscriptionsRepository.findSubscribes(SecurityContextHolder.getContext().getAuthentication().getName()));
@@ -134,6 +140,7 @@ public class UserController {
     public String find_Subscribers(ModelMap modelMap) {
         //  modelMap.put("posts", postService.findByUser(SecurityContextHolder.getContext().getAuthentication().getName()));
         modelMap.put("userslist", userService.findAll());
+        modelMap.put("userOnlyList", userService.getUsersOnly());
         modelMap.put("user", SecurityContextHolder.getContext().getAuthentication().getName());
         modelMap.put("userinfo", userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
         modelMap.put("sub", subscriptionsRepository.findSubscribers(SecurityContextHolder.getContext().getAuthentication().getName()));
@@ -151,6 +158,7 @@ public class UserController {
         modelMap.put("sub", subscriptionsRepository.findSubscribes(user));
      //   modelMap.put("userinfo_sub", userService.findByUsername(user));
       //  modelMap.put("user_sub", user);
+        modelMap.put("userOnlyList", userService.getUsersOnly());
 
         return "subscriptions-subuser";
     }
@@ -164,8 +172,34 @@ public class UserController {
       //  modelMap.put("user_sub", user);
       //  modelMap.put("userinfo_sub", userService.findByUsername(user));
         modelMap.put("sub", subscriptionsRepository.findSubscribers(user));
+        modelMap.put("userOnlyList", userService.getUsersOnly());
 
         return "subscribers-subuser";
+    }
+
+    @GetMapping("/search")
+    public String search(ModelMap modelMap, @RequestParam(required = false) String search) {
+
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        modelMap.put("userslist", userService.findAll());
+        modelMap.put("user", username);
+        modelMap.put("userinfo", userService.findByUsername(username));
+        modelMap.put("userOnlyList", userService.getUsersOnly());
+        modelMap.put("countSearchUsers", userService.countSearchUsers(search));
+        modelMap.put("countSearchTags", postService.countSearchTags(search));
+        modelMap.put("tagUserName", search);
+
+        if (search != null) {
+            modelMap.put("findUsers", userService.searchUsers(search));
+            modelMap.put("findTags", postService.searchTags(search));
+
+
+            return "search-results";
+        } else {
+            modelMap.put("findUsers", userService.findAll());
+
+            return "search-results";
+        }
     }
 
 }

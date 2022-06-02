@@ -47,6 +47,8 @@
         <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/sign-in/">
         <link th:href="@{/webjars/bootstrap/5.1.3/css/bootstrap.min.css}" rel="stylesheet">
         <link th:href="@{/resources/css/posts.css}" rel="stylesheet">
+        <link th:href="@{/resources/css/menu.css}" rel="stylesheet">
+        <script type="text/javascript" th:src="@{/resources/js/menu.js}"></script>
         <style>
             .bd-placeholder-img {
                 font-size: 1.125rem;
@@ -70,7 +72,11 @@
         <nav class="navbar" th:fragment="navigation">
             <div class="nav-wrapper">
                 <a th:href="@{/}"><img th:src="@{/resources/img/nav/stogram.png}" class="brand-img" alt=""></a>
-                <input type="text" class="search-box" placeholder="Найти">
+
+                <form class="search-form" method="GET" th:action="@{/search}">
+                        <input type="text" class="search-box" name="search" placeholder="Найти">
+                </form>
+
                 <div class="nav-items">
                     <a class="icon" th:href="@{/}"><img th:src="@{/resources/img/nav/home.png}" class="icon" alt=""></a>
                     <a class="icon" sec:authorize="hasRole('ADMIN')" th:href="@{/bugs_view}"><img th:src="@{/resources/img/nav/messenger.png}" class="icon" alt=""></a>
@@ -79,7 +85,6 @@
                  <!--   <img th:src="@{/resources/img/nav/like.png}" class="icon" alt="">-->
 
                     <div class="icon user-profile" sec:authorize="isAuthenticated()" >
-
                         <ul class="icon user-profile nav-list" sec:authorize="isAuthenticated()">
                             <li>
                                 <img th:if="${userinfo.photo == null}" class="icon user-profile" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
@@ -120,8 +125,10 @@
                 </div>
                 <button class="action-btn">Переключиться</button>
             </div>-->
+
+            <!-- Recomendations -->
             <p class="suggestion-text">Рекомендации для вас</p>
-            <div class="profile-card" th:each="users: ${userslist}">
+            <div class="profile-card" th:each="users: ${userOnlyList}">
                 <div class="profile-pic">
                     <a th:href="@{/sub-posts/{user}(user = ${users.username})}">
                         <img th:if="${users.photo == null}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
@@ -138,8 +145,8 @@
         </div>
 
         <!-- Footer -->
-        <p class="text-muted" th:fragment="footer-login">© 2022 Stogram (version 1.16.5 Pre-Alpha). Обнаружили ошибку? <a class="description comments" th:href="@{bug/new}">Напишите нам</a></p>
-        <footer class="text-muted" th:fragment="footer">© 2022 Stogram (version 1.16.5 Pre-Alpha). Обнаружили ошибку? <a class="description comments" th:href="@{bug/new}">Напишите нам</a></footer>
+        <p class="text-muted" th:fragment="footer-login">© 2022 Stogram (version 1.17.0 Pre-Alpha). Обнаружили ошибку? <a class="description comments" th:href="@{/bug/new}">Напишите нам</a></p>
+        <footer class="text-muted" th:fragment="footer">© 2022 Stogram (version 1.17.0 Pre-Alpha). Обнаружили ошибку? <a class="description comments" th:href="@{/bug/new}">Напишите нам</a></footer>
 
     </body>
 </html>

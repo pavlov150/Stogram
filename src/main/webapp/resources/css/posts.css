@@ -55,10 +55,28 @@ body{
   border-radius: 2px;
   color: rgba(0, 0, 0, 0.5);
   text-align: center;
+ /* text-transform: capitalize;*/
+}
+
+.search-form{
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 25px;
+  background: #fafafa;
+  border: 1px solid #dfdfdf;
+  border-radius: 2px;
+  color: rgba(0, 0, 0, 0.5);
+  text-align: center;
   text-transform: capitalize;
 }
 
 .search-box::placeholder{
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.search-form::placeholder{
   color: rgba(0, 0, 0, 0.5);
 }
 
@@ -88,10 +106,30 @@ body{
   margin-top: 50px;
 }
 
+
+
+
+
+.main-post{
+  width: 100%;
+  padding: 20px 0;
+  display: flex;
+  justify-content: center;
+  margin-top: 0px;
+}
+
 .wrapper{
   width: 70%;
   max-width: 1000px;
   display: grid;
+  grid-template-columns: 60% 40%;
+  grid-gap: 30px;
+}
+
+.wrapper-posts{
+  width: 90%;
+  max-width: 1000px;
+
   grid-template-columns: 60% 40%;
   grid-gap: 30px;
 }
@@ -572,7 +610,7 @@ a {
 }
 
 @media (max-width: 1100px){
-  .right-col, .search-box{
+  .right-col{
     display: none;
   }
   .nav-wrapper,
@@ -621,7 +659,7 @@ a {
 footer {
   padding-top: 1rem;
   padding-bottom: 1rem;
-  padding-left: 1rem;
+ /* padding-left: 1rem;*/
 }
 
 footer p {
@@ -631,6 +669,10 @@ footer p {
 p {
   margin-top: 0;
   margin-bottom: 0rem;
+}
+
+.usersNotFound {
+  margin-bottom: 19px;
 }
 
 

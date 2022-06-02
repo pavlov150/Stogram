@@ -19,11 +19,17 @@ public class Post {
     @Column(name="photo")
     private String photo;
 
+    @Column(name="extention")
+    private String extFile;
+
     @Column(name = "content")
     private String content;
 
     @OneToMany(mappedBy = "post")
     private List<Comment> comments;
+
+    @OneToMany(mappedBy = "postLikeId", fetch = FetchType.EAGER)
+    private List<Likes> postLike;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
@@ -89,5 +95,21 @@ public class Post {
 
     public void setPhoto(String photo) {
         this.photo = photo;
+    }
+
+    public String getExtFile() {
+        return extFile;
+    }
+
+    public void setExtFile(String extFile) {
+        this.extFile = extFile;
+    }
+
+    public List<Likes> getPostLike() {
+        return postLike;
+    }
+
+    public void setPostLike(List<Likes> postLike) {
+        this.postLike = postLike;
     }
 }

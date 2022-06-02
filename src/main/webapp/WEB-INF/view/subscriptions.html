@@ -49,6 +49,9 @@
                                 </div>
                             </div>
                         </div>
+                        <div th:if="${sub.isEmpty()}">
+                            <p class="usersNotFound"  th:text="'У вас нет подписок'"></p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -64,7 +67,7 @@
             <div class="post">
                 <div class="post-content">
                     <div class="view-source comments-view">
-                        <div th:each="users: ${userslist}">
+                        <div th:each="users: ${userOnlyList}">
                             <div class="media-body">
                                 <div class="info-comments">
                                     <div class="user-comments">
@@ -87,9 +90,12 @@
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
+            <!-- Footer -->
+            <footer th:insert="fragments.html :: footer"></footer>
 
         </div>
 
@@ -98,8 +104,7 @@
     </div>
 </section>
 
-<!-- Footer -->
-<footer th:insert="fragments.html :: footer"></footer>
+
 
 <!-- Bootstrap core JavaScript -->
 <script src="vendor/jquery/jquery.min.js"></script>

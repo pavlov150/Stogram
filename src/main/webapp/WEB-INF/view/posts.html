@@ -10,45 +10,57 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" th:insert="fragments.html :: navigation"></nav>
 
         <!-- Page Content -->
-        <main role="main">
-            <section class="text-center">
-                <div sec:authorize="isAuthenticated()" class="info-main">
-                    <div class="user-main">
-                        <div class="profile-pic-main">
-                            <img th:if="${userinfo.photo == null}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
-                            <img th:unless="${userinfo.photo == null}" th:src="@{'/resources/img/users/' + ${user} + '/profile/' + ${userinfo.photo}}" alt="">
-                            <!-- FIXME В ${user} заменить на post.user.username. Проверить везде и затем на самих страницах поменяв пользователя -->
+        <section class="main-post">
+            <div class="wrapper-posts">
+                <div class="left-col">
+                    <section class="text-center">
+                        <div sec:authorize="isAuthenticated()" class="info-main">
+                            <div class="user-main">
+                                <div class="profile-pic-main">
+                                    <img th:if="${userinfo.photo == null}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
+                                    <img th:unless="${userinfo.photo == null}" th:src="@{'/resources/img/users/' + ${user} + '/profile/' + ${userinfo.photo}}" alt="">
+                                    <!-- FIXME В ${user} заменить на post.user.username. Проверить везде и затем на самих страницах поменяв пользователя -->
+                                </div>
+                                <div>
+                                    <p class="username-main" th:text="${user}"></p>
+                                    <p class="description-main">
+                                        <span th:text="${countPosts} + ' публикаций '"></span>
+                                        <a th:href="@{/subscribers}"><span th:text="${countSubscribers} + ' подписчиков '"></span></a>
+                                        <a th:href="@{/subscriptions}"><span th:text="${countSubscribe} + ' подписок'"></span></a>
+                                    </p>
+                                </div>
+                            </div>
+                            <a th:href="@{/profile_edit/{user}(user = ${user})}" class="btn btn-outline-dark">Редактировать профиль</a>
                         </div>
-                        <div>
-                            <p class="username-main" th:text="${user}"></p>
-                            <p class="description-main">
-                                <span th:text="${countPosts} + ' публикаций '"></span>
-                                <a th:href="@{/subscribers}"><span th:text="${countSubscribers} + ' подписчиков '"></span></a>
-                                <a th:href="@{/subscriptions}"><span th:text="${countSubscribe} + ' подписок'"></span></a>
-                            </p>
-                        </div>
-                    </div>
-                    <a th:href="@{/profile_edit/{user}(user = ${user})}" class="btn btn-outline-dark">Редактировать профиль</a>
-                </div>
-            </section>
+                    </section>
 
-            <div class="row">
-                <div class="no_public" th:if="${countPosts == 0}" >
-                    <img th:src="@{'/resources/img/icons/face.png'}" alt="">
-                    <h1 class="h3 mb-3 font-weight-normal no_public">Пока нет публикаций</h1>
-                </div>
-                <div th:unless="${countPosts == 0}" class="col-md-4" th:each="post: ${posts}" th:id="'post-' + ${post.postId}">
-                    <a th:href="@{/posts_detail}">
-                    <div class="card mb-4">
-                        <img th:src="@{'/resources/img/users/' + ${post.user.username} + '/' + ${post.photo}}">
+                    <div class="post">
+                        <div class="post-content">
+                            <div class="view-source comments-view">
+                                <div class="row">
+                                    <div class="no_public" th:if="${countPosts == 0}" >
+                                        <img th:src="@{'/resources/img/icons/face.png'}" alt="">
+                                        <h1 class="h3 mb-3 font-weight-normal no_public">Пока нет публикаций</h1>
+                                    </div>
+                                    <div th:unless="${countPosts == 0}" class="col-md-4" th:each="post: ${posts}" th:id="'post-' + ${post.postId}">
+                                        <a th:href="@{/posts_detail}">
+                                            <div class="card mb-4">
+                                                <img th:if="${post.extFile == 'jpg'}" th:src="@{'/resources/img/users/' + ${post.user.username} + '/' + ${post.photo}}">
+                                                <video th:if="${post.extFile == 'mp4'}" height="100%" autoplay controls loop muted>
+                                                    <source th:src="@{'/resources/video/users/' + ${post.user.username} + '/' + ${post.photo}}" type=video/mp4>
+                                                </video>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    </a>
+                    <!-- Footer -->
+                    <footer th:insert="fragments.html :: footer"></footer>
                 </div>
             </div>
-        </main>
-
-        <!-- Footer -->
-        <footer th:insert="fragments.html :: footer"></footer>
+        </section>
 
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
         <script>window.jQuery || document.write('<script src="../assets/js/vendor/jquery.slim.min.js"><\/script>')</script>

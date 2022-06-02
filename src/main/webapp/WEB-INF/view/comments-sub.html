@@ -44,11 +44,21 @@
                                 <div class="info-comments">
                                     <div class="user-comments">
                                         <div class="profile-pic-comments">
+
+
+
+
+                                            <a th:href="@{/sub-posts/{user}(user = ${comment.user.username})}">
                                             <img th:if="${comment.user.photo == null}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
                                             <img th:unless="${comment.user.photo == null}" th:src="@{'/resources/img/users/' + ${comment.user.username} + '/profile/' + ${comment.user.photo}}" alt="">
+                                            </a>
                                         </div>
                                         <div>
-                                            <b class="description-comments-user"><span th:text="${comment.user.username}"></span></b>
+                                            <a th:href="@{/sub-posts/{user}(user = ${comment.user.username})}">
+                                                <b class="description-comments-user">
+                                                    <span th:text="${comment.user.username}"></span>
+                                                </b>
+                                            </a>
                                             <span class="description-comments" th:text="${comment.commentText}"></span>
                                             <div>
                                                 <p class="post-time-comments" th:text="${#temporals.format(comment.createdAt, 'dd.MM.yyyy HH:mm')} + ' ' + 'Ответить'"></p>
@@ -77,6 +87,8 @@
                     </form>
                 </div>
             </div>
+            <!-- Footer -->
+            <footer th:insert="fragments.html :: footer"></footer>
         </div>
         <!-- Right Column -->
         <div th:insert="fragments.html :: right-column"></div>
@@ -84,8 +96,7 @@
     </div>
 </section>
 
-<!-- Footer -->
-<footer th:insert="fragments.html :: footer"></footer>
+
 
 <!-- Bootstrap core JavaScript -->
 <script src="vendor/jquery/jquery.min.js"></script>
