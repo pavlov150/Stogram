@@ -56,7 +56,7 @@
                 <h1 class="h3 mb-3 font-weight-normal no_public">Пока нет подписок</h1>
             </div>
 
-            <div th:unless="${countPosts == 0}" class="post" th:each="post_sub: ${posts_sub}">
+            <div th:unless="${countPosts == 0}" class="post" th:each="post_sub: ${posts_sub}" >
                 <div class="info">
                     <div class="user">
                         <div class="profile-pic">
@@ -86,6 +86,8 @@
 
                         <div th:if="${!post_sub.postLike.isEmpty()}">
                             <div th:each="likes, state : ${post_sub.postLike}">
+
+
                                 <div th:if="${likes.userLikeId.username.equals(userinfo.username)}">
                                     <a th:href="@{/unlike_detail_sub/{postId}(postId = ${post_sub.postId})}">
                                         <img th:src="@{/resources/img/icons/like.png}" class="icon" alt="">

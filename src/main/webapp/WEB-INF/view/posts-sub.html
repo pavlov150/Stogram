@@ -44,7 +44,7 @@
                                 <h1 class="h3 mb-3 font-weight-normal no_public">Пока нет публикаций</h1>
                             </div>
                             <div th:unless="${countPosts == 0}" class="col-md-4" th:each="post: ${posts}" th:id="'post-' + ${post.postId}">
-                                <a th:href="@{/posts_detail_subuser/{user}(user = ${user_sub})}">
+                                <a th:href="@{/posts_detail_subuser/{user}#post- (user = ${user_sub})} + ${post.postId}">
                                     <div class="card mb-4">
                                         <img th:if="${post.extFile == 'jpg'}" th:src="@{'/resources/img/users/' + ${post.user.username} + '/' + ${post.photo}}">
                                         <video th:if="${post.extFile == 'mp4'}" height="100%" autoplay controls loop muted>

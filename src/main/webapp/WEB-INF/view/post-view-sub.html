@@ -64,31 +64,31 @@
                     <p class="post-time" th:text="${#temporals.format(post.createdAt, 'dd.MM.yyyy')} + ' г.'"></p>
 
                     <!-- Comments -->
-                    <div class="view-source comments-view">
+                  <div class="view-source comments-view">
                         <a th:href="@{/comment/sub/{postId}(postId = ${post.postId})}" th:each="like, state : ${post.comments}" class="description comments" th:text="${state.last} ? 'Смотреть все комментарии (' + ${state.count} + ')' : ''"></a>
-                        <div>
-                            <div th:each="comment: ${comments}">
-                                <div class="media-body">
-                                    <div class="info-comments">
-                                        <div class="user-comments">
-                                            <div class="profile-pic-comments">
-                                                <a th:href="@{/sub-posts/{user}(user = ${comment.user.username})}">
-                                                    <img th:if="${comment.user.photo == null}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
-                                                    <img th:unless="${comment.user.photo == null}" th:src="@{'/resources/img/users/' + ${comment.user.username} + '/profile/' + ${comment.user.photo}}" alt="">
-                                            </div>
-                                            <div>
-                                                <b class="description-comments-user"><span th:text="${comment.user.username}"></span></b></a>
-                                                <span class="description-comments" th:text="${comment.commentText}"></span>
-                                                <div>
-                                                    <p class="post-time-comments" th:text="${#temporals.format(comment.createdAt, 'dd.MM.yyyy HH:mm')} + ' ' + 'Ответить'"></p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                      <!--     <div>
+                             <div th:each="comment: ${comments}">
+                                 <div class="media-body">
+                                     <div class="info-comments">
+                                         <div class="user-comments">
+                                             <div class="profile-pic-comments">
+                                                 <a th:href="@{/sub-posts/{user}(user = ${comment.user.username})}">
+                                                     <img th:if="${comment.user.photo == null}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
+                                                     <img th:unless="${comment.user.photo == null}" th:src="@{'/resources/img/users/' + ${comment.user.username} + '/profile/' + ${comment.user.photo}}" alt="">
+                                             </div>
+                                             <div>
+                                                 <b class="description-comments-user"><span th:text="${comment.user.username}"></span></b></a>
+                                                 <span class="description-comments" th:text="${comment.commentText}"></span>
+                                                 <div>
+                                                     <p class="post-time-comments" th:text="${#temporals.format(comment.createdAt, 'dd.MM.yyyy HH:mm')} + ' ' + 'Ответить'"></p>
+                                                 </div>
+                                             </div>
+                                         </div>
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>-->
+                     </div>
                 </div>
 
                 <!-- Comments Form -->

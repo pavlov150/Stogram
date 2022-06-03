@@ -1,75 +1,78 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-    <head>
-        <title>Stogram - Вход</title>
-        <link th:href="@{/resources/css/login.css}" rel="stylesheet">
-    <!--    <link th:href="@{/webjars/bootstrap/5.1.3/css/bootstrap.min.css}" rel="stylesheet">-->
-    </head>
+<head>
+    <title>Stogram - Вход</title>
+    <link th:href="@{/resources/css/login.css}" rel="stylesheet">
+    <link th:href="@{/resources/css/sign-up.css}" rel="stylesheet">
+</head>
 
-    <!-- Page Content -->
-
-    <div class="wrapper">
-    <!--    <div class="alert alert-warning" role="alert">Это веб-приложение находится на начальной стадии разработки. Многие кнопки и ссылки могут неправильно работать или не работать вообще, т.к. они выведены пока только для визуализации объектов в приложении. Желающие могут помочь в развитии приложения <a href="#" class="alert-link">https://github.com/pavlov150/Stogram</a></div>-->
-        <div class="header">
-
-            <div class="top">
-                <div class="logo">
-                    <img th:src="@{/resources/img/nav/stogram.png}" alt="instagram" style="width: 120px;">
-                </div>
-
-                <form action="login" method="POST">
-                <div class="form">
-                    <div class="input_field">
-                        <input type="text" name="username" placeholder="Имя пользователя" class="input">
+<!-- Navigation -->
+<div class="wrapper">
+    <div class="header">
+        <div class="main-container">
+            <div class="image-container">
+                <img th:src="@{/resources/img/login/insta-signup-page.png}" alt="Stogram In Phone Image">
+            </div>
+            <div class="form-container">
+                <div class="top">
+                    <div class="logo">
+                        <img th:src="@{/resources/img/nav/stogram.png}" alt="Strogram" style="width: 120px;">
                     </div>
-                    <div class="input_field">
-                        <input type="password" name="password" placeholder="Пароль" class="input">
+                    <form action="login" method="POST">
+                        <div class="form">
+                            <div class="input_field">
+                                <input type="text" name="username" placeholder="Имя пользователя" class="input">
+                            </div>
+                            <div class="input_field">
+                                <input type="password" name="password" placeholder="Пароль" class="input">
+                            </div>
+                            <button class="btn" type="submit">Войти</button>
+                        </div>
+                    </form>
+                    <div class="or">
+                            <div class="line"></div>
+                            <p>ИЛИ</p>
+                            <div class="line"></div>
+                        </div>
+                    <div class="dif">
+                         <div class="fb">
+                             <img th:src="@{/resources/img/login/vk.png}" alt="facebook">
+                             <p>Войти через ВКонтакте</p>
+                         </div>
+                        <div class="forgot">
+                            <a href="#">Забыли пароль?</a>
+                        </div>
                     </div>
-                    <button class="btn" type="submit">Войти</button>
                 </div>
-                </form>
-
-           <!--     <div class="or">
-                    <div class="line"></div>
-                    <p>ИЛИ</p>
-                    <div class="line"></div>
-                </div>-->
-                <div class="dif">
-                  <!--  <div class="fb">
-                        <img th:src="@{/resources/img/login/vk.png}" alt="facebook">
-                        <p>Войти через ВКонтакте</p>
-                    </div>-->
-                    <div class="forgot">
-                        <a href="#">Забыли пароль?</a>
+                <div class="signup">
+                    <p>У Вас еще нет аккаунта? <a th:href="@{/register}">Зарегистрироваться</a></p>
+                </div>
+                <div class="apps">
+                    <p>Установите приложение</p>
+                    <div class="icons">
+                        <a href="#"><img th:src="@{/resources/img/login/appstore.png}" alt="appstore"></a>
+                        <a href="#"><img th:src="@{/resources/img/login/googleplay.png}" alt="googleplay"></a>
                     </div>
                 </div>
-            </div>
-            <div class="signup">
-                <p>У Вас еще нет аккаунта? <a th:href="@{/register}">Зарегистрироваться</a></p>
-            </div>
-            <div class="apps">
-                <p>Скачать приложение</p>
-                <div class="icons">
-                    <a href="#"><img th:src="@{/resources/img/login/appstore.png}" alt="appstore"></a>
-                    <a href="#"><img th:src="@{/resources/img/login/googleplay.png}" alt="googleplay"></a>
-                </div>
-            </div>
-        </div>
-        <div class="footer">
-            <div class="links">
-                <ul>
-                    <li><a href="#">О НАС</a></li>
-                    <li><a href="#">ПОДДЕРЖКА</a></li>
-                    <li><a href="#">API</a></li>
-                    <li><a href="#">КОНФИДЕНЦИАЛЬНОСТЬ</a></li>
-                    <li><a href="#">УСЛОВИЯ</a></li>
-                </ul>
-            </div>
-            <!-- Footer -->
-            <div class="copyright">
-                <p th:insert="fragments.html :: footer-login"></p>
             </div>
         </div>
     </div>
+
+    <div class="footer">
+        <div class="links">
+            <ul>
+                <li><a href="#">О НАС</a></li>
+                <li><a href="#">ПОДДЕРЖКА</a></li>
+                <li><a href="#">API</a></li>
+                <li><a href="#">КОНФИДЕНЦИАЛЬНОСТЬ</a></li>
+                <li><a href="#">УСЛОВИЯ</a></li>
+            </ul>
+        </div>
+        <!-- Footer -->
+        <div class="copyright">
+            <p th:insert="fragments.html :: footer-login"></p>
+        </div>
+    </div>
+</div>
 </html>

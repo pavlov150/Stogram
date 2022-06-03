@@ -19,7 +19,7 @@
                 <div class="info">
                     <div class="user">
                         <div class="profile-pic">
-                            <a th:href="@{/posts_detail}">
+                            <a th:href="@{/posts_detail#post-} + ${post.postId}">
                                 <img th:src="@{'/resources/img/nav/arrow-left.png'}" alt="">
                             </a>
                         </div>

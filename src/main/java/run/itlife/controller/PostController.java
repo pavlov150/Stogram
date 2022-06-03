@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.imageio.ImageIO;
 import javax.persistence.Id;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.multipart.MultipartFile;
 import run.itlife.dto.PostDto;
@@ -18,11 +19,13 @@ import run.itlife.entity.Post;
 import run.itlife.repository.PostRepository;
 import run.itlife.repository.UserRepository;
 import run.itlife.service.*;
+import run.itlife.utils.ZXingQR;
 
 import java.awt.image.BufferedImage;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.util.List;
 
 import static run.itlife.utils.EditImage.cropImage;
@@ -355,5 +358,7 @@ public class PostController {
         modelMap.put("users", userService.findAll());
         modelMap.put("contextPath", context.getContextPath());
     }
+
+
 
 }

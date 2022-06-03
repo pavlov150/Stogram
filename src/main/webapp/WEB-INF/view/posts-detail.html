@@ -57,7 +57,7 @@
                         </div>
                     </div>-->
 
-                    <div class="post" th:each="post: ${posts}" th:id="'post-' + ${post.postId}">
+                    <div class="post" th:each="post: ${posts}" th:id="'post-' + ${post.postId}" th:name="'post-' + ${post.postId}">
                         <div class="info">
                             <div class="user">
                                 <div class="profile-pic">
@@ -79,17 +79,36 @@
                             <div class="reaction-wrapper">
                                 <div th:if="${!post.postLike.isEmpty()}">
                                     <div th:each="likes, state : ${post.postLike}">
+                                    <!--    <p th:text="${likes.userLikeId.username}"></p> margo
+                                        <p th:text="${post.user.username}"></p>shurrik
+                                        <p th:text="${state.current.userLikeId.username}"></p>margo
+                                        <p th:text="${state.size}"></p>
+                                        <p th:text="${state.last}"></p>-->
+
                                         <div th:if="${likes.userLikeId.username.equals(post.user.username)}">
                                             <a th:href="@{/unlike_detail/{postId}(postId = ${post.postId})}">
                                                 <img th:src="@{/resources/img/icons/like.png}" class="icon" alt="">
                                             </a>
                                         </div>
 
-                                        <div th:if="${!likes.userLikeId.username.equals(post.user.username) && state.size > 0 && state.last}">
+                                    <!--    <div th:if="${!likes.userLikeId.username.equals(post.user.username) && state.size > 0 && state.last}">
+                                            <a th:href="@{/like_detail/{postId}(postId = ${post.postId})}">
+                                                <img th:src="@{/resources/img/icons/notlike.png}" class="icon" alt="">
+                                            </a>
+                                        </div>-->
+
+                                        <div th:if="${!likes.userLikeId.username.equals(post.user.username) && state.current.userLikeId.username.equals(post.user.username)}">
                                             <a th:href="@{/like_detail/{postId}(postId = ${post.postId})}">
                                                 <img th:src="@{/resources/img/icons/notlike.png}" class="icon" alt="">
                                             </a>
                                         </div>
+
+                                        <div th:if="${!likes.userLikeId.username.equals(post.user.username) && state.size > 0 &&  state.last && !state.current.userLikeId.username.equals(post.user.username)}">
+                                            <a th:href="@{/like_detail/{postId}(postId = ${post.postId})}">
+                                                <img th:src="@{/resources/img/icons/notlike.png}" class="icon" alt="">
+                                            </a>
+                                        </div>
+
                                     </div>
                                 </div>
 
@@ -98,6 +117,7 @@
                                         <img th:src="@{/resources/img/icons/notlike.png}" class="icon" alt="">
                                     </a>
                                 </div>
+
                                 <a th:href="@{/comment/{postId}(postId = ${post.postId})}"><img th:src="@{/resources/img/nav/comment.png}" class="icon" alt=""></a>
                             </div>
 

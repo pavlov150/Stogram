@@ -97,6 +97,9 @@
                                         <a th:href="@{/profile_edit/{user}(user = ${user})}">Настройки</a>
                                     </li>
                                     <li>
+                                        <a th:href="@{/qrcode/}">Генерация QR-кода</a>
+                                    </li>
+                                    <li>
                                         <a th:href="@{/logout}">Выйти</a>
                                     </li>
                                 </ul>
@@ -145,8 +148,8 @@
         </div>
 
         <!-- Footer -->
-        <p class="text-muted" th:fragment="footer-login">© 2022 Stogram (version 1.17.0 Pre-Alpha). Обнаружили ошибку? <a class="description comments" th:href="@{/bug/new}">Напишите нам</a></p>
-        <footer class="text-muted" th:fragment="footer">© 2022 Stogram (version 1.17.0 Pre-Alpha). Обнаружили ошибку? <a class="description comments" th:href="@{/bug/new}">Напишите нам</a></footer>
+        <p class="text-muted" th:fragment="footer-login">© 2022 Stogram (version 1.18.0 Pre-Alpha). Обнаружили ошибку? <a class="description comments" th:href="@{/bug/new}">Напишите нам</a></p>
+        <footer class="text-muted" th:fragment="footer">© 2022 Stogram (version 1.18.0 Pre-Alpha). Обнаружили ошибку? <a class="description comments" th:href="@{/bug/new}">Напишите нам</a></footer>
 
     </body>
 </html>

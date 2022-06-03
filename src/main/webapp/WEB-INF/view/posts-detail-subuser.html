@@ -57,7 +57,7 @@
                  </div>
              </div>-->
 
-            <div class="post" th:each="post: ${posts}" th:id="'post-' + ${post.postId}">
+            <div class="post" th:each="post: ${posts}" th:id="'post-' + ${post.postId}" th:name="'post-' + ${post.postId}">
                 <div class="info">
                     <div class="user">
                         <div class="profile-pic">
@@ -83,6 +83,7 @@
 
 
                         <div th:if="${!post.postLike.isEmpty()}">
+
                             <div th:each="likes, state : ${post.postLike}">
                                 <div th:if="${likes.userLikeId.username.equals(userinfo.username)}">
                                     <a th:href="@{/unlike_detail_subuser/{user}/{postId}(postId = ${post.postId}, user = ${post.user.username})}">

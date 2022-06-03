@@ -12,15 +12,31 @@
         <div class="header">
             <div class="main-container">
                 <div class="image-container">
-                    <img th:src="@{/resources/img/login/insta-signup-page.png}" alt="Instagram In Phone Image">
+                    <img th:src="@{/resources/img/login/insta-signup-page.png}" alt="Stogram In Phone Image">
                 </div>
                 <div class="form-container">
                     <div class="top">
                         <div class="logo">
-                            <img th:src="@{/resources/img/nav/stogram.png}" alt="instagram" style="width: 120px;">
+                            <img th:src="@{/resources/img/nav/stogram.png}" alt="Stogram" style="width: 120px;">
+                            <p class="apps">Зарегистрируйтесь, чтобы смотреть фото и видео ваших друзей.</p>
+                            <br>
                         </div>
+
+
                         <form th:action="@{/register}" method="POST">
                             <div class="form">
+                                <div class="input_field">
+                                    <input type="text" name="phone" placeholder="Мобильный телефон" class="input">
+                                </div>
+                                <div class="input_field">
+                                    <input type="text" name="email" placeholder="Адрес электронной почты" class="input">
+                                </div>
+                                <div class="input_field">
+                                    <input type="text" name="firstname" placeholder="Имя" class="input">
+                                </div>
+                                <div class="input_field">
+                                    <input type="text" name="surname" placeholder="Фамилия" class="input">
+                                </div>
                                 <div class="input_field">
                                     <input type="text" name="username" placeholder="Имя пользователя" class="input">
                                 </div>
@@ -30,26 +46,24 @@
                                 <button class="btn" type="submit">Зарегистрироваться</button>
                             </div>
                         </form>
-                    <!--    <div class="or">
+                        <div class="or">
                             <div class="line"></div>
                             <p>ИЛИ</p>
                             <div class="line"></div>
-                        </div>-->
+                        </div>
                         <div class="dif">
-                           <!-- <div class="fb">
+                            <div class="fb">
                                 <img th:src="@{/resources/img/login/vk.png}" alt="facebook">
                                 <p>Войти через ВКонтакте</p>
-                            </div>-->
-                            <div class="forgot">
-                                <a href="#">Забыли пароль?</a>
                             </div>
+
                         </div>
                     </div>
                     <div class="signup">
-                        <p>У меня есть аккаунт. <a onclick="window.location='login'" href="#">Войти</a></p>
+                        <p>Есть аккаунт? <a th:href="@{/login}">Войти</a></p>
                     </div>
                     <div class="apps">
-                        <p>Скачать приложение</p>
+                        <p>Установите приложение</p>
                         <div class="icons">
                             <a href="#"><img th:src="@{/resources/img/login/appstore.png}" alt="appstore"></a>
                             <a href="#"><img th:src="@{/resources/img/login/googleplay.png}" alt="googleplay"></a>
