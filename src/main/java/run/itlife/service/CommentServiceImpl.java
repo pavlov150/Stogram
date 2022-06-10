@@ -1,6 +1,7 @@
 package run.itlife.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import run.itlife.dto.CommentDto;
 import run.itlife.entity.Comment;
@@ -9,7 +10,8 @@ import run.itlife.repository.CommentRepository;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static run.itlife.utils.SecurityUtils.getCurrentUserDetails;
+import static run.itlife.utils.SecurityUtils.*;
+import static run.itlife.utils.SecurityUtils.ACCESS_DENIED;
 
 // Уровень обслуживания
 // Класс, реализующий интерфейс, который отвечает за логику создания комментариев
@@ -39,6 +41,17 @@ public class CommentServiceImpl implements CommentService {
         comment.setUser(userService.findByUsername(getCurrentUserDetails().getUsername()));
         comment.setCreatedAt(LocalDateTime.now());
         commentRepository.save(comment);
+    }
+
+    @Override
+    public void delete(long id) {
+        String username = commentRepository.findById(id)
+                .orElseThrow()
+                .getUser().getUsername();
+        if (!hasAuthority(username) && !hasRole("ADMIN")) {
+            throw new AccessDeniedException(ACCESS_DENIED);
+        }
+        commentRepository.deleteById(id);
     }
 
     @Override

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+    <head th:include="fragments.html :: header">
+        <title id="pageTitle">Stogram - Новый пост</title>
+    </head>
+
+    <!-- Navigation -->
+    <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" th:insert="fragments.html :: navigation"></nav>
+
+
+        <br>
+        <br>
+    <!-- Page Content -->
+    <section class="main-post">
+        <div class="wrapper-posts">
+            <div class="left-col">
+                    <form method="POST" th:action="@{/post/newVideo}" enctype="multipart/form-data">
+                        <label>
+                            <input type="file" name="file" accept="video/mp4, video/quicktime" style="display: none;">
+                            <img id="profilePicture" th:src="@{/resources/img/icons/upload.png}">
+                        </label>
+
+
+                            <br>
+                            <textarea name="content" class="profile-box description" rows="4" placeholder="Введите текст поста"></textarea>
+
+                        <br>
+                        <button type="submit" class="btn btn-outline-dark">Опубликовать пост</button>
+                    </form>
+                    <!-- Footer -->
+                    <footer th:insert="fragments.html :: footer"></footer>
+            </div>
+        </div>
+    </section>
+
+
+
+        <!-- Bootstrap core JavaScript -->
+        <script src="vendor/jquery/jquery.min.js"></script>
+        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    </body>
+</html>

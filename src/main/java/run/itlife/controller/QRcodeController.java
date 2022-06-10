@@ -23,7 +23,7 @@ public class QRcodeController {
     @RequestMapping(value = "qrcode/", method = RequestMethod.GET)
     public void qrcode(HttpServletResponse response) throws Exception {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        String path = InetAddress.getLocalHost().getHostName() + '/' + "sub-posts" + '/' + username;
+        String path =  "stogram.moscow/" + "sub-posts" + '/' + username;
         response.setContentType("image/png");
         OutputStream outputStream = response.getOutputStream();
         outputStream.write(ZXingQR.getQRCodeImage(path, 400, 400));

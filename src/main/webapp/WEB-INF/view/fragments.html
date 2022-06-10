@@ -66,6 +66,39 @@
         </style>
     </head>
 
+    <head th:fragment="header-add-img">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+        <meta name="generator" content="Jekyll v4.1.1">
+        <title th:include=":: #pageTitle"></title>
+        <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/sign-in/">
+        <link th:href="@{/webjars/bootstrap/4.0.0/css/bootstrap.min.css}" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.4.0/cropper.min.css">
+        <link th:href="@{/resources/css/crop.css}" rel="stylesheet">
+        <link th:href="@{/resources/css/posts.css}" rel="stylesheet">
+        <link th:href="@{/resources/css/menu.css}" rel="stylesheet">
+        <script type="text/javascript" th:src="@{/resources/js/menu.js}"></script>
+        <style>
+            .bd-placeholder-img {
+                font-size: 1.125rem;
+                text-anchor: middle;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+            }
+            @media (min-width: 768px) {
+                .bd-placeholder-img-lg {
+                    font-size: 3.5rem;
+                }
+            }
+        </style>
+    </head>
+
     <body>
 
         <!-- Navigation -->
@@ -80,9 +113,73 @@
                 <div class="nav-items">
                     <a class="icon" th:href="@{/}"><img th:src="@{/resources/img/nav/home.png}" class="icon" alt=""></a>
                     <a class="icon" sec:authorize="hasRole('ADMIN')" th:href="@{/bugs_view}"><img th:src="@{/resources/img/nav/messenger.png}" class="icon" alt=""></a>
-                    <a class="icon" sec:authorize="hasRole('USER')" th:href="@{/post/new}"><img th:src="@{/resources/img/nav/add.png}" class="icon" alt=""></a>
-                  <!--  <a class="icon" sec:authorize="hasRole('USER')" th:href="@{/users}"><img th:src="@{/resources/img/nav/explore.png}" class="icon" alt=""></a>-->
+
+                        <ul class=" nav-list icon">
+                            <li class="icon">
+                                <img class="icon" th:src="@{/resources/img/nav/add.png}" alt="">
+                                <ul class="nalumes-nucludem">
+                                    <li>
+                                        <a th:href="@{/post/newImage}">Фото</a>
+                                    </li>
+                                    <li>
+                                        <a th:href="@{/post/newVideo}">Видео</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    <!--  <a class="icon" sec:authorize="hasRole('USER')" th:href="@{/users}"><img th:src="@{/resources/img/nav/explore.png}" class="icon" alt=""></a>-->
                  <!--   <img th:src="@{/resources/img/nav/like.png}" class="icon" alt="">-->
+                    <div class="icon user-profile" sec:authorize="isAuthenticated()" >
+                        <ul class="icon user-profile nav-list" sec:authorize="isAuthenticated()">
+                            <li>
+                                <img th:if="${userinfo.photo == null}" class="icon user-profile" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
+                                <img th:unless="${userinfo.photo == null}" class="icon user-profile" th:src="@{'/resources/img/users/' + ${user} + '/profile/' + ${userinfo.photo}}" alt="">
+                                <ul class="nalumes-nucludem">
+                                    <li>
+                                        <a th:href="@{/posts}">Профиль</a>
+                                    </li>
+                                    <li>
+                                        <a th:href="@{/profile_edit/{user}(user = ${user})}">Настройки</a>
+                                    </li>
+                                    <li>
+                                        <a th:href="@{/qrcode/}">QR-код</a>
+                                    </li>
+                                    <li>
+                                        <a th:href="@{/logout}">Выйти</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <nav class="navbar" th:fragment="navigation-add-img">
+            <div class="nav-wrapper">
+                <a th:href="@{/}"><img th:src="@{/resources/img/nav/stogram.png}" class="brand-img" alt=""></a>
+
+                <form class="search-form" method="GET" th:action="@{/search}">
+                    <input type="text" class="search-box" name="search" placeholder="Найти">
+                </form>
+
+                <div class="nav-items">
+                    <a class="icon" th:href="@{/}"><img th:src="@{/resources/img/nav/home.png}" class="icon" alt=""></a>
+                    <a class="icon" sec:authorize="hasRole('ADMIN')" th:href="@{/bugs_view}"><img th:src="@{/resources/img/nav/messenger.png}" class="icon" alt=""></a>
+
+                    <ul class=" nav-list icon">
+                        <li class="icon">
+                            <img class="icon" th:src="@{/resources/img/nav/add.png}" alt="">
+                            <ul class="nalumes-nucludem">
+                                <li>
+                                    <a th:href="@{/post/newImage}">Фото</a>
+                                </li>
+                                <li>
+                                    <a th:href="@{/post/newVideo}">Видео</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
 
                     <div class="icon user-profile" sec:authorize="isAuthenticated()" >
                         <ul class="icon user-profile nav-list" sec:authorize="isAuthenticated()">
@@ -97,7 +194,7 @@
                                         <a th:href="@{/profile_edit/{user}(user = ${user})}">Настройки</a>
                                     </li>
                                     <li>
-                                        <a th:href="@{/qrcode/}">Генерация QR-кода</a>
+                                        <a th:href="@{/qrcode/}">QR-код</a>
                                     </li>
                                     <li>
                                         <a th:href="@{/logout}">Выйти</a>
@@ -106,11 +203,6 @@
                             </li>
                         </ul>
                     </div>
-
-
-
-
-
                 </div>
             </div>
         </nav>
@@ -148,8 +240,8 @@
         </div>
 
         <!-- Footer -->
-        <p class="text-muted" th:fragment="footer-login">© 2022 Stogram (version 1.18.0 Pre-Alpha). Обнаружили ошибку? <a class="description comments" th:href="@{/bug/new}">Напишите нам</a></p>
-        <footer class="text-muted" th:fragment="footer">© 2022 Stogram (version 1.18.0 Pre-Alpha). Обнаружили ошибку? <a class="description comments" th:href="@{/bug/new}">Напишите нам</a></footer>
+        <p class="text-muted" th:fragment="footer-login">© 2022 Stogram (version 1.19.0 Pre-Alpha). Обнаружили ошибку? <a class="description comments" th:href="@{/bug/new}">Напишите нам</a></p>
+        <footer class="text-muted" th:fragment="footer">© 2022 Stogram (version 1.19.0 Pre-Alpha). Обнаружили ошибку? <a class="description comments" th:href="@{/bug/new}">Напишите нам</a></footer>
 
     </body>
 </html>

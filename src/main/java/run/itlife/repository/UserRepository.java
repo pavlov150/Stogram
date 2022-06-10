@@ -23,9 +23,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value = "select * from users u " +
             "join user_role ur on ur.user_id = u.user_id " +
             "join role r on r.role_id = ur.role_id " +
-            "where r.name = 'USER' ", nativeQuery = true)
+            "where r.name = 'USER' " +
+            "order by u.created_at desc " +
+            "LIMIT 5 ", nativeQuery = true)
     List<User> getUsersOnly();
-
 
     @Query(value = "select u.* from users u " +
     "where u.username LIKE ? ", nativeQuery = true)

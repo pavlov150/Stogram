@@ -6,43 +6,29 @@
     </head>
 
     <!-- Navigation -->
-    <body class="text-center">
+    <body>
         <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" th:insert="fragments.html :: navigation"></nav>
 
+        <br>
+        <br>
         <!-- Page Content -->
-        <br>
-        <br>
-        <div class="container">
-            <div class="row">
-                <!-- Post Content Column -->
-                <div class="col-lg-8">
+        <section class="main-post">
+            <div class="wrapper-posts">
+                <div class="left-col">
                     <form method="POST" th:action="@{/post/edit}" th:object="${post}" enctype="multipart/form-data">
-                        <div class="form-group">
                             <input type="hidden" th:field="*{postId}"/>
-                            <br>
-                            <img th:if="${post.extFile == 'jpg'}" th:src="@{'/resources/img/users/' + ${user} + '/' + ${post.photo}}" th:height="300px">
-                            <video th:if="${post.extFile == 'mp4'}" th:height="300px" autoplay controls loop muted>
-                                <source th:src="@{'/resources/video/users/' + ${user} + '/' + ${post.photo}}" type=video/mp4>
-                            </video>
-                            <br><br>
-                            Выберите новое фото или видео для загрузки: <input type="file" name="file">
-                            <br>
-                            <br>
-                            <textarea th:field="*{content}" class="form-control" rows="4" placeholder="Введите текст поста"></textarea>
 
-                        </div>
+
+                            <textarea th:field="*{content}" class="profile-box description" rows="4" placeholder="Введите текст поста"></textarea>
+
                         <br>
                         <button type="submit" class="btn btn-outline-dark">Отредактировать пост</button>
                     </form>
                     <!-- Footer -->
                     <footer th:insert="fragments.html :: footer"></footer>
                 </div>
-
             </div>
-            <!-- /.row -->
-
-        </div>
-        <!-- /.container -->
+        </section>
 
 
 

@@ -1,0 +1,30 @@
+#profileImageModal .modal-body {
+    min-height: 300px;
+    max-height: 300px;
+}
+
+.imgdiv {
+    max-height: 500px;
+    max-width: 1000px;
+    width: 75%;
+}
+#profilePicture {
+    margin-top:50px;
+   /* border:1px solid #000000;*/
+    min-height:300px;
+    min-width:300px;
+    max-height:300px;
+    max-width:300px;
+}
+
+.modal-dialog {
+    margin: 10px;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+#profileImageModal .modal-body {
+    height: 100%;
+    max-height: 1500px;
+}
+

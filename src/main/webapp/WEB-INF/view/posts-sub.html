@@ -30,8 +30,8 @@
                             </p>
                         </div>
                     </div>
-                    <a th:if="${isSub == 0} " th:href="@{/subscription/{user}(user = ${user_sub})}" class="btn btn-outline-dark">Подписаться</a>
-                    <a th:unless="${isSub == 0}" th:href="@{/unsubscription/{user}(user = ${user_sub})}" class="btn btn-outline-danger">Отписаться</a>
+                    <a th:if="${isSub == 0 && !user.equals(user_sub)} " th:href="@{/subscription/{user}(user = ${user_sub})}" class="btn btn-outline-dark">Подписаться</a>
+                    <a th:if="${isSub != 0 && !user.equals(user_sub)}" th:href="@{/unsubscription/{user}(user = ${user_sub})}" class="btn btn-outline-danger">Отписаться</a>
                 </div>
             </section>
 
@@ -46,8 +46,8 @@
                             <div th:unless="${countPosts == 0}" class="col-md-4" th:each="post: ${posts}" th:id="'post-' + ${post.postId}">
                                 <a th:href="@{/posts_detail_subuser/{user}#post- (user = ${user_sub})} + ${post.postId}">
                                     <div class="card mb-4">
-                                        <img th:if="${post.extFile == 'jpg'}" th:src="@{'/resources/img/users/' + ${post.user.username} + '/' + ${post.photo}}">
-                                        <video th:if="${post.extFile == 'mp4'}" height="100%" autoplay controls loop muted>
+                                        <img th:if="${post.extFile == 'png' || post.extFile == 'jpg'}" th:src="@{'/resources/img/users/' + ${post.user.username} + '/' + ${post.photo}}">
+                                        <video th:if="${post.extFile == 'mp4' || post.extFile == 'mov'}" height="100%" autoplay controls loop muted>
                                             <source th:src="@{'/resources/video/users/' + ${post.user.username} + '/' + ${post.photo}}" type=video/mp4>
                                         </video>
                                     </div>

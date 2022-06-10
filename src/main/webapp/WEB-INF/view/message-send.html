@@ -6,14 +6,20 @@
 </head>
 
 <!-- Navigation -->
-<body class="text-center">
+<body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" th:insert="fragments.html :: navigation"></nav>
-<div class="form-signin" >
-    <br><br><br><br>
-    <h1 class="h3 mb-3 font-weight-normal">Сообщение отправлено. Спасибо за отзыв</h1>
 
-    <p th:insert="fragments.html :: footer-login"></p>
-</div>
+<!-- Page Content -->
+<section class="main-post">
+    <div class="wrapper-posts">
+        <div class="left-col">
+    <br><br><br><br>
+    <h1 class="h3 mb-3 font-weight-normal text-center">Сообщение отправлено. Спасибо за отзыв</h1>
+            <br><br><br><br>
+    <p class="text-center" th:insert="fragments.html :: footer-login"></p>
+        </div>
+    </div>
+</section>
 
 </body>
 </html>

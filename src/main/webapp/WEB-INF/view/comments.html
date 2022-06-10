@@ -40,43 +40,32 @@
                 <hr>
                     <!-- Comments -->
                     <div class="view-source comments-view">
-                            <div th:each="comment: ${comments}">
-                                <div class="media-body">
-                                    <div class="info-comments">
-                                        <div class="user-comments">
-
-                                           <div class="profile-pic-comments">
-
-
-
-                                               <a th:href="@{/sub-posts/{user}(user = ${comment.user.username})}">
-                                                   <img th:if="${comment.user.photo == null}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
-                                                   <img th:unless="${comment.user.photo == null}" th:src="@{'/resources/img/users/' + ${comment.user.username} + '/profile/' + ${comment.user.photo}}" alt="">
-                                               </a>
-
-
-
-                                           </div>
+                        <div th:each="comment: ${comments}">
+                            <div class="media-body">
+                                <div class="info-comments">
+                                    <div class="user-comments">
+                                        <div class="profile-pic-comments">
+                                            <a th:href="@{/sub-posts/{user}(user = ${comment.user.username})}">
+                                                <img th:if="${comment.user.photo == null}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
+                                                <img th:unless="${comment.user.photo == null}" th:src="@{'/resources/img/users/' + ${comment.user.username} + '/profile/' + ${comment.user.photo}}" alt="">
+                                            </a>
+                                        </div>
+                                        <div>
+                                            <a th:href="@{/sub-posts/{user}(user = ${comment.user.username})}">
+                                                <b class="description-comments-user">
+                                                    <span th:text="${comment.user.username}"></span>
+                                                </b>
+                                            </a>
+                                            <span class="description-comments" th:text="${comment.commentText}"></span>
                                             <div>
-                                                <a th:href="@{/sub-posts/{user}(user = ${comment.user.username})}">
-                                                    <b class="description-comments-user">
-                                                        <span th:text="${comment.user.username}"></span>
-                                                    </b>
-                                                </a>
-                                                <span class="description-comments" th:text="${comment.commentText}"></span>
-                                                <div>
-                                                    <p class="post-time-comments" th:text="${#temporals.format(comment.createdAt, 'dd.MM.yyyy HH:mm')} + ' ' + 'Ответить'"></p>
-                                                </div>
+                                                <span class="post-time-comments" th:text="${#temporals.format(comment.createdAt, 'dd.MM.yyyy HH:mm')}"></span>
+                                                <a th:if="${#authentication.name == comment.user.username}" class="post-time-comments" th:href="@{/comment/delete/{postId}/{commentId}(commentId = ${comment.commentId}, postId = ${post.postId})}">Удалить</a>
                                             </div>
-
                                         </div>
                                     </div>
-
-
-
-
                                 </div>
                             </div>
+                        </div>
                     </div>
                 </div>
 

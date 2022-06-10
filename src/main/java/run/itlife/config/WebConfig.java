@@ -26,7 +26,7 @@ import org.thymeleaf.templatemode.TemplateMode;
 public class WebConfig implements ApplicationContextAware, WebMvcConfigurer {
 
     private ApplicationContext applicationContext;
-    private int maxUploadSizeInMb = 50 * 1024 * 1024; // 50 МБ
+    private int maxUploadSizeInMb = 100 * 1024 * 1024; // 100 МБ
 
     @Override
     //Контекст приложений (application contexts) основан на понятии фабрик компонентов и реализует прикладные

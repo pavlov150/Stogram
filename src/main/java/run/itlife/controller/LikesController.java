@@ -1,8 +1,10 @@
 package run.itlife.controller;
 
+import com.google.zxing.qrcode.decoder.Mode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import run.itlife.service.LikesService;
@@ -25,7 +27,7 @@ public class LikesController {
 
     @GetMapping("/like/{postId}")
     @PreAuthorize("hasRole('USER')")
-    public String create_like(@PathVariable long postId){
+    public String create_like(@PathVariable long postId){ // TODO седаль по аналогии как с регистрацией и созданием комментариев
         likesService.create_like(postId);
         return "redirect:/post/{postId}";
     }
@@ -62,7 +64,7 @@ public class LikesController {
     @PreAuthorize("hasRole('USER')")
     public String create_like_detail(@PathVariable long postId){
         likesService.create_like(postId);
-        return "redirect:/posts_detail/";
+        return "redirect:/posts_detail";
     }
 
 
@@ -72,7 +74,7 @@ public class LikesController {
         //  String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();
         long currentUserId = userService.findByUsername(getCurrentUserDetails().getUsername()).getUserId().longValue();
         likesService.delete_like(currentUserId, postId);
-        return "redirect:/posts_detail/";
+        return "redirect:/posts_detail";
     }
 
 

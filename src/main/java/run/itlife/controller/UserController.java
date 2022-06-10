@@ -19,9 +19,13 @@ import run.itlife.service.PostService;
 import run.itlife.service.UserService;
 
 import javax.imageio.ImageIO;
+import javax.lang.model.element.ModuleElement;
+import javax.persistence.EntityExistsException;
 import javax.servlet.ServletContext;
 import java.awt.image.BufferedImage;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 
 import static run.itlife.utils.EditImage.cropImage;
 import static run.itlife.utils.EditImage.resizeImage;
@@ -58,8 +62,13 @@ public class UserController {
 
     @PostMapping("/register")
     public String register(User user){
-        userService.create(user);
-        return "redirect:/login";
+        try {
+            userService.create(user);
+            return "redirect:/login";
+        } catch (EntityExistsException e) {
+        return "exist";
+    }
+
     }
 
     @GetMapping("/register")
@@ -79,15 +88,21 @@ public class UserController {
 
     @PostMapping("/profile_edit")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public String profile_edit(UserDto userDto, @RequestParam("file") MultipartFile file) {
+    public String profile_edit(UserDto userDto, @RequestParam("file") String file, ModelMap modelMap) {
+        final String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        modelMap.put("user", username);
+        modelMap.put("userinfo", userService.findByUsername(username));
+
+        String name = null;
 
        if (!file.isEmpty()) {
             try {
+
+                String base64Image = file.split(",")[1];
+                byte[] imageBytes = javax.xml.bind.DatatypeConverter.parseBase64Binary(base64Image);
+
                 // изменение и генерация ноового имени файла
                 String filename = generateFileName() + ".jpg";
-
-                // получаем имя юзера для формирования пути сохранения фото
-                final String username = SecurityContextHolder.getContext().getAuthentication().getName();
 
                 // получение имени фото и сохранение имени фото и данных поста в БД
                 userService.checkAuthority(userDto.getUserId());
@@ -100,19 +115,13 @@ public class UserController {
                     dir.mkdirs();
                 }
 
-                // Обрезаем изображение
-                BufferedImage cropImage = null;
-                BufferedImage originalImage = ImageIO.read(file.getInputStream());
-                cropImage = cropImage(originalImage);
+                File uploadedFile = new File(dir + "/" + filename);
+                BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(uploadedFile));
+                stream.write(imageBytes);
+                stream.flush();
+                stream.close();
+                return "redirect:/posts/";
 
-                // Уменьшаем или увеличиваем размер до 500
-                BufferedImage resizeImage = null;
-                File newFileJPG = null;
-                resizeImage = resizeImage(cropImage, 500, 500);
-                newFileJPG = new File(dir.getAbsolutePath() + File.separator + filename);
-                ImageIO.write(resizeImage, "jpg", newFileJPG);
-
-                return "redirect:/";
             } catch (Exception e) {
                 return "error";
             }

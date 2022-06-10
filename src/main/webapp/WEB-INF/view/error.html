@@ -6,14 +6,21 @@
     </head>
 
     <!-- Navigation -->
-    <body class="text-center">
+    <body>
         <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" th:insert="fragments.html :: navigation"></nav>
-        <div class="form-signin" >
-            <br><br><br><br>
-            <h1 class="h3 mb-3 font-weight-normal">Ошибка публикации. Файл не соответствует формату, либо файл имеет слишком длинное имя, либо файл не приложен</h1>
 
+        <!-- Page Content -->
+        <section class="main-post">
+            <div class="wrapper-posts">
+                <div class="left-col">
+                    <br><br><br><br>
+            <h1 class="h3 mb-3 font-weight-normal text-center">Ошибка публикации. Файл не соответствует формату, либо файл имеет слишком длинное имя, либо файл не приложен</h1>
+
+                    <br><br><br><br>
             <p th:insert="fragments.html :: footer-login"></p>
-        </div>
+                </div>
+            </div>
+        </section>
 
     </body>
 </html>

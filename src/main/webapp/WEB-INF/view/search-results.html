@@ -69,8 +69,8 @@
                             <div class="col-md-4" th:each="tag: ${findTags}">
                                 <a th:href="@{/post-view-sub/{postId}(postId = ${tag.postId})}">
                                     <div class="card mb-4">
-                                        <img th:if="${tag.extFile == 'jpg'}" th:src="@{'/resources/img/users/' + ${tag.user.username} + '/' + ${tag.photo}}">
-                                        <video th:if="${tag.extFile == 'mp4'}" height="100%" autoplay controls loop muted>
+                                        <img th:if="${tag.extFile == 'png' || tag.extFile == 'jpg'}" th:src="@{'/resources/img/users/' + ${tag.user.username} + '/' + ${tag.photo}}">
+                                        <video th:if="${tag.extFile == 'mp4' || tag.extFile == 'mov'}" height="100%" autoplay controls loop muted>
                                             <source th:src="@{'/resources/video/users/' + ${tag.user.username} + '/' + ${tag.photo}}" type=video/mp4>
                                         </video>
                                     </div>

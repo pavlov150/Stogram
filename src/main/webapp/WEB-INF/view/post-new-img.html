@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:include="fragments.html :: header-add-img">
-    <title id="pageTitle">Stogram - Редактирование профиля</title>
+    <title id="pageTitle">Stogram - Новый пост</title>
 </head>
 
 <!-- Navigation -->
@@ -13,15 +13,11 @@
 <section class="main-post">
     <div class="wrapper-posts">
         <div class="left-col">
-            <form method="POST" th:action="@{/profile_edit}" th:object="${userinfo}" enctype="multipart/form-data">
-                <input type="hidden" th:field="*{userId}"/>
-
+            <form method="POST" th:action="@{/post/newImage}" enctype="multipart/form-data">
                 <textarea id="blob-img" name="file" class="form-control" rows="4" placeholder="" style="display:none;"></textarea>
                 <div>
-                    <img th:if="${userinfo.photo == null}" class="profile-pic-edit" id="profilePicture" th:src="@{'/resources/img/icons/avatar.jpg'}" src="" alt="" data-target="#profileImageModal" data-toggle="modal">
-                    <img th:unless="${userinfo.photo == null}" class="profile-pic-edit" id="profilePicture" th:src="@{'/resources/img/users/' + ${user} + '/profile/' + ${userinfo.photo}}" src="" alt="" data-target="#profileImageModal" data-toggle="modal">
+                    <img id="profilePicture" th:src="@{/resources/img/icons/upload.png}" src="" alt="" data-target="#profileImageModal" data-toggle="modal">
                 </div>
-
 
                 <!-- Modal Window -->
                 <div class="modal fade" id="profileImageModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
@@ -58,37 +54,9 @@
                 </div>
                 <!-- Modal Window End -->
 
-                <div class="info_input post">
-                    <input th:field="*{username}" type="text" class="profile-box-input description" placeholder="Введите логин" readonly>
-                </div>
-                <div class="info_input post">
-                    <input th:field="*{password}" type="password" class="profile-box-input description" placeholder="Введите пароль">
-                </div>
-                <div class="info_input post">
-                    <input th:field="*{surname}" type="text" class="profile-box-input description" placeholder="Введите фамилию">
-                </div>
-                <div class="info_input post">
-                    <input th:field="*{firstname}" type="text" class="profile-box-input description" placeholder="Введите имя">
-                </div>
+                <textarea name="content" class="profile-box description" rows="4" placeholder="Введите текст поста"></textarea>
                 <br>
-                <textarea th:field="*{info}" class="profile-box description" rows="9" placeholder="Введите информацию о себе"></textarea>
-                <div class="info_input post">
-                    <input th:field="*{www}" type="text" class="profile-box-input description" placeholder="Введите сайт">
-                </div>
-                <div class="info_input post">
-                    <input th:field="*{email}" type="text" class="profile-box-input description" placeholder="Введите e-mail">
-                </div>
-                <div class="info_input post">
-                    <input th:field="*{phone}" type="text" class="profile-box-input description" placeholder="Введите телефон">
-                </div>
-                <div class="info_input post">
-                    <select class="profile-box-input description" rows="9" th:field="*{sex}">
-                        <option th:value="${sex_male}" th:text="${sex_male.getTitle()}"></option>
-                        <option th:value="${sex_female}" th:text="${sex_female.getTitle()}"></option>
-                    </select>
-                </div>
-                <br>
-                <button type="submit" class="btn btn-outline-dark">Изменить данные профиля</button>
+                <button type="submit" class="btn btn-outline-dark">Опубликовать пост</button>
             </form>
 
             <!-- Footer -->
@@ -97,9 +65,6 @@
     </div>
 </section>
 
-<!-- Bootstrap core JavaScript -->
-<script src="vendor/jquery/jquery.min.js"></script>
-<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 <!-- partial -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -108,6 +73,5 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.4.0/cropper.min.js"></script>
 <script type="text/javascript" th:src="@{/resources/js/crop.js}"></script>
-
 </body>
 </html>

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import run.itlife.dto.CommentDto;
+import run.itlife.entity.Comment;
 import run.itlife.service.CommentService;
 import run.itlife.service.PostService;
 import run.itlife.service.UserService;
@@ -37,6 +38,23 @@ public class CommentController {
         commentService.create(comment);
         return "redirect:/post/" + comment.getPostId();
     }
+
+
+    @GetMapping("/delete/{postId}/{commentId}")
+    @PreAuthorize("hasRole('USER')")
+    public String delete(@PathVariable long commentId, @PathVariable long postId){
+        commentService.delete(commentId);
+        return "redirect:/comment/" + postId;
+    }
+
+    @GetMapping("/delete/sub/{postId}/{commentId}")
+    @PreAuthorize("hasRole('USER')")
+    public String delete_sub(@PathVariable long commentId, @PathVariable long postId){
+        commentService.delete(commentId);
+        return "redirect:/comment/sub/" + postId;
+    }
+
+
 
     @PostMapping("/create_subuser_comment")
     public String create_subuser_comment(CommentDto comment){

@@ -102,6 +102,8 @@ public class UserServiceImpl implements UserService {
         return userRepository.getUsersOnly();
     }
 
+
+
     @Override
     public List<User> searchUsers(String substring) {
         return userRepository.searchUsers("%" + substring +"%");

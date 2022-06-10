@@ -9,24 +9,20 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.imageio.ImageIO;
-import javax.persistence.Id;
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.multipart.MultipartFile;
+import run.itlife.config.WebConfig;
 import run.itlife.dto.PostDto;
-import run.itlife.entity.Post;
 import run.itlife.repository.PostRepository;
 import run.itlife.repository.UserRepository;
 import run.itlife.service.*;
-import run.itlife.utils.ZXingQR;
 
 import java.awt.image.BufferedImage;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.OutputStream;
-import java.util.List;
 
 import static run.itlife.utils.EditImage.cropImage;
 import static run.itlife.utils.EditImage.resizeImage;
@@ -134,14 +130,24 @@ public class PostController {
 
 
 
-    @GetMapping("/post/new")
+    @GetMapping("/post/newVideo")
     @PreAuthorize("hasRole('USER')")
-    public String postNew(ModelMap modelMap) {
+    public String postNewVideo(ModelMap modelMap) {
         setCommonParams(modelMap);
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         modelMap.put("user", username);
         modelMap.put("userinfo", userService.findByUsername(username));
-        return "post-new";
+        return "post-new-video";
+    }
+
+    @GetMapping("/post/newImage")
+    @PreAuthorize("hasRole('USER')")
+    public String postNewImage(ModelMap modelMap) {
+        setCommonParams(modelMap);
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        modelMap.put("user", username);
+        modelMap.put("userinfo", userService.findByUsername(username));
+        return "post-new-img";
     }
 
    /* @GetMapping("/fragments")
@@ -152,52 +158,33 @@ public class PostController {
         return "fragments";
     }*/
 
-    @PostMapping("/post/new")
+    @PostMapping("/post/newVideo")
     @PreAuthorize("hasRole('USER')")
-    public String postNew(PostDto postDto, @RequestParam("file") MultipartFile file, ModelMap modelMap) {
-
+    public String postNewVideo(PostDto postDto, @RequestParam("file") MultipartFile file, ModelMap modelMap) {
         final String username = SecurityContextHolder.getContext().getAuthentication().getName();
         modelMap.put("user", username);
         modelMap.put("userinfo", userService.findByUsername(username));
 
         if (!file.isEmpty()) {
-
             try {
-                if(file.getContentType().equals("image/jpeg")) {
+                if(file.getContentType().equals("video/mp4") || file.getContentType().equals("video/quicktime") ) {
+                 //   final String username = SecurityContextHolder.getContext().getAuthentication().getName();
 
-                    // изменение и генерация ноового имени файла
-                    String filename = generateFileName() + ".jpg";
-
-                    // получаем имя юзера для формирования пути сохранения фото
-                  //  final String username = SecurityContextHolder.getContext().getAuthentication().getName();
-
-                    // получение имени фото и сохранение имени фото и данных поста в БД
-                    postDto.setExtFile("jpg");
-                    postDto.setPhoto(filename);
-                    long postId = postService.createPost(postDto);
-                    // сохранение самого файла в папку юзера
-                    File dir = new File(context.getRealPath("/resources/img/users/" + username));
-                    if (!dir.exists()) {
-                        dir.mkdirs();
+                    String extension;
+                    switch (file.getContentType()) {
+                        case "video/mp4":
+                            extension = "mp4";
+                            break;
+                        case "video/quicktime":
+                            extension = "mov";
+                            break;
+                        default:
+                            extension = "mp4";
+                            break;
                     }
 
-                    // Обрезаем изображение
-                    BufferedImage cropImage = null;
-                    BufferedImage originalImage = ImageIO.read(file.getInputStream());
-                    cropImage = cropImage(originalImage);
-
-                    // Уменьшаем или увеличиваем размер до 500
-                    BufferedImage resizeImage = null;
-                    File newFileJPG = null;
-                    resizeImage = resizeImage(cropImage, 500, 500);
-                    newFileJPG = new File(dir.getAbsolutePath() + File.separator + filename);
-                    ImageIO.write(resizeImage, "jpg", newFileJPG);
-                    return "redirect:/post/" + postId;
-                }
-                else if(file.getContentType().equals("video/mp4")) {
-                 //   final String username = SecurityContextHolder.getContext().getAuthentication().getName();
-                    String filename = generateFileName() + ".mp4";
-                    postDto.setExtFile("mp4");
+                    String filename = generateFileName() + "." + extension;
+                    postDto.setExtFile(extension);
                     postDto.setPhoto(filename);
                     long postId = postService.createPost(postDto);
                     File dir = new File(context.getRealPath("/resources/video/users/" + username));
@@ -223,6 +210,47 @@ public class PostController {
 
     }
 
+
+    @PostMapping("/post/newImage")
+    @PreAuthorize("hasRole('USER')")
+    public String postNewImage(PostDto postDto, @RequestParam("file") String file, ModelMap modelMap) {
+        final String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        modelMap.put("user", username);
+        modelMap.put("userinfo", userService.findByUsername(username));
+
+        String name = null;
+        if (!file.isEmpty()) {
+            try {
+                String base64Image = file.split(",")[1];
+                byte[] imageBytes = javax.xml.bind.DatatypeConverter.parseBase64Binary(base64Image);
+
+                String filename = generateFileName() + ".png";
+                postDto.setExtFile("png");
+                postDto.setPhoto(filename);
+                long postId = postService.createPost(postDto);
+
+
+                name = filename;
+                File dir = new File(context.getRealPath("/resources/img/users/" + username));
+                if (!dir.exists()) {
+                    dir.mkdirs();
+                }
+
+                File uploadedFile = new File(dir + "/" + filename);
+                BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(uploadedFile));
+                stream.write(imageBytes);
+                stream.flush();
+                stream.close();
+                return "redirect:/post/" + postId;
+            } catch (Exception e) {
+                return "error";
+            }
+        } else {
+            return "error";
+        }
+
+    }
+
     @GetMapping("/post/{postId}/edit")
     @PreAuthorize("hasRole('USER')")
     public String postEdit(ModelMap modelMap, @PathVariable long postId) {
@@ -237,74 +265,14 @@ public class PostController {
 
     @PostMapping("/post/edit")
     @PreAuthorize("hasRole('USER')")
-    public String postEdit(PostDto postDto, @RequestParam("file") MultipartFile file, ModelMap modelMap) {
-
+    public String postEdit(PostDto postDto, ModelMap modelMap) {
         // получаем имя юзера для формирования пути сохранения фото
         final String username = SecurityContextHolder.getContext().getAuthentication().getName();
         modelMap.put("user", username);
         modelMap.put("userinfo", userService.findByUsername(username));
-
-        if (!file.isEmpty()) {
-            try {
-
-                if(file.getContentType().equals("image/jpeg")) {
-
-                    // изменение и генерация ноового имени файла
-                    String filename = generateFileName() + ".jpg";
-
-                    // получение имени фото и сохранение имени фото и данных поста в БД
-                    postService.checkAuthority(postDto.getPostId());
-                    postDto.setExtFile("jpg");
-                    postDto.setPhoto(filename);
-                    postService.update(postDto);
-
-                    // сохранение самого файла в папку юзера
-                    File dir = new File(context.getRealPath("/resources/img/users/" + username));
-                    if (!dir.exists()) {
-                        dir.mkdirs();
-                    }
-
-                    // Обрезаем изображение
-                    BufferedImage cropImage = null;
-                    BufferedImage originalImage = ImageIO.read(file.getInputStream());
-                    cropImage = cropImage(originalImage);
-
-                    // Уменьшаем или увеличиваем размер до 500
-                    BufferedImage resizeImage = null;
-                    File newFileJPG = null;
-                    resizeImage = resizeImage(cropImage, 500, 500);
-                    newFileJPG = new File(dir.getAbsolutePath() + File.separator + filename);
-                    ImageIO.write(resizeImage, "jpg", newFileJPG);
-                    return "redirect:/post/" + postDto.getPostId();
-                }
-                else if(file.getContentType().equals("video/mp4")) {
-                    //   final String username = SecurityContextHolder.getContext().getAuthentication().getName();
-                    String filename = generateFileName() + ".mp4";
-                    postService.checkAuthority(postDto.getPostId());
-                    postDto.setExtFile("mp4");
-                    postDto.setPhoto(filename);
-                    postService.update(postDto);
-                    File dir = new File(context.getRealPath("/resources/video/users/" + username));
-                    if (!dir.exists()) {
-                        dir.mkdirs();
-                    }
-                    // TODO написать логику обрезки видео
-                    byte[] bytes = file.getBytes();
-                    BufferedOutputStream stream =
-                            new BufferedOutputStream(new FileOutputStream(new File(dir + "/" + filename)));
-                    stream.write(bytes);
-                    stream.close();
-                    return "redirect:/post/" + postDto.getPostId();
-                }
-                return "error";
-            } catch (Exception e) {
-                return "error";
-            }
-        } else {
-            postService.checkAuthority(postDto.getPostId());
-            postService.update(postDto);
-            return "redirect:/post/" + postDto.getPostId();
-        }
+        postService.checkAuthority(postDto.getPostId());
+        postService.update(postDto);
+        return "redirect:/post/" + postDto.getPostId();
     }
 
     @GetMapping("/post-view-sub/{id}")

@@ -5,7 +5,28 @@
     <title>Stogram - Вход</title>
     <link th:href="@{/resources/css/login.css}" rel="stylesheet">
     <link th:href="@{/resources/css/sign-up.css}" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+    <script>
+        $(function() {
+            $("form").on('change input paste', 'input', function(e) {
+
+                var username = $('#username').val();
+                var password = $('#password').val();
+                if (username.length == 0 || password.length == 0) {
+                    $("#submit").attr('disabled', 'disabled');
+                    $("#submit").addClass('deactivate').removeClass('btn');}
+                else {
+                    $("#submit").removeAttr('disabled', 'disabled');
+                    $("#submit").addClass('btn').removeClass('deactivate');
+                }
+
+            });
+        });
+    </script>
 </head>
+
+
 
 <!-- Navigation -->
 <div class="wrapper">
@@ -22,12 +43,12 @@
                     <form action="login" method="POST">
                         <div class="form">
                             <div class="input_field">
-                                <input type="text" name="username" placeholder="Имя пользователя" class="input">
+                                <input type="text" name="username" placeholder="Имя пользователя" id="username" class="input">
                             </div>
                             <div class="input_field">
-                                <input type="password" name="password" placeholder="Пароль" class="input">
+                                <input type="password" name="password" placeholder="Пароль" id="password" class="input">
                             </div>
-                            <button class="btn" type="submit">Войти</button>
+                            <button class="deactivate" id="submit" type="submit" disabled>Войти</button>
                         </div>
                     </form>
                     <div class="or">

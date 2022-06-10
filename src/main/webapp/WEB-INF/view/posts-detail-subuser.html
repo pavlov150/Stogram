@@ -71,8 +71,8 @@
 
 
                 <a th:href="@{/post-view-sub/{postId}(postId = ${post.postId})}">
-                    <img th:if="${post.extFile == 'jpg'}" th:src="@{'/resources/img/users/' + ${post.user.username} + '/' + ${post.photo}}" class="post-image" alt="">
-                    <video th:if="${post.extFile == 'mp4'}" width="100%" autoplay controls loop muted>
+                    <img th:if="${post.extFile == 'png' || post.extFile == 'jpg'}" th:src="@{'/resources/img/users/' + ${post.user.username} + '/' + ${post.photo}}" class="post-image" alt="">
+                    <video th:if="${post.extFile == 'mp4' || post.extFile == 'mov'}" width="100%" autoplay controls loop muted>
                         <source th:src="@{'/resources/video/users/' + ${post.user.username} + '/' + ${post.photo}}" type=video/mp4>
                     </video>
                 </a>

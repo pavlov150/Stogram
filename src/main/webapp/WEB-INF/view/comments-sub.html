@@ -61,7 +61,8 @@
                                             </a>
                                             <span class="description-comments" th:text="${comment.commentText}"></span>
                                             <div>
-                                                <p class="post-time-comments" th:text="${#temporals.format(comment.createdAt, 'dd.MM.yyyy HH:mm')} + ' ' + 'Ответить'"></p>
+                                                <span class="post-time-comments" th:text="${#temporals.format(comment.createdAt, 'dd.MM.yyyy HH:mm')}"></span>
+                                                <a th:if="${#authentication.name == comment.user.username}" class="post-time-comments" th:href="@{/comment/delete/sub/{postId}/{commentId}(commentId = ${comment.commentId}, postId = ${post.postId})}">Удалить</a>
                                             </div>
                                         </div>
                                     </div>

@@ -112,7 +112,7 @@ nav ul li ul li a {
 }
 @media screen and (min-width: 799px) {
     .nav-list {
-        display: block!important;
+      /*  display: block!important;*/
     }
 
     .nav-list li:hover .nalumes-nucludem {

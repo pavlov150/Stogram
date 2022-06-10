@@ -70,14 +70,14 @@
                             <a th:if="${#authentication.name == post.user.username}" th:href="@{/post/{postId}/edit(postId = ${post.postId})}"><img th:src="@{/resources/img/nav/option.png}" class="options" alt=""></a>
                         </div>
                         <a th:href="@{/post/{postId}(postId = ${post.postId})}">
-                            <img th:if="${post.extFile == 'jpg'}" th:src="@{'/resources/img/users/' + ${post.user.username} + '/' + ${post.photo}}" class="post-image" alt="">
-                            <video th:if="${post.extFile == 'mp4'}" width="100%" autoplay controls loop muted>
+                            <img th:if="${post.extFile == 'png' || post.extFile == 'jpg'}" th:src="@{'/resources/img/users/' + ${post.user.username} + '/' + ${post.photo}}" class="post-image" alt="">
+                            <video th:if="${post.extFile == 'mp4' || post.extFile == 'mov'}" width="100%" autoplay controls loop muted>
                                 <source th:src="@{'/resources/video/users/' + ${post.user.username} + '/' + ${post.photo}}" type=video/mp4>
                             </video>
                         </a>
                         <div class="post-content">
                             <div class="reaction-wrapper">
-                                <div th:if="${!post.postLike.isEmpty()}">
+                                <div>
                                     <div th:each="likes, state : ${post.postLike}">
                                     <!--    <p th:text="${likes.userLikeId.username}"></p> margo
                                         <p th:text="${post.user.username}"></p>shurrik
@@ -85,17 +85,19 @@
                                         <p th:text="${state.size}"></p>
                                         <p th:text="${state.last}"></p>-->
 
+
+
                                         <div th:if="${likes.userLikeId.username.equals(post.user.username)}">
                                             <a th:href="@{/unlike_detail/{postId}(postId = ${post.postId})}">
                                                 <img th:src="@{/resources/img/icons/like.png}" class="icon" alt="">
                                             </a>
                                         </div>
 
-                                    <!--    <div th:if="${!likes.userLikeId.username.equals(post.user.username) && state.size > 0 && state.last}">
-                                            <a th:href="@{/like_detail/{postId}(postId = ${post.postId})}">
-                                                <img th:src="@{/resources/img/icons/notlike.png}" class="icon" alt="">
-                                            </a>
-                                        </div>-->
+                                        <!--    <div th:if="${!likes.userLikeId.username.equals(post.user.username) && state.size > 0 && state.last}">
+                                                <a th:href="@{/like_detail/{postId}(postId = ${post.postId})}">
+                                                    <img th:src="@{/resources/img/icons/notlike.png}" class="icon" alt="">
+                                                </a>
+                                            </div>-->
 
                                         <div th:if="${!likes.userLikeId.username.equals(post.user.username) && state.current.userLikeId.username.equals(post.user.username)}">
                                             <a th:href="@{/like_detail/{postId}(postId = ${post.postId})}">
@@ -113,7 +115,7 @@
                                 </div>
 
                                 <div th:if="${post.postLike.isEmpty()}">
-                                    <a th:href="@{/like_detail/{postId}(postId = ${post.postId})}">
+                                    <a th:href="@{/like_detail/{postId} (postId = ${post.postId})}">
                                         <img th:src="@{/resources/img/icons/notlike.png}" class="icon" alt="">
                                     </a>
                                 </div>
