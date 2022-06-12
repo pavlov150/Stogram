@@ -5,11 +5,9 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import run.itlife.dto.CommentDto;
 import run.itlife.entity.Comment;
-import run.itlife.entity.Post;
 import run.itlife.repository.CommentRepository;
 import java.time.LocalDateTime;
 import java.util.List;
-
 import static run.itlife.utils.SecurityUtils.*;
 import static run.itlife.utils.SecurityUtils.ACCESS_DENIED;
 
@@ -59,11 +57,5 @@ public class CommentServiceImpl implements CommentService {
             List<Comment> comments = commentRepository.sortCommentsByDate(id);
             return comments;
     }
-
-/*    @Override
-    public List<Comment> getLastComments() {
-        return commentRepository.getLastComments();
-    }*/
-
 
 }

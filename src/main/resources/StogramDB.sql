@@ -70,7 +70,6 @@ CREATE TABLE bugs (
 insert into role values (1, 'ADMIN');
 insert into role values (2, 'USER');
 
-
 insert into users (username, password, created_at, is_active) values ('admin', '$2a$10$nzYRhy8lWbVTxvr7xnZFqu8BLBP0pNQaTU1hslTl0xoR6yA2CgsbC', now()::timestamp, true);
 insert into users (username, password, created_at, is_active) values ('pavlov89312', '$2a$10$nzYRhy8lWbVTxvr7xnZFqu8BLBP0pNQaTU1hslTl0xoR6yA2CgsbC', now()::timestamp, true);
 insert into users (username, password, created_at, is_active) values ('user1', '$2a$10$nzYRhy8lWbVTxvr7xnZFqu8BLBP0pNQaTU1hslTl0xoR6yA2CgsbC', now()::timestamp, true);

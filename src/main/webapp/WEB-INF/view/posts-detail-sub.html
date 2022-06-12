@@ -13,49 +13,10 @@
 <section class="main">
     <div class="wrapper">
         <div class="left-col">
-            <!-- <div class="status-wrapper">
-                 <div class="status-card">
-                     <div class="profile-pic"><img th:src="@{/resources/img/nav/cover 1.png}" alt=""></div>
-                     <p class="username">user_name_1</p>
-                 </div>
-                 <div class="status-card">
-                     <div class="profile-pic"><img th:src="@{/resources/img/nav/cover 2.png}" alt=""></div>
-                     <p class="username">user_name_2</p>
-                 </div>
-                 <div class="status-card">
-                     <div class="profile-pic"><img th:src="@{/resources/img/nav/cover 3.png}" alt=""></div>
-                     <p class="username">user_name_3</p>
-                 </div>
-                 <div class="status-card">
-                     <div class="profile-pic"><img th:src="@{/resources/img/nav/cover 1.png}" alt=""></div>
-                     <p class="username">user_name_3</p>
-                 </div>
-                 <div class="status-card">
-                     <div class="profile-pic"><img th:src="@{/resources/img/nav/cover 1.png}" alt=""></div>
-                     <p class="username">user_name_3</p>
-                 </div>
-                 <div class="status-card">
-                     <div class="profile-pic"><img th:src="@{/resources/img/nav/cover 1.png}" alt=""></div>
-                     <p class="username">user_name_3</p>
-                 </div>
-                 <div class="status-card">
-                     <div class="profile-pic"><img th:src="@{/resources/img/nav/cover 1.png}" alt=""></div>
-                     <p class="username">user_name_3</p>
-                 </div>
-                 <div class="status-card">
-                     <div class="profile-pic"><img th:src="@{/resources/img/nav/cover 1.png}" alt=""></div>
-                     <p class="username">user_name_3</p>
-                 </div>
-                 <div class="status-card">
-                     <div class="profile-pic"><img th:src="@{/resources/img/nav/cover 1.png}" alt=""></div>
-                     <p class="username">user_name_3</p>
-                 </div>
-             </div>-->
             <div class="no_public" th:if="${countPosts == 0}" >
                 <img th:src="@{'/resources/img/icons/face.png'}" alt="">
                 <h1 class="h3 mb-3 font-weight-normal no_public">Пока нет подписок</h1>
             </div>
-
             <div th:unless="${countPosts == 0}" class="post" th:each="post_sub: ${posts_sub}" >
                 <div class="info">
                     <div class="user">
@@ -70,30 +31,21 @@
                         </a>
                     </div>
                 </div>
-
-
-
                 <a th:href="@{/post-view-sub/{postId}(postId = ${post_sub.postId})}">
                     <img th:if="${post_sub.extFile == 'png' || post_sub.extFile == 'jpg'}" th:src="@{'/resources/img/users/' + ${post_sub.user.username} + '/' + ${post_sub.photo}}" class="post-image" alt="">
                     <video th:if="${post_sub.extFile == 'mp4' || post_sub.extFile == 'mov'}" width="100%" autoplay controls loop muted>
                         <source th:src="@{'/resources/video/users/' + ${post_sub.user.username} + '/' + ${post_sub.photo}}" type=video/mp4>
                     </video>
                 </a>
-
-
                 <div class="post-content">
                     <div class="reaction-wrapper">
-
                         <div th:if="${!post_sub.postLike.isEmpty()}">
                             <div th:each="likes, state : ${post_sub.postLike}">
-
-
                                 <div th:if="${likes.userLikeId.username.equals(userinfo.username)}">
                                     <a th:href="@{/unlike_detail_sub/{postId}(postId = ${post_sub.postId})}">
                                         <img th:src="@{/resources/img/icons/like.png}" class="icon" alt="">
                                     </a>
                                 </div>
-
                                 <div th:if="${!likes.userLikeId.username.equals(userinfo.username) && state.size > 0 && state.last}">
                                     <a th:href="@{/like_detail_sub/{postId}(postId = ${post_sub.postId})}">
                                         <img th:src="@{/resources/img/icons/notlike.png}" class="icon" alt="">
@@ -101,64 +53,37 @@
                                 </div>
                             </div>
                         </div>
-
                         <div th:if="${post_sub.postLike.isEmpty()}">
                             <a th:href="@{/like_detail_sub/{postId}(postId = ${post_sub.postId})}">
                                 <img th:src="@{/resources/img/icons/notlike.png}" class="icon" alt="">
                             </a>
                         </div>
-
-
-
-                      <!--  <img th:src="@{/resources/img/nav/like.png}" class="icon" alt="">-->
                         <a th:href="@{/comment/sub/{postId}(postId = ${post_sub.postId})}">
                             <img th:src="@{/resources/img/nav/comment.png}" class="icon" alt="">
                         </a>
-                     <!--   <img th:src="@{/resources/img/nav/send.png}" class="icon" alt="">
-                        <img th:src="@{/resources/img/nav/save.png}" class="save icon" alt="">-->
                     </div>
                     <p th:each="like, state : ${post_sub.postLike}" class="likes" th:text="${state.last} ? 'Нравится: ' + ${state.count} : ''"></p>
-                    <b class="description"><span th:text="${post_sub.user.username}"></span></b>
+                    <b class="description">
+                        <span th:text="${post_sub.user.username}"></span>
+                    </b>
                     <span class="description-normal" th:text="${post_sub.content}"></span>
                     <p class="post-time" th:text="${#temporals.format(post_sub.createdAt, 'dd.MM.yyyy')} + ' г.'"></p>
 
                     <!-- Comments -->
                     <div class="view-source comments-view">
                         <a th:href="@{/comment/sub/{postId}(postId = ${post_sub.postId})}" th:each="like, state : ${post_sub.comments}" class="description comments" th:text="${state.last} ? 'Смотреть все комментарии (' + ${state.count} + ')' : ''"></a>
-
-                       <!-- <div>
-                            <div th:each="comment_sub: ${post_sub.comments}">
-                                <div class="media-body">
-                                    <div class="info-comments">
-                                        <div class="user-comments">
-                                            <div class="profile-pic-comments">
-                                                <a th:href="@{/sub-posts/{user}(user = ${comment_sub.user.username})}">
-                                                    <img th:if="${comment_sub.user.photo == null}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
-                                                    <img th:unless="${comment_sub.user.photo == null}" th:src="@{'/resources/img/users/' + ${comment_sub.user.username} + '/profile/' + ${comment_sub.user.photo}}" alt="">
-                                                </a>
-                                            </div>
-                                            <div>
-                                                <b class="description-comments-user"><span th:text="${comment_sub.user.username}"></span></b></a>
-                                                <span class="description-comments" th:text="${comment_sub.commentText}"></span>
-                                                <div>
-                                                    <p class="post-time-comments" th:text="${#temporals.format(comment_sub.createdAt, 'dd.MM.yyyy HH:mm')} + ' ' + 'Ответить'"></p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>-->
                     </div>
                 </div>
+
                 <!-- Comments Form -->
                 <div sec:authorize="hasAnyRole('USER')">
                     <form class="comment-wrapper" method="POST" th:action="@{/comment/create_comment_detail_sub}">
                         <input type="hidden" name="postId" th:value="${post_sub.postId}" />
                         <div class="info-view">
                             <div class="user">
-                               <!-- <img th:src="@{/resources/img/nav/smile.png}" class="icon" alt="">-->
-                                <div class="profile-pic"><img th:src="@{'/resources/img/users/' + ${user} + '/profile/' + ${userinfo.photo}}" alt=""></div>
+                                <div class="profile-pic">
+                                    <img th:src="@{'/resources/img/users/' + ${user} + '/profile/' + ${userinfo.photo}}" alt="">
+                                </div>
                             </div>
                         </div>
                         <input type="text" class="comment-box description" name="commentText"  th:placeholder="'Добавьте комментарий...'">
@@ -167,8 +92,10 @@
                     </form>
                 </div>
             </div>
+
             <!-- Footer -->
             <footer th:insert="fragments.html :: footer"></footer>
+
         </div>
 
         <!-- Right Column -->
@@ -176,8 +103,6 @@
 
     </div>
 </section>
-
-
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script>window.jQuery || document.write('<script src="../assets/js/vendor/jquery.slim.min.js"><\/script>')</script>

@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import run.itlife.dto.CommentDto;
-import run.itlife.entity.Comment;
 import run.itlife.service.CommentService;
 import run.itlife.service.PostService;
 import run.itlife.service.UserService;
@@ -32,13 +31,13 @@ public class CommentController {
     }
 
     @PostMapping("/create")
+    @PreAuthorize("hasRole('USER')")
     //Принимает он CommentDto - берёт данные с формы post.html, видит, что там есть name=”postId”, есть name="content”
     //и т.д. и он маппит по этим именам на объект CommentDto
     public String create(CommentDto comment){
         commentService.create(comment);
         return "redirect:/post/" + comment.getPostId();
     }
-
 
     @GetMapping("/delete/{postId}/{commentId}")
     @PreAuthorize("hasRole('USER')")
@@ -54,19 +53,15 @@ public class CommentController {
         return "redirect:/comment/sub/" + postId;
     }
 
-
-
     @PostMapping("/create_subuser_comment")
+    @PreAuthorize("hasRole('USER')")
     public String create_subuser_comment(CommentDto comment){
         commentService.create(comment);
         return "redirect:/post-view-sub/" + comment.getPostId();
     }
 
-
-
-
-
     @PostMapping("/create_comment_detail")
+    @PreAuthorize("hasRole('USER')")
     public String create_comment_detail(CommentDto comment){
         commentService.create(comment);
         return "redirect:/posts_detail/";
@@ -87,34 +82,34 @@ public class CommentController {
     }
 
     @PostMapping("/create_comment")
+    @PreAuthorize("hasRole('USER')")
     public String create_comment(CommentDto comment){
         commentService.create(comment);
         return "redirect:/comment/" + comment.getPostId();
     }
 
-
     @PostMapping("/create_comment_subuser")
+    @PreAuthorize("hasRole('USER')")
     public String create_comment_subuser(CommentDto comment){
         commentService.create(comment);
         return "redirect:/comment/sub/" + comment.getPostId();
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('USER')")
     public String comments(@PathVariable long id, ModelMap modelMap){
-        modelMap.put("post", postService.findById(id));
-        modelMap.put("comments", commentService.sortCommentsByDate(id));
-        modelMap.put("countComments", postService.countComments(id));
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        modelMap.put("user", username);
-        modelMap.put("userinfo", userService.findByUsername(username));
-        modelMap.put("userslist", userService.findAll());
-        modelMap.put("userOnlyList", userService.getUsersOnly());
-
+        setCommonParams(id, modelMap);
         return "comments";
     }
 
     @GetMapping("/sub/{id}")
+    @PreAuthorize("hasRole('USER')")
     public String comments_sub(@PathVariable long id, ModelMap modelMap){
+        setCommonParams(id, modelMap);
+        return "comments-sub";
+    }
+
+    private void setCommonParams(long id, ModelMap modelMap) {
         modelMap.put("post", postService.findById(id));
         modelMap.put("comments", commentService.sortCommentsByDate(id));
         modelMap.put("countComments", postService.countComments(id));
@@ -123,8 +118,6 @@ public class CommentController {
         modelMap.put("userinfo", userService.findByUsername(username));
         modelMap.put("userslist", userService.findAll());
         modelMap.put("userOnlyList", userService.getUsersOnly());
-
-        return "comments-sub";
     }
 
 }

@@ -7,20 +7,14 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import run.itlife.dto.PostDto;
-import run.itlife.entity.Bugs;
-import run.itlife.entity.Comment;
 import run.itlife.entity.Post;
-import run.itlife.entity.User;
 import run.itlife.repository.PostRepository;
 import run.itlife.repository.UserRepository;
 import run.itlife.utils.SecurityUtils;
 import javax.persistence.EntityNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 import static run.itlife.utils.SecurityUtils.*;
 
 // Уровень обслуживания
@@ -55,7 +49,6 @@ public class PostServiceImpl implements PostService {
                 .getPosts();
         posts.size();
         return posts;
-
     }
 
     @Override
@@ -147,18 +140,12 @@ public class PostServiceImpl implements PostService {
         return posts;
     }
 
-
     private PostDto toDto(Post post) {
         PostDto dto = new PostDto();
         dto.setPostId(post.getPostId());
         dto.setPhoto(post.getPhoto());
         dto.setContent(post.getContent());
         dto.setExtFile(post.getExtFile());
-        /*dto.setTags(post.getTags()
-                .stream()
-                .map(Tag::getName)
-                .collect(Collectors.joining(" ")));*/
-
         return dto;
     }
 
@@ -180,15 +167,12 @@ public class PostServiceImpl implements PostService {
     @Override
     public List<Post> searchTags(String substring) {
         List<Post> posts = postRepository.searchTags("%#" + substring +"%");
-
         return posts;
     }
 
     @Override
     public int countSearchTags(String substring) {
-
         return postRepository.countSearchTags("%#" + substring +"%");
     }
-
 
 }

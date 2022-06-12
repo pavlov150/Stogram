@@ -11,7 +11,6 @@ public class Subscriptions {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long subId;
 
-
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User currentUserId;
@@ -19,7 +18,6 @@ public class Subscriptions {
     @ManyToOne
     @JoinColumn(name = "user_sub_id")
     private User subUserId;
-
 
     public Long getSubId() {
         return subId;
@@ -44,4 +42,5 @@ public class Subscriptions {
     public void setSubUserId(User subUserId) {
         this.subUserId = subUserId;
     }
+
 }

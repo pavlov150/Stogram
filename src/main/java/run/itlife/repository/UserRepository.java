@@ -1,11 +1,8 @@
 package run.itlife.repository;
 
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import run.itlife.entity.Post;
 import run.itlife.entity.User;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -17,8 +14,6 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findByUsername(String username); // Возвращает юзера
-
-    // List<User> findAll(); // Возвращает юзеров
 
     @Query(value = "select * from users u " +
             "join user_role ur on ur.user_id = u.user_id " +
@@ -35,6 +30,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value = "select count(u.username) from users u " +
             "where u.username LIKE ? ", nativeQuery = true)
     int countSearchUsers(String substring);
-
 
 }

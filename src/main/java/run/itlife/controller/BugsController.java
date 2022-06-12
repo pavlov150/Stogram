@@ -6,7 +6,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import run.itlife.dto.BugsDto;
 import run.itlife.service.BugsService;
@@ -25,23 +24,16 @@ public class BugsController {
     }
 
     @GetMapping("/bug/new")
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String bugNew(ModelMap modelMap) {
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        modelMap.put("user", username);
-        modelMap.put("userinfo", userService.findByUsername(username));
-        modelMap.put("userOnlyList", userService.getUsersOnly());
-
+        setCommonParams(modelMap);
         return "bugs-add";
     }
 
     @PostMapping("/bug/new")
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('USER') || hasRole('ADMIN')")
     public String postNewBug(BugsDto bugsDto, ModelMap modelMap) {
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        modelMap.put("user", username);
-        modelMap.put("userinfo", userService.findByUsername(username));
-        modelMap.put("userOnlyList", userService.getUsersOnly());
+        setCommonParams(modelMap);
         bugsService.create(bugsDto);
         return "message-send";
     }
@@ -51,13 +43,15 @@ public class BugsController {
     public String index(ModelMap modelMap) {
         modelMap.put("bugs", bugsService.listAllBugs());
         modelMap.put("userslist", userService.findAll());
+        setCommonParams(modelMap);
+        return "bugs";
+    }
+
+    private void setCommonParams(ModelMap modelMap) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         modelMap.put("user", username);
         modelMap.put("userinfo", userService.findByUsername(username));
         modelMap.put("userOnlyList", userService.getUsersOnly());
-
-        return "bugs";
     }
-
 
 }

@@ -31,6 +31,9 @@
     <thymeleaf-extras-springsecurity5.version>3.0.4.RELEASE</thymeleaf-extras-springsecurity5.version>
     <thymeleaf.version>3.0.11.RELEASE</thymeleaf.version>
     <commons-fileupload.version>1.4</commons-fileupload.version>
+    <junit-jupiter.version>RELEASE</junit-jupiter.version>
+    <core.version>3.3.3</core.version>
+    <javase.version>3.3.3</javase.version>
   </properties>
 
   <dependencies>
@@ -111,23 +114,21 @@
       <artifactId>commons-fileupload</artifactId>
       <version>${commons-fileupload.version}</version>
     </dependency>
-      <dependency>
-          <groupId>org.junit.jupiter</groupId>
-          <artifactId>junit-jupiter</artifactId>
-          <version>RELEASE</version>
-          <scope>test</scope>
-      </dependency>
-
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <version>${junit-jupiter.version}</version>
+      <scope>test</scope>
+    </dependency>
     <dependency>
       <groupId>com.google.zxing</groupId>
       <artifactId>core</artifactId>
-      <version>3.3.3</version>
+      <version>${core.version}</version>
     </dependency>
-
     <dependency>
       <groupId>com.google.zxing</groupId>
       <artifactId>javase</artifactId>
-      <version>3.3.3</version>
+      <version>${javase.version}</version>
     </dependency>
   </dependencies>
 

@@ -2,16 +2,13 @@ package run.itlife.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import run.itlife.dto.BugsDto;
 import run.itlife.entity.Bugs;
-import run.itlife.entity.Post;
 import run.itlife.repository.BugsRepository;
 import run.itlife.repository.UserRepository;
 import run.itlife.utils.SecurityUtils;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -35,9 +32,7 @@ public class BugsServiceImpl implements BugsService {
         bugs.setUserId(userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException(username)));
         bugs.setCreatedAt(LocalDateTime.now());
-        //String username = SecurityContextHolder.getContext().getAuthentication().getName();
         bugsRepository.save(bugs);
-
     }
 
     @Override
@@ -48,4 +43,5 @@ public class BugsServiceImpl implements BugsService {
         }
         return bugs;
     }
+
 }

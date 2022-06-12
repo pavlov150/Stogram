@@ -7,9 +7,11 @@ body {
     justify-content: center;
     margin-top: 2rem;
 }
+
 .image-container {
     margin-right: 1.5rem;
 }
+
 .form-container {
     margin-left: 1.5rem;
 }
@@ -20,6 +22,7 @@ body {
     padding: 2rem;
     border: 1px solid rgb(223, 223, 223);
 }
+
 .text-logo {
     width: 300px;
     margin-bottom: 2rem;
@@ -37,9 +40,11 @@ body {
     border-radius: 4px;
     font-size: 1rem;
 }
+
 .username-input{
     margin-bottom: 0.5rem;
 }
+
 .log-in-btn{
     background-color: #3095F3;
     padding: 0.8rem;

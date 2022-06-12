@@ -54,5 +54,4 @@ public class Bugs {
         this.createdAt = createdAt;
     }
 
-
 }

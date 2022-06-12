@@ -15,13 +15,11 @@
         <div class="left-col">
             <form method="POST" th:action="@{/profile_edit}" th:object="${userinfo}" enctype="multipart/form-data">
                 <input type="hidden" th:field="*{userId}"/>
-
                 <textarea id="blob-img" name="file" class="form-control" rows="4" placeholder="" style="display:none;"></textarea>
                 <div>
                     <img th:if="${userinfo.photo == null}" class="profile-pic-edit" id="profilePicture" th:src="@{'/resources/img/icons/avatar.jpg'}" src="" alt="" data-target="#profileImageModal" data-toggle="modal">
                     <img th:unless="${userinfo.photo == null}" class="profile-pic-edit" id="profilePicture" th:src="@{'/resources/img/users/' + ${user} + '/profile/' + ${userinfo.photo}}" src="" alt="" data-target="#profileImageModal" data-toggle="modal">
                 </div>
-
 
                 <!-- Modal Window -->
                 <div class="modal fade" id="profileImageModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
@@ -93,6 +91,7 @@
 
             <!-- Footer -->
             <footer th:insert="fragments.html :: footer"></footer>
+
         </div>
     </div>
 </section>

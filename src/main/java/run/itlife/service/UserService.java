@@ -1,7 +1,6 @@
 package run.itlife.service;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
-import run.itlife.dto.PostDto;
 import run.itlife.dto.UserDto;
 import run.itlife.entity.User;
 import java.util.List;

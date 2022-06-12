@@ -42,4 +42,5 @@ public class Likes {
     public void setPostLikeId(Post postLikeId) {
         this.postLikeId = postLikeId;
     }
+
 }

@@ -42,7 +42,6 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div class="modal-footer d-flex justify-content-center">
                                 <button type="button" onclick="onClickUpload()" class="btn btn-primary st-cropper-upload-btn btn-md">Загрузить
                                     <i class="fa fa-spinner fa-spin showloading" style="color:white; font-size:12px; display:none;  position:absolute; margin-left: 3px; margin-top: 4px;"></i>
@@ -61,10 +60,10 @@
 
             <!-- Footer -->
             <footer th:insert="fragments.html :: footer"></footer>
+
         </div>
     </div>
 </section>
-
 
 <!-- partial -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -73,5 +72,6 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.4.0/cropper.min.js"></script>
 <script type="text/javascript" th:src="@{/resources/js/crop.js}"></script>
+
 </body>
 </html>

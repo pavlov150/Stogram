@@ -76,7 +76,6 @@ public class WebConfig implements ApplicationContextAware, WebMvcConfigurer {
         registry.addResourceHandler("/webjars/**").addResourceLocations("/webjars/");
     }
 
-
     // --- MultipartConfig ---
     @Bean
     public CommonsMultipartResolver multipartResolver() {

@@ -20,13 +20,16 @@
                             <img th:if="${userinfo_sub.photo == null}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
                             <img th:unless="${userinfo_sub.photo == null}" th:src="@{'/resources/img/users/' + ${user_sub} + '/profile/' + ${userinfo_sub.photo}}" alt="">
                         </div>
-
                         <div>
                             <p class="username-main" th:text="${user_sub}"></p>
                             <p class="description-main">
                                 <span th:text="${countPosts} + ' публикаций '"></span>
-                                <a th:href="@{/subscribers_subuser/{user}(user = ${user_sub})}"><span th:text="${countSubscribers} + ' подписчиков '"></span></a>
-                                <a th:href="@{/subscriptions_subuser/{user}(user = ${user_sub})}"><span th:text="${countSubscribe} + ' подписок'"></span></a>
+                                <a th:href="@{/subscribers_subuser/{user}(user = ${user_sub})}">
+                                    <span th:text="${countSubscribers} + ' подписчиков '"></span>
+                                </a>
+                                <a th:href="@{/subscriptions_subuser/{user}(user = ${user_sub})}">
+                                    <span th:text="${countSubscribe} + ' подписок'"></span>
+                                </a>
                             </p>
                         </div>
                     </div>
@@ -34,7 +37,6 @@
                     <a th:if="${isSub != 0 && !user.equals(user_sub)}" th:href="@{/unsubscription/{user}(user = ${user_sub})}" class="btn btn-outline-danger">Отписаться</a>
                 </div>
             </section>
-
             <div class="post">
                 <div class="post-content">
                     <div class="view-source comments-view">
@@ -57,13 +59,13 @@
                     </div>
                 </div>
             </div>
+
             <!-- Footer -->
             <footer th:insert="fragments.html :: footer"></footer>
+
         </div>
     </div>
 </section>
-
-
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script>window.jQuery || document.write('<script src="../assets/js/vendor/jquery.slim.min.js"><\/script>')</script>

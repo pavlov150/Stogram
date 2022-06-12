@@ -3,9 +3,7 @@ package run.itlife.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import run.itlife.entity.Comment;
 import run.itlife.entity.Likes;
-import run.itlife.entity.Post;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -33,7 +31,6 @@ public interface LikesRepository extends JpaRepository<Likes, Long> {
             "where u1.username = ? ", nativeQuery = true)
     int countLikesByUsername(String username);
 
-
     //кто пролайкал текущий пост
     @Query(value = "select * from likes l " +
             "join users u on u.user_id = l.user_id " +
@@ -53,8 +50,5 @@ public interface LikesRepository extends JpaRepository<Likes, Long> {
     @Query(value = "delete from likes l " +
             "where user_id = ? and post_id = ? ; ", nativeQuery = true)
     void delete_like(long userId, long postId);
-
-
-
 
 }

@@ -54,7 +54,6 @@ public class JpaConfig {
         return transactionManager;
     }
 
-
     @Bean
     public TransactionOperations transactionOperations() {
         return new TransactionTemplate(transactionManager());

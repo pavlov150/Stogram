@@ -1,7 +1,5 @@
 package run.itlife.entity;
 
-import org.hibernate.annotations.Type;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -112,4 +110,5 @@ public class Post {
     public void setPostLike(List<Likes> postLike) {
         this.postLike = postLike;
     }
+
 }

@@ -6,11 +6,9 @@
     <link th:href="@{/resources/css/login.css}" rel="stylesheet">
     <link th:href="@{/resources/css/sign-up.css}" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-
     <script>
         $(function() {
             $("form").on('change input paste', 'input', function(e) {
-
                 var username = $('#username').val();
                 var password = $('#password').val();
                 if (username.length == 0 || password.length == 0) {
@@ -20,94 +18,89 @@
                     $("#submit").removeAttr('disabled', 'disabled');
                     $("#submit").addClass('btn').removeClass('deactivate');
                 }
-
             });
         });
     </script>
 </head>
 
-
-
-    <!-- Navigation -->
-    <div class="wrapper">
-        <div class="header">
-            <div class="main-container">
-                <div class="image-container">
-                    <img th:src="@{/resources/img/login/insta-signup-page.png}" alt="Stogram In Phone Image">
-                </div>
-                <div class="form-container">
-                    <div class="top">
-                        <div class="logo">
-                            <img th:src="@{/resources/img/nav/stogram.png}" alt="Stogram" style="width: 120px;">
-                            <p class="apps">Зарегистрируйтесь, чтобы смотреть фото и видео ваших друзей.</p>
-                            <br>
-                        </div>
-
-
-                        <form th:action="@{/register}" method="POST">
-                            <div class="form">
-                                <div class="input_field">
-                                    <input type="text" name="phone" placeholder="Мобильный телефон" class="input">
-                                </div>
-                                <div class="input_field">
-                                    <input type="text" name="email" placeholder="Адрес электронной почты" class="input">
-                                </div>
-                                <div class="input_field">
-                                    <input type="text" name="firstname" placeholder="Имя" class="input">
-                                </div>
-                                <div class="input_field">
-                                    <input type="text" name="surname" placeholder="Фамилия" class="input">
-                                </div>
-                                <div class="input_field">
-                                    <input type="text" name="username" placeholder="Имя пользователя" id="username" class="input">
-                                </div>
-                                <div class="input_field">
-                                    <input type="password" name="password" placeholder="Пароль" id="password" class="input">
-                                </div>
-                                <button class="deactivate" id="submit" type="submit" disabled>Зарегистрироваться</button>
-                            </div>
-                        </form>
-                        <div class="or">
-                            <div class="line"></div>
-                            <p>ИЛИ</p>
-                            <div class="line"></div>
-                        </div>
-                        <div class="dif">
-                            <div class="fb">
-                                <img th:src="@{/resources/img/login/vk.png}" alt="facebook">
-                                <p>Войти через ВКонтакте</p>
-                            </div>
-
-                        </div>
+<!-- Navigation -->
+<div class="wrapper">
+    <div class="header">
+        <div class="main-container">
+            <div class="image-container">
+                <img th:src="@{/resources/img/login/insta-signup-page.png}" alt="Stogram In Phone Image">
+            </div>
+            <div class="form-container">
+                <div class="top">
+                    <div class="logo">
+                        <img th:src="@{/resources/img/nav/stogram.png}" alt="Stogram" style="width: 120px;">
+                        <p class="apps">Зарегистрируйтесь, чтобы смотреть фото и видео ваших друзей.</p>
+                        <br>
                     </div>
-                    <div class="signup">
-                        <p>Есть аккаунт? <a th:href="@{/login}">Войти</a></p>
+                    <form th:action="@{/register}" method="POST">
+                        <div class="form">
+                            <div class="input_field">
+                                <input type="text" name="phone" placeholder="Мобильный телефон" class="input">
+                            </div>
+                            <div class="input_field">
+                                <input type="text" name="email" placeholder="Адрес электронной почты" class="input">
+                            </div>
+                            <div class="input_field">
+                                <input type="text" name="firstname" placeholder="Имя" class="input">
+                            </div>
+                            <div class="input_field">
+                                <input type="text" name="surname" placeholder="Фамилия" class="input">
+                            </div>
+                            <div class="input_field">
+                                <input type="text" name="username" placeholder="Имя пользователя" id="username" class="input">
+                            </div>
+                            <div class="input_field">
+                                <input type="password" name="password" placeholder="Пароль" id="password" class="input">
+                            </div>
+                            <button class="deactivate" id="submit" type="submit" disabled>Зарегистрироваться</button>
+                        </div>
+                    </form>
+                    <div class="or">
+                        <div class="line"></div>
+                        <p>ИЛИ</p>
+                        <div class="line"></div>
                     </div>
-                    <div class="apps">
-                        <p>Установите приложение</p>
-                        <div class="icons">
-                            <a href="#"><img th:src="@{/resources/img/login/appstore.png}" alt="appstore"></a>
-                            <a href="#"><img th:src="@{/resources/img/login/googleplay.png}" alt="googleplay"></a>
+                    <div class="dif">
+                        <div class="fb">
+                            <img th:src="@{/resources/img/login/vk.png}" alt="facebook">
+                            <p>Войти через ВКонтакте</p>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <div class="footer">
-            <div class="links">
-                <ul>
-                    <li><a href="#">О НАС</a></li>
-                    <li><a href="#">ПОДДЕРЖКА</a></li>
-                    <li><a href="#">API</a></li>
-                    <li><a href="#">КОНФИДЕНЦИАЛЬНОСТЬ</a></li>
-                    <li><a href="#">УСЛОВИЯ</a></li>
-                </ul>
-            </div>
-            <!-- Footer -->
-            <div class="copyright">
-                <p th:insert="fragments.html :: footer-login"></p>
+                <div class="signup">
+                    <p>Есть аккаунт? <a th:href="@{/login}">Войти</a></p>
+                </div>
+                <div class="apps">
+                    <p>Установите приложение</p>
+                    <div class="icons">
+                        <a href="#"><img th:src="@{/resources/img/login/appstore.png}" alt="appstore"></a>
+                        <a href="#"><img th:src="@{/resources/img/login/googleplay.png}" alt="googleplay"></a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+    <div class="footer">
+        <div class="links">
+            <ul>
+                <li><a href="#">О НАС</a></li>
+                <li><a href="#">ПОДДЕРЖКА</a></li>
+                <li><a href="#">API</a></li>
+                <li><a href="#">КОНФИДЕНЦИАЛЬНОСТЬ</a></li>
+                <li><a href="#">УСЛОВИЯ</a></li>
+            </ul>
+        </div>
+
+        <!-- Footer -->
+        <div class="copyright">
+            <p th:insert="fragments.html :: footer-login"></p>
+        </div>
+
+    </div>
+</div>
 </html>

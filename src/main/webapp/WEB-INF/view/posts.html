@@ -1,73 +1,71 @@
 <!DOCTYPE html>
 <html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-    <head th:include="fragments.html :: header">
-        <title id="pageTitle">Stogram - Профиль</title>
-    </head>
+<head th:include="fragments.html :: header">
+    <title id="pageTitle">Stogram - Профиль</title>
+</head>
 
-    <!-- Navigation -->
-    <body>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" th:insert="fragments.html :: navigation"></nav>
+<!-- Navigation -->
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" th:insert="fragments.html :: navigation"></nav>
 
-        <!-- Page Content -->
-        <section class="main-post">
-            <div class="wrapper-posts">
-                <div class="left-col">
-                    <section class="text-center">
-                        <div sec:authorize="isAuthenticated()" class="info-main">
-                            <div class="user-main">
-                                <div class="profile-pic-main">
-                                    <img th:if="${userinfo.photo == null}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
-                                    <img th:unless="${userinfo.photo == null}" th:src="@{'/resources/img/users/' + ${user} + '/profile/' + ${userinfo.photo}}" alt="">
-                                    <!-- FIXME В ${user} заменить на post.user.username. Проверить везде и затем на самих страницах поменяв пользователя -->
-                                </div>
-                                <div>
-                                    <p class="username-main" th:text="${user}"></p>
-                                    <p class="description-main">
-                                        <span th:text="${countPosts} + ' публикаций '"></span>
-                                        <a th:href="@{/subscribers}"><span th:text="${countSubscribers} + ' подписчиков '"></span></a>
-                                        <a th:href="@{/subscriptions}"><span th:text="${countSubscribe} + ' подписок'"></span></a>
-                                    </p>
-                                </div>
-                            </div>
-                            <a th:href="@{/profile_edit/{user}(user = ${user})}" class="btn btn-outline-dark">Редактировать профиль</a>
+<!-- Page Content -->
+<section class="main-post">
+    <div class="wrapper-posts">
+        <div class="left-col">
+            <section class="text-center">
+                <div sec:authorize="isAuthenticated()" class="info-main">
+                    <div class="user-main">
+                        <div class="profile-pic-main">
+                            <img th:if="${userinfo.photo == null}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
+                            <img th:unless="${userinfo.photo == null}" th:src="@{'/resources/img/users/' + ${user} + '/profile/' + ${userinfo.photo}}" alt="">
+                            <!-- FIXME В ${user} заменить на post.user.username. Проверить везде и затем на самих страницах поменяв пользователя -->
                         </div>
-                    </section>
-
-                    <div class="post">
-                        <div class="post-content">
-                            <div class="view-source comments-view">
-                                <div class="row">
-                                    <div class="no_public" th:if="${countPosts == 0}" >
-                                        <img th:src="@{'/resources/img/icons/face.png'}" alt="">
-                                        <h1 class="h3 mb-3 font-weight-normal no_public">Пока нет публикаций</h1>
+                        <div>
+                            <p class="username-main" th:text="${user}"></p>
+                            <p class="description-main">
+                                <span th:text="${countPosts} + ' публикаций '"></span>
+                                <a th:href="@{/subscribers}"><span th:text="${countSubscribers} + ' подписчиков '"></span></a>
+                                <a th:href="@{/subscriptions}"><span th:text="${countSubscribe} + ' подписок'"></span></a>
+                            </p>
+                        </div>
+                    </div>
+                    <a th:href="@{/profile_edit/{user}(user = ${user})}" class="btn btn-outline-dark">Редактировать профиль</a>
+                </div>
+            </section>
+            <div class="post">
+                <div class="post-content">
+                    <div class="view-source comments-view">
+                        <div class="row">
+                            <div class="no_public" th:if="${countPosts == 0}" >
+                                <img th:src="@{'/resources/img/icons/face.png'}" alt="">
+                                <h1 class="h3 mb-3 font-weight-normal no_public">Пока нет публикаций</h1>
+                            </div>
+                            <div th:unless="${countPosts == 0}" class="col-md-4" th:each="post: ${posts}" th:id="'post-' + ${post.postId}">
+                                <a th:href="@{/posts_detail#post-} + ${post.postId}">
+                                    <div class="card mb-4">
+                                        <img th:if="${post.extFile == 'png' || post.extFile == 'jpg'}" th:src="@{'/resources/img/users/' + ${post.user.username} + '/' + ${post.photo}}">
+                                        <video class="video-size" th:if="${post.extFile == 'mp4' || post.extFile == 'mov'}" height="300px" width="300px" controls loop muted>
+                                            <source th:src="@{'/resources/video/users/' + ${post.user.username} + '/' + ${post.photo}}">
+                                        </video>
                                     </div>
-                                    <div th:unless="${countPosts == 0}" class="col-md-4" th:each="post: ${posts}" th:id="'post-' + ${post.postId}">
-                                        <a th:href="@{/posts_detail#post-} + ${post.postId}">
-                                            <div class="card mb-4">
-                                                <img th:if="${post.extFile == 'png' || post.extFile == 'jpg'}" th:src="@{'/resources/img/users/' + ${post.user.username} + '/' + ${post.photo}}">
-
-                                                <video class="video-size" th:if="${post.extFile == 'mp4' || post.extFile == 'mov'}" height="300px" width="300px" controls loop muted>
-                                                    <source th:src="@{'/resources/video/users/' + ${post.user.username} + '/' + ${post.photo}}">
-                                                </video>
-
-
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
+                                </a>
                             </div>
                         </div>
                     </div>
-                    <!-- Footer -->
-                    <footer th:insert="fragments.html :: footer"></footer>
                 </div>
             </div>
-        </section>
 
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-        <script>window.jQuery || document.write('<script src="../assets/js/vendor/jquery.slim.min.js"><\/script>')</script>
-        <script src="../resources/js/bootstrap.bundle.min.js"></script>
+            <!-- Footer -->
+            <footer th:insert="fragments.html :: footer"></footer>
 
-    </body>
+        </div>
+    </div>
+</section>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script>window.jQuery || document.write('<script src="../assets/js/vendor/jquery.slim.min.js"><\/script>')</script>
+<script src="../resources/js/bootstrap.bundle.min.js"></script>
+
+</body>
 </html>

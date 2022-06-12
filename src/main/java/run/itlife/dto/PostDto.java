@@ -1,6 +1,5 @@
 package run.itlife.dto;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.time.LocalDateTime;
 import java.util.List;
 

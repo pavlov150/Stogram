@@ -1,200 +1,93 @@
 <!DOCTYPE html>
 <html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-    <head th:include="fragments.html :: header">
-        <title id="pageTitle">Stogram - Мои посты</title>
-    </head>
+<head th:include="fragments.html :: header">
+    <title id="pageTitle">Stogram - Мои посты</title>
+</head>
 
-    <script th:inline="javascript">var contextPath = [[${#httpServletRequest.getContextPath()}]];</script>
-    <script type="text/javascript" th:src="@{/resources/js/delete-post.js}"></script>
+<script th:inline="javascript">var contextPath = [[${#httpServletRequest.getContextPath()}]];</script>
+<script type="text/javascript" th:src="@{/resources/js/delete-post.js}"></script>
 
-    <!-- Navigation -->
-    <body>
-        <nav class="navbar" th:insert="fragments.html :: navigation"></nav>
+<!-- Navigation -->
+<body>
+<nav class="navbar" th:insert="fragments.html :: navigation"></nav>
 
-
-        <!-- Page Content -->
-
-        <section class="main">
-            <div class="wrapper">
-                <div class="left-col">
-                   <!-- <div class="status-wrapper">
-                        <div class="status-card">
-                            <div class="profile-pic"><img th:src="@{/resources/img/nav/cover 1.png}" alt=""></div>
-                            <p class="username">user_name_1</p>
+<!-- Page Content -->
+<section class="main">
+    <div class="wrapper">
+        <div class="left-col">
+            <div class="post" th:each="post: ${posts}" th:id="'post-' + ${post.postId}" th:name="'post-' + ${post.postId}">
+                <div class="info">
+                    <div class="user">
+                        <div class="profile-pic">
+                            <img th:if="${userinfo.photo == null}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
+                            <img th:unless="${userinfo.photo == null}" th:src="@{'/resources/img/users/' + ${post.user.username} + '/profile/' + ${userinfo.photo}}" alt="">
                         </div>
-                        <div class="status-card">
-                            <div class="profile-pic"><img th:src="@{/resources/img/nav/cover 2.png}" alt=""></div>
-                            <p class="username">user_name_2</p>
-                        </div>
-                        <div class="status-card">
-                            <div class="profile-pic"><img th:src="@{/resources/img/nav/cover 3.png}" alt=""></div>
-                            <p class="username">user_name_3</p>
-                        </div>
-                        <div class="status-card">
-                            <div class="profile-pic"><img th:src="@{/resources/img/nav/cover 1.png}" alt=""></div>
-                            <p class="username">user_name_3</p>
-                        </div>
-                        <div class="status-card">
-                            <div class="profile-pic"><img th:src="@{/resources/img/nav/cover 1.png}" alt=""></div>
-                            <p class="username">user_name_3</p>
-                        </div>
-                        <div class="status-card">
-                            <div class="profile-pic"><img th:src="@{/resources/img/nav/cover 1.png}" alt=""></div>
-                            <p class="username">user_name_3</p>
-                        </div>
-                        <div class="status-card">
-                            <div class="profile-pic"><img th:src="@{/resources/img/nav/cover 1.png}" alt=""></div>
-                            <p class="username">user_name_3</p>
-                        </div>
-                        <div class="status-card">
-                            <div class="profile-pic"><img th:src="@{/resources/img/nav/cover 1.png}" alt=""></div>
-                            <p class="username">user_name_3</p>
-                        </div>
-                        <div class="status-card">
-                            <div class="profile-pic"><img th:src="@{/resources/img/nav/cover 1.png}" alt=""></div>
-                            <p class="username">user_name_3</p>
-                        </div>
-                    </div>-->
-
-                    <div class="post" th:each="post: ${posts}" th:id="'post-' + ${post.postId}" th:name="'post-' + ${post.postId}">
-                        <div class="info">
-                            <div class="user">
-                                <div class="profile-pic">
-                                    <img th:if="${userinfo.photo == null}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
-                                    <img th:unless="${userinfo.photo == null}" th:src="@{'/resources/img/users/' + ${post.user.username} + '/profile/' + ${userinfo.photo}}" alt="">
+                        <p class="username" th:text="${post.user.username}"></p>
+                    </div>
+                    <a th:if="${#authentication.name == post.user.username or #authorization.expression('hasRole(''ADMIN'')')}" th:onclick="'deletePost(\'' + ${post.postId} + '\');'">
+                        <img th:src="@{/resources/img/nav/delete.png}" class="delete" alt="">
+                    </a>
+                    <a th:if="${#authentication.name == post.user.username}" th:href="@{/post/{postId}/edit(postId = ${post.postId})}">
+                        <img th:src="@{/resources/img/nav/option.png}" class="options" alt="">
+                    </a>
+                </div>
+                <a th:href="@{/post/{postId}(postId = ${post.postId})}">
+                    <img th:if="${post.extFile == 'png' || post.extFile == 'jpg'}" th:src="@{'/resources/img/users/' + ${post.user.username} + '/' + ${post.photo}}" class="post-image" alt="">
+                    <video th:if="${post.extFile == 'mp4' || post.extFile == 'mov'}" width="100%" autoplay controls loop muted>
+                        <source th:src="@{'/resources/video/users/' + ${post.user.username} + '/' + ${post.photo}}" type=video/mp4>
+                    </video>
+                </a>
+                <div class="post-content">
+                    <div class="reaction-wrapper">
+                        <div>
+                            <div th:each="likes, state : ${post.postLike}">
+                                <div th:if="${likes.userLikeId.username.equals(post.user.username)}">
+                                    <a th:href="@{/unlike_detail/{postId}(postId = ${post.postId})}">
+                                        <img th:src="@{/resources/img/icons/like.png}" class="icon" alt="">
+                                    </a>
                                 </div>
-                                <p class="username" th:text="${post.user.username}"></p>
-                            </div>
-                            <a th:if="${#authentication.name == post.user.username or #authorization.expression('hasRole(''ADMIN'')')}" th:onclick="'deletePost(\'' + ${post.postId} + '\');'"><img th:src="@{/resources/img/nav/delete.png}" class="delete" alt=""></a>
-                            <a th:if="${#authentication.name == post.user.username}" th:href="@{/post/{postId}/edit(postId = ${post.postId})}"><img th:src="@{/resources/img/nav/option.png}" class="options" alt=""></a>
-                        </div>
-                        <a th:href="@{/post/{postId}(postId = ${post.postId})}">
-                            <img th:if="${post.extFile == 'png' || post.extFile == 'jpg'}" th:src="@{'/resources/img/users/' + ${post.user.username} + '/' + ${post.photo}}" class="post-image" alt="">
-                            <video th:if="${post.extFile == 'mp4' || post.extFile == 'mov'}" width="100%" autoplay controls loop muted>
-                                <source th:src="@{'/resources/video/users/' + ${post.user.username} + '/' + ${post.photo}}" type=video/mp4>
-                            </video>
-                        </a>
-                        <div class="post-content">
-                            <div class="reaction-wrapper">
-                                <div>
-                                    <div th:each="likes, state : ${post.postLike}">
-                                    <!--    <p th:text="${likes.userLikeId.username}"></p> margo
-                                        <p th:text="${post.user.username}"></p>shurrik
-                                        <p th:text="${state.current.userLikeId.username}"></p>margo
-                                        <p th:text="${state.size}"></p>
-                                        <p th:text="${state.last}"></p>-->
-
-
-
-                                        <div th:if="${likes.userLikeId.username.equals(post.user.username)}">
-                                            <a th:href="@{/unlike_detail/{postId}(postId = ${post.postId})}">
-                                                <img th:src="@{/resources/img/icons/like.png}" class="icon" alt="">
-                                            </a>
-                                        </div>
-
-                                        <!--    <div th:if="${!likes.userLikeId.username.equals(post.user.username) && state.size > 0 && state.last}">
-                                                <a th:href="@{/like_detail/{postId}(postId = ${post.postId})}">
-                                                    <img th:src="@{/resources/img/icons/notlike.png}" class="icon" alt="">
-                                                </a>
-                                            </div>-->
-
-                                        <div th:if="${!likes.userLikeId.username.equals(post.user.username) && state.current.userLikeId.username.equals(post.user.username)}">
-                                            <a th:href="@{/like_detail/{postId}(postId = ${post.postId})}">
-                                                <img th:src="@{/resources/img/icons/notlike.png}" class="icon" alt="">
-                                            </a>
-                                        </div>
-
-                                        <div th:if="${!likes.userLikeId.username.equals(post.user.username) && state.size > 0 &&  state.last && !state.current.userLikeId.username.equals(post.user.username)}">
-                                            <a th:href="@{/like_detail/{postId}(postId = ${post.postId})}">
-                                                <img th:src="@{/resources/img/icons/notlike.png}" class="icon" alt="">
-                                            </a>
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                                <div th:if="${post.postLike.isEmpty()}">
-                                    <a th:href="@{/like_detail/{postId} (postId = ${post.postId})}">
+                                <div th:if="${!likes.userLikeId.username.equals(post.user.username) && state.current.userLikeId.username.equals(post.user.username)}">
+                                    <a th:href="@{/like_detail/{postId}(postId = ${post.postId})}">
                                         <img th:src="@{/resources/img/icons/notlike.png}" class="icon" alt="">
                                     </a>
                                 </div>
-
-                                <a th:href="@{/comment/{postId}(postId = ${post.postId})}"><img th:src="@{/resources/img/nav/comment.png}" class="icon" alt=""></a>
-                            </div>
-
-
-
-
-
-                            <p th:each="like, state : ${post.postLike}" class="likes" th:text="${state.last} ? 'Нравится: ' + ${state.count} : ''"></p>
-
-                            <b class="description">
-                                <span th:text="${post.user.username}"></span>
-                            </b>
-                            <span class="description-normal" th:text="${post.content}"></span>
-                            <p class="post-time" th:text="${#temporals.format(post.createdAt, 'dd.MM.yyyy')} + ' г.'"></p>
-
-                            <!-- Comments -->
-                            <!-- <div class="view-source comments-view">
-                             <a th:href="@{/comment/{postId}(postId = ${post.postId})}" th:each="like, state : ${post.comments}" class="description comments" th:text="${state.last} ? 'Смотреть все комментарии (' + ${state.count} + ')' : ''"></a>
-                                 <div>
-                                     <div th:each="comment: ${post.comments}">
-                                         <div class="media-body">
-                                             <div class="info-comments">
-                                                 <div class="user-comments">
-                                                     <div class="profile-pic-comments">
-                                                         <a th:href="@{/sub-posts/{user}(user = ${comment.user.username})}">
-                                                             <img th:if="${comment.user.photo == null}" th:src="@{'/resources/img/icons/avatar.jpg'}" alt="">
-                                                             <img th:unless="${comment.user.photo == null}" th:src="@{'/resources/img/users/' + ${comment.user.username} + '/profile/' + ${comment.user.photo}}" alt="">
-                                                     </div>
-                                                     <div>
-                                                         <b class="description-comments-user"><span th:text="${comment.user.username}"></span></b></a>
-                                                         <span class="description-comments" th:text="${comment.commentText}"></span>
-                                                         <div>
-                                                             <p class="post-time-comments" th:text="${#temporals.format(comment.createdAt, 'dd.MM.yyyy HH:mm')} + ' ' + 'Ответить'"></p>
-                                                         </div>
-                                                     </div>
-                                                 </div>
-                                             </div>
-                                         </div>
-                                     </div>
-                                 </div>
-                            </div>-->
-                        </div>
-
-                        <!-- Comments Form -->
-                        <!--<div sec:authorize="hasAnyRole('USER')">
-                            <form class="comment-wrapper" method="POST" th:action="@{/comment/create_comment_detail}">
-                                <input type="hidden" name="postId" th:value="${post.postId}" />
-                                <div class="info-view">
-                                    <div class="user">
-                                        <img th:src="@{/resources/img/nav/smile.png}" class="icon" alt="">-->
-                                       <!-- <div class="profile-pic"><img th:src="@{'/resources/img/users/' + ${user} + '/profile/' + ${userinfo.photo}}" alt=""></div>-->
-                               <!--     </div>
+                                <div th:if="${!likes.userLikeId.username.equals(post.user.username) && state.size > 0 &&  state.last && !state.current.userLikeId.username.equals(post.user.username)}">
+                                    <a th:href="@{/like_detail/{postId}(postId = ${post.postId})}">
+                                        <img th:src="@{/resources/img/icons/notlike.png}" class="icon" alt="">
+                                    </a>
                                 </div>
-                                <input type="text" class="comment-box description" name="commentText"  th:placeholder="'Добавьте комментарий...'">
-                                <br>
-                                <button class="comment-btn">Опубликовать</button>
-                            </form>
-                        </div>-->
-
+                            </div>
+                        </div>
+                        <div th:if="${post.postLike.isEmpty()}">
+                            <a th:href="@{/like_detail/{postId} (postId = ${post.postId})}">
+                                <img th:src="@{/resources/img/icons/notlike.png}" class="icon" alt="">
+                            </a>
+                        </div>
+                        <a th:href="@{/comment/{postId}(postId = ${post.postId})}"><img th:src="@{/resources/img/nav/comment.png}" class="icon" alt=""></a>
                     </div>
-                    <!-- Footer -->
-                    <footer th:insert="fragments.html :: footer"></footer>
+                    <p th:each="like, state : ${post.postLike}" class="likes" th:text="${state.last} ? 'Нравится: ' + ${state.count} : ''"></p>
+                    <b class="description">
+                        <span th:text="${post.user.username}"></span>
+                    </b>
+                    <span class="description-normal" th:text="${post.content}"></span>
+                    <p class="post-time" th:text="${#temporals.format(post.createdAt, 'dd.MM.yyyy')} + ' г.'"></p>
                 </div>
-
-                <!-- Right Column -->
-                <div th:insert="fragments.html :: right-column"></div>
             </div>
 
-        </section>
+            <!-- Footer -->
+            <footer th:insert="fragments.html :: footer"></footer>
 
+        </div>
 
+        <!-- Right Column -->
+        <div th:insert="fragments.html :: right-column"></div>
 
+    </div>
+</section>
 
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-        <script>window.jQuery || document.write('<script src="../assets/js/vendor/jquery.slim.min.js"><\/script>')</script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script>window.jQuery || document.write('<script src="../assets/js/vendor/jquery.slim.min.js"><\/script>')</script>
 
-    </body>
+</body>
 </html>

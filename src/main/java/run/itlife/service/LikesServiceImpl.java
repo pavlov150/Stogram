@@ -3,12 +3,8 @@ package run.itlife.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import run.itlife.dto.LikesDto;
 import run.itlife.entity.Likes;
-import run.itlife.entity.Subscriptions;
 import run.itlife.repository.LikesRepository;
-
-import java.time.LocalDateTime;
 
 import static run.itlife.utils.SecurityUtils.getCurrentUserDetails;
 
@@ -27,11 +23,6 @@ public class LikesServiceImpl implements LikesService {
         this.userService = userService;
     }
 
-   /* @Override
-    public List<Likes> searchLikesByUsername(String username) {
-        return likesRepository.searchLikesByUsername(username);
-    }*/
-
     @Override
     public int countLikesByPostId(long postId) {
         return likesRepository.countLikesByPostId(postId);
@@ -48,19 +39,6 @@ public class LikesServiceImpl implements LikesService {
         return likesRepository.isLikePostForCurrentUser(postId, currentUsername);
     }
 
- /*   @Override
-    public List<Likes> searchUsernameByPostId(long postId) {
-        return likesRepository.searchUsernameByPostId(postId);
-    }*/
-
-/*    @Override
-    public void create_like(LikesDto likesdto) {
-        Likes likes = new Likes();
-        likes.setPostLikeId(postService.findById(likesdto.getPostLikeId()));
-        likes.setUserLikeId(userService.findByUsername(getCurrentUserDetails().getUsername()));
-        likesRepository.save(likes);
-    }*/
-
     @Override
     public void create_like(Long postId) {
         Likes likes = new Likes();
@@ -73,4 +51,5 @@ public class LikesServiceImpl implements LikesService {
     public void delete_like(long userId, long postId) {
         likesRepository.delete_like(userId, postId);
     }
+
 }

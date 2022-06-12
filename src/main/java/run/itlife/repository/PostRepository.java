@@ -2,9 +2,7 @@ package run.itlife.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import run.itlife.entity.Comment;
 import run.itlife.entity.Post;
-import run.itlife.entity.User;
 
 import java.util.List;
 
@@ -57,11 +55,5 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     @Query(value = "select count(p.*) from post p " +
             "where p.content LIKE ? ", nativeQuery = true)
     int countSearchTags(String substring);
-
-
-
-
-
-
 
 }

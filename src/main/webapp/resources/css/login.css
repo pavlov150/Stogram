@@ -10,14 +10,12 @@
 	font-family: 'Roboto', sans-serif;
 }
 
-body{
+body {
 	background: #fafafa;
 	font-size: 14px;
 }
 
-
-
-.wrapper .header{
+.wrapper .header {
 	max-width: 350px;
 	width: 100%;
 	height: auto;
@@ -76,7 +74,6 @@ body{
 	color: #ffffff;
 	width: 100%;
 }
-
 
 .wrapper .header .form .btn a{
 	color: #fff;

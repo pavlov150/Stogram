@@ -27,11 +27,13 @@
 nav {
     float: right;
 }
+
 nav ul {
     list-style: none;
     margin: 0;
     padding: 0;
 }
+
 nav ul li {
    /* float: left;*/
     position: relative;
@@ -58,9 +60,11 @@ nav ul li a:visited:not(:only-child):after {
     padding-left: 4px;
     content: ' ▾';
 }
+
 nav ul li ul li {
     min-width: 190px;
 }
+
 nav ul li ul li a {
     padding: 7px;
     line-height: 20px;
@@ -110,15 +114,16 @@ nav ul li ul li a {
         position: static;
     }
 }
+
 @media screen and (min-width: 799px) {
     .nav-list {
       /*  display: block!important;*/
     }
-
     .nav-list li:hover .nalumes-nucludem {
         display: block!important;
     }
 }
+
 #sadas-polnyus {
     position: absolute;
     left: 18px;
@@ -126,6 +131,7 @@ nav ul li ul li a {
     cursor: pointer;
     padding: 10px 35px 16px 0px;
 }
+
 #sadas-polnyus span,
 #sadas-polnyus span:before,
 #sadas-polnyus span:after {
@@ -139,21 +145,27 @@ nav ul li ul li a {
     content: '';
     transition: all 300ms ease-in-out;
 }
+
 #sadas-polnyus span:before {
     top: -10px;
 }
+
 #sadas-polnyus span:after {
     bottom: -10px;
 }
+
 #sadas-polnyus.active span {
     background-color: transparent;
 }
+
 #sadas-polnyus.active span:before, #sadas-polnyus.active span:after {
     top: 0;
 }
+
 #sadas-polnyus.active span:before {
     transform: rotate(45deg);
 }
+
 #sadas-polnyus.active span:after {
     transform: rotate(-45deg);
 }

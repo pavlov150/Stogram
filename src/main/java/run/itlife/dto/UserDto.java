@@ -1,12 +1,5 @@
 package run.itlife.dto;
 
-import run.itlife.entity.Post;
-import run.itlife.entity.Role;
-
-import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.util.List;
-
 public class UserDto {
 
     private Long userId;
@@ -21,7 +14,6 @@ public class UserDto {
     private String phone;
     private String sex;
 
-
     public Long getUserId() {
         return userId;
     }
@@ -29,7 +21,6 @@ public class UserDto {
     public void setUserId(Long userId) {
         this.userId = userId;
     }
-
 
     public String getUsername() {
         return username;

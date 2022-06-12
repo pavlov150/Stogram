@@ -3,7 +3,6 @@ package run.itlife.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import run.itlife.entity.Post;
 import run.itlife.entity.Subscriptions;
 import run.itlife.repository.SubscriptionsRepository;
 
@@ -18,12 +17,10 @@ public class SubscriptionsServiceImpl implements SubscriptionsService {
     private final SubscriptionsRepository subscriptionsRepository;
     private final UserService userService;
 
-
     @Autowired
     public SubscriptionsServiceImpl(SubscriptionsRepository subscriptionsRepository, UserService userService) {
         this.subscriptionsRepository = subscriptionsRepository;
         this.userService = userService;
-
     }
 
     @Override
@@ -39,13 +36,10 @@ public class SubscriptionsServiceImpl implements SubscriptionsService {
         subscriptionsRepository.deleteSubscribeLong(currentUserId, subUserId);
     }
 
-
     @Override
     public List<Subscriptions> findSubscribes(String username) {
         return subscriptionsRepository.findSubscribes(username);
     }
-
-
 
     @Override
     public List<Subscriptions> findSubscribers(String username) {
@@ -66,6 +60,5 @@ public class SubscriptionsServiceImpl implements SubscriptionsService {
     public int countSubscribers(String currentUsername) {
         return subscriptionsRepository.countSubscribers(currentUsername);
     }
-
 
 }

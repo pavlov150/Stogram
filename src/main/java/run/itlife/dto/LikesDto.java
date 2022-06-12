@@ -1,10 +1,5 @@
 package run.itlife.dto;
 
-import run.itlife.entity.Post;
-import run.itlife.entity.User;
-
-import javax.persistence.*;
-
 public class LikesDto {
 
     private Long likeId;

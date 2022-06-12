@@ -3,8 +3,6 @@ package run.itlife.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import run.itlife.entity.Post;
-import run.itlife.entity.Role;
 import run.itlife.entity.Subscriptions;
 
 import javax.transaction.Transactional;
@@ -17,8 +15,6 @@ public interface SubscriptionsRepository extends JpaRepository<Subscriptions, In
             "join users u1 on u1.user_id = s.user_id " +
             "where u1.username = ? ; ", nativeQuery = true)
     List<Subscriptions> findSubscribes(String username);
-
-
 
     @Query(value = "select s.*, u.username, u1.username from subscriptions s " +
             "join users u on u.user_id = s.user_sub_id " +
@@ -49,8 +45,6 @@ public interface SubscriptionsRepository extends JpaRepository<Subscriptions, In
     @Query(value = "delete from subscriptions s " +
             "where user_id = ? and user_sub_id = ? ; ", nativeQuery = true)
     void deleteSubscribeLong(long currentUserId, long subUserId);
-
-
 
 }
 

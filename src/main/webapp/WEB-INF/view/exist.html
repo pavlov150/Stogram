@@ -14,13 +14,14 @@
     <div class="wrapper-posts">
         <div class="left-col">
             <br><br><br><br>
-    <h1 class="h3 mb-3 font-weight-normal text-center">Пользователь существует. Попробуйте другое имя пользователя</h1>
-    <div class="signup">
-        <p class="text-center"><a th:href="@{/register}">Вернуться на страницу регистрации</a></p>
-
-    </div>
+            <h1 class="h3 mb-3 font-weight-normal text-center">Пользователь существует. Попробуйте другое имя пользователя</h1>
+            <div class="signup">
+                <p class="text-center">
+                    <a th:href="@{/register}">Вернуться на страницу регистрации</a>
+                </p>
+            </div>
             <br><br><br><br>
-    <p th:insert="fragments.html :: footer-login"></p>
+            <p th:insert="fragments.html :: footer-login"></p>
         </div>
     </div>
 </section>

@@ -1,26 +1,25 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-    <head th:include="fragments.html :: header-login">
-        <title id="pageTitle">Stogram - Регистрация</title>
-    </head>
+<head th:include="fragments.html :: header-login">
+    <title id="pageTitle">Stogram - Регистрация</title>
+</head>
 
-    <!-- Navigation -->
-    <body>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" th:insert="fragments.html :: navigation"></nav>
+<!-- Navigation -->
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" th:insert="fragments.html :: navigation"></nav>
 
-        <!-- Page Content -->
-        <section class="main-post">
-            <div class="wrapper-posts">
-                <div class="left-col">
-                    <br><br><br><br>
+<!-- Page Content -->
+<section class="main-post">
+    <div class="wrapper-posts">
+        <div class="left-col">
+            <br><br><br><br>
             <h1 class="h3 mb-3 font-weight-normal text-center">Ошибка публикации. Файл не соответствует формату, либо файл имеет слишком длинное имя, либо файл не приложен</h1>
-
-                    <br><br><br><br>
+            <br><br><br><br>
             <p th:insert="fragments.html :: footer-login"></p>
-                </div>
-            </div>
-        </section>
+        </div>
+    </div>
+</section>
 
-    </body>
+</body>
 </html>

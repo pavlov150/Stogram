@@ -8,14 +8,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import run.itlife.dto.UserDto;
-import run.itlife.entity.Post;
 import run.itlife.entity.User;
 import run.itlife.repository.RoleRepository;
 import run.itlife.repository.UserRepository;
 import javax.persistence.EntityExistsException;
 import org.springframework.transaction.annotation.Transactional;
 import run.itlife.utils.SecurityUtils;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -101,8 +99,6 @@ public class UserServiceImpl implements UserService {
     public List<User> getUsersOnly() {
         return userRepository.getUsersOnly();
     }
-
-
 
     @Override
     public List<User> searchUsers(String substring) {

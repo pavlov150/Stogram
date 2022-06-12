@@ -113,10 +113,6 @@ body{
   margin-top: 50px;
 }
 
-
-
-
-
 .main-post{
   width: 100%;
   padding: 20px 0;
@@ -243,8 +239,6 @@ body{
   color: rgba(0, 0, 0, 0.5)
 }
 
-
-
 .username-comments{
   width: 100%;
   overflow: hidden;
@@ -317,7 +311,6 @@ body{
   align-items: center;
   padding: 0 8px;
 }
-
 
 .info .username{
   width: auto;
@@ -474,7 +467,6 @@ body{
 
 a:hover {
   color: #A9A9A9;
-
 }
 
 a {
@@ -489,7 +481,6 @@ a {
   margin-left: 20px;
   text-align: start;
 }
-
 
 .description span{
   font-weight: bold;
@@ -557,9 +548,6 @@ a {
   padding: 10px 10px;
   /*opacity: 0.4;*/
 }
-
-
-
 
 .no_public {
   text-align: center;
@@ -686,6 +674,7 @@ a {
   margin-bottom: 0;
   background-color: #fff;
 }
+
 @media (min-width: 768px) {
   .jumbotron {
     padding-top: 4rem;
@@ -723,5 +712,3 @@ p {
 .usersNotFound {
   margin-bottom: 19px;
 }
-
-

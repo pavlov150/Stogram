@@ -42,6 +42,7 @@ $(document).ready(function(){
     }
     //cropper end
 });
+
 function onClickUpload() {
     //console.log('test')
     var profileImage;
