@@ -8,7 +8,6 @@ import java.util.List;
 public interface BugsService {
 
     void create(BugsDto bugsDto);
-
     List<Bugs> listAllBugs();
 
 }

@@ -22,6 +22,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private MyBasicAuthenticationEntryPoint authEndpoint;
+
     @Override
     //Делаем цепочку вызовов. Вызываем методы друг за другом и туда кидаем какую-то конфигурацию
     protected void configure(HttpSecurity http) throws Exception {
@@ -36,7 +39,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout()
                 .permitAll()
-                .logoutSuccessUrl("/");
+                .logoutSuccessUrl("/")
+                .and()
+                .httpBasic().authenticationEntryPoint(authEndpoint);
     }
 
     @Bean

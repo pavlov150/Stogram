@@ -9,19 +9,12 @@ import java.util.List;
 public interface UserService extends UserDetailsService {
 
     User findByUsername(String username);
-
     List<User> findAll();
-
     void create(User user);
-
     void update(UserDto userDto);
-
     public void checkAuthority(long userId);
-
     List<User> getUsersOnly();
-
     List<User> searchUsers(String substring);
-
     int countSearchUsers(String substring);
 
 }

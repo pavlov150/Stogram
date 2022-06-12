@@ -56,4 +56,6 @@ public interface PostRepository extends JpaRepository<Post, Long> {
             "where p.content LIKE ? ", nativeQuery = true)
     int countSearchTags(String substring);
 
+    List<Post> findByContentLikeIgnoreCase(String substring);
+
 }

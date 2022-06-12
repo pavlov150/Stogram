@@ -4,11 +4,8 @@ package run.itlife.dto;
 public class CommentDto {
 
     private Long commentId;
-
     private Long postId;
-
     private String commentText;
-
     private String username;
 
     public CommentDto() { }

@@ -1,11 +1,15 @@
 package run.itlife.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
 //Класс, который представляет таблицу post в виде Java-класса (dto - dataobject)
 //задача объектов класса содержать некоторые данные по информации в таблице.
 //Каждый объект класса будет соответствовать некоторому посту
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class PostDto {
 
     private Long postId;
@@ -24,6 +28,7 @@ public class PostDto {
         this.extFile = extFile;
     }
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
@@ -70,7 +75,7 @@ public class PostDto {
         this.updatedAt = updatedAt;
     }
 
-    public List<CommentDto> getCommets() {
+    public List<CommentDto> getComments() {
         return comments;
     }
 

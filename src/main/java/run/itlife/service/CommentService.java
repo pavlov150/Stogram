@@ -9,9 +9,7 @@ import java.util.List;
 public interface CommentService {
 
     void create(CommentDto comment);
-
     void delete(long id);
-
     List<Comment> sortCommentsByDate(long id);
 
 }

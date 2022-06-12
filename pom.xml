@@ -34,6 +34,8 @@
     <junit-jupiter.version>RELEASE</junit-jupiter.version>
     <core.version>3.3.3</core.version>
     <javase.version>3.3.3</javase.version>
+    <jackson-databin.version>2.13.3</jackson-databin.version>
+    <jackson-datatype-jsr310.version>2.13.3</jackson-datatype-jsr310.version>
   </properties>
 
   <dependencies>
@@ -130,6 +132,17 @@
       <artifactId>javase</artifactId>
       <version>${javase.version}</version>
     </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>${jackson-databin.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.datatype</groupId>
+      <artifactId>jackson-datatype-jsr310</artifactId>
+      <version>${jackson-datatype-jsr310.version}</version>
+    </dependency>
+
   </dependencies>
 
   <build>

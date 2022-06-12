@@ -6,7 +6,9 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+import run.itlife.dto.CommentDto;
 import run.itlife.dto.PostDto;
+import run.itlife.entity.Comment;
 import run.itlife.entity.Post;
 import run.itlife.repository.PostRepository;
 import run.itlife.repository.UserRepository;
@@ -15,6 +17,8 @@ import javax.persistence.EntityNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import static run.itlife.utils.SecurityUtils.*;
 
 // Уровень обслуживания
@@ -40,6 +44,27 @@ public class PostServiceImpl implements PostService {
             p.getComments().size();
         }
         return posts;
+    }
+
+    @Override
+    public List<PostDto> listAllPostsAsDto() {
+        return toDtoList(listAllPosts());
+    }
+
+    @Override
+    public List<Post> search(String search) {
+        return postRepository.findByContentLikeIgnoreCase("%" + search +"%");
+    }
+
+    @Override
+    public List<PostDto> searchDtos(String search) {
+        return toDtoList(search(search));
+    }
+
+    private List<PostDto> toDtoList(List<Post> posts) {
+        return posts.stream()
+                .map(this::toDto)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -146,6 +171,24 @@ public class PostServiceImpl implements PostService {
         dto.setPhoto(post.getPhoto());
         dto.setContent(post.getContent());
         dto.setExtFile(post.getExtFile());
+        //для REST
+        dto.setComments(post.getComments().stream()
+                .map(this::commentToDto)
+                .collect(Collectors.toList()));
+        dto.setUsername(post.getUser().getUsername());
+        dto.setCreatedAt(post.getCreatedAt());
+        dto.setUpdatedAt(post.getUpdatedAt());
+        /////
+        return dto;
+    }
+
+    //для REST
+    private CommentDto commentToDto(Comment comment){
+        CommentDto dto = new CommentDto();
+        dto.setCommentText(comment.getCommentText());
+        dto.setUsername(comment.getUser().getUsername());
+        dto.setCommentId(comment.getCommentId());
+        dto.setPostId(comment.getPost().getPostId());
         return dto;
     }
 
