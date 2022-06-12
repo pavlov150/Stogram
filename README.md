@@ -53,17 +53,17 @@ GET http://stogram.moscow/api/post?search=москва
 
 Выборка всех постов
 
-GET http://localhost:8080/Stogram/api/post
+GET http://stogram.moscow/api/post
 
 
 Поиск поста по ID
 
-GET http://localhost:8080/Stogram/api/post/284
+GET http://stogram.moscow/api/post/284
 
 
 Создание поста
 
-POST http://localhost:8080/Stogram/api/post/
+POST http://stogram.moscow/api/post/
 
 Пример запроса
 
@@ -82,7 +82,7 @@ POST http://localhost:8080/Stogram/api/post/
 
 Редактирование поста
 
-PUT http://localhost:8080/Stogram/api/post/294
+PUT http://stogram.moscow/api/post/294
 
 Пример запроса
 
@@ -101,7 +101,7 @@ PUT http://localhost:8080/Stogram/api/post/294
 
 Удаление поста
 
-DELETE http://localhost:8080/Stogram/api/post/295
+DELETE http://stogram.moscow/api/post/295
 
 
 :iphone: **Внешний вид приложения на текущий момент:**
