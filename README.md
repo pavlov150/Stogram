@@ -48,7 +48,7 @@
 
 Выборка постов по ключевому слову
 
-GET http://localhost:8080/Stogram/api/post?search=москва
+GET http://stogram.moscow/api/post?search=москва
 
 
 Выборка всех постов
