@@ -43,20 +43,30 @@
 25. REST-API
 
 **REST-API:**
+
 Используется Basic-Auth
 
 Выборка постов ключевому слову
+
 GET http://localhost:8080/Stogram/api/post?search=москва
 
+
 Выборка всех постов
+
 GET http://localhost:8080/Stogram/api/post
 
+
 Поиск поста по ID
+
 GET http://localhost:8080/Stogram/api/post/284
 
+
 Создание поста
+
 POST http://localhost:8080/Stogram/api/post/
+
 Пример запроса
+
 {
     "photo": "gfpdohum.png",
     "extFile": "png",
@@ -64,9 +74,13 @@ POST http://localhost:8080/Stogram/api/post/
     "createdAt": "2022-06-12 02:18:59"
 }
 
+
 Редактирование поста
+
 PUT http://localhost:8080/Stogram/api/post/294
+
 Пример запроса
+
 {
     "photo": "gfpdohum.png",
     "extFile": "png",
@@ -74,8 +88,11 @@ PUT http://localhost:8080/Stogram/api/post/294
     "createdAt": "2022-06-12 02:18:59"
 }
 
+
 Удаление поста
+
 DELETE http://localhost:8080/Stogram/api/post/295
+
 
 
 **Внешний вид приложения на текущий момент:**
