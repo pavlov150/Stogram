@@ -102,10 +102,6 @@ PUT http://localhost:8080/Stogram/api/post/294
 DELETE http://localhost:8080/Stogram/api/post/295
 
 
-
-
-
-
 **Внешний вид приложения на текущий момент:**
 
 Страница пользователя без подписок
