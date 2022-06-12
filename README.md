@@ -68,7 +68,6 @@ POST http://localhost:8080/Stogram/api/post/
 Пример запроса
 
 {
-
     "photo": "gfpdohum.png",
     
     "extFile": "png",
@@ -76,7 +75,6 @@ POST http://localhost:8080/Stogram/api/post/
     "content": "Test API create",
     
     "createdAt": "2022-06-12 02:18:59"
-    
 }
 
 
@@ -87,7 +85,6 @@ PUT http://localhost:8080/Stogram/api/post/294
 Пример запроса
 
 {
-
     "photo": "gfpdohum.png",
     
     "extFile": "png",
@@ -95,13 +92,13 @@ PUT http://localhost:8080/Stogram/api/post/294
     "content": "Test API edit",
     
     "createdAt": "2022-06-12 02:18:59"
-    
 }
 
 
 Удаление поста
 
 DELETE http://localhost:8080/Stogram/api/post/295
+
 
 
 
