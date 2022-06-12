@@ -46,7 +46,7 @@
 
 Используется Basic-Auth
 
-Выборка постов ключевому слову
+Выборка постов по ключевому слову
 
 GET http://localhost:8080/Stogram/api/post?search=москва
 
@@ -68,10 +68,15 @@ POST http://localhost:8080/Stogram/api/post/
 Пример запроса
 
 {
+
     "photo": "gfpdohum.png",
+    
     "extFile": "png",
+    
     "content": "Test API create",
+    
     "createdAt": "2022-06-12 02:18:59"
+    
 }
 
 
@@ -82,10 +87,15 @@ PUT http://localhost:8080/Stogram/api/post/294
 Пример запроса
 
 {
+
     "photo": "gfpdohum.png",
+    
     "extFile": "png",
+    
     "content": "Test API edit",
+    
     "createdAt": "2022-06-12 02:18:59"
+    
 }
 
 
